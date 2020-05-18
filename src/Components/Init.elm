@@ -5,23 +5,16 @@ import Components.Structure exposing (GameParas)
 init : GameParas
 init =
   { board =
-      { x = 0
-      , y = -200
-      , tox = 0
-      , toy = 0
-      }
+      { x = 0, y = -200, status = 1, width = 60, height = 14}
   , ball =
-      { x = 0
-      , y = -183
-      , tox = 1
-      , toy = 1
-      }
-  , block =
-      { x = 20
-      , y = 20
-      , tox = 0
-      , toy = 0
-      }
-  , lock =
-      1
+      { x = 0, y = -183, tox = 2, toy = 2, radius = 10}
+  , brick =
+      -- Put your bricks here!
+      [ { x = -40, y = -40, status = 1, width = 40, height = 12}
+      , { x = -100, y = 80, status = 1, width = 60, height = 30 }
+      , { x = 40, y = 40, status = 1, width = 40, height = 12}
+      , { x = 200, y = 20, status = 1, width = 50, height = 10}
+      ]
+  , lock = 1
+  , win = 0
   }
