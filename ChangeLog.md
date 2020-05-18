@@ -1,5 +1,10 @@
 # ChangeLog
 
+### Version 0.1.0
+##### 2020.5.17 By Zhimin Sun
+#### Release the first release version
+All basic functions complete
+
 ### Version 0.0.1
 ##### 2020.5.17 By Zhimin Sun
 #### Main change
