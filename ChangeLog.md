@@ -1,5 +1,13 @@
 # ChangeLog
 
+### Version 0.1.1
+##### 2020.5.21 By Zhimin Sun
+### Fix Bug
+- The ball will not bounce left or right.
+### New Functions
+1. The speed of ball will change when it touches the moving board.
+2. Ball will bounce back when it hit the corner of bricks or board.
+
 ### Version 0.1.0
 ##### 2020.5.17 By Zhimin Sun
 #### Release the first release version

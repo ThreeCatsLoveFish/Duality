@@ -39,3 +39,5 @@
 1. The ball can bounce between walls and the board that users control.
 1. Board can move left and right, and won't go beyond the walls.
 1. The bricks exist and will be broken.
+1. The speed of ball will change when it touches the moving board.
+1. Ball will bounce back when it hit the corner of bricks or board.
