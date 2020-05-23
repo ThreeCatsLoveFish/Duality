@@ -1,9 +1,56 @@
 module Main exposing (..)
 
-import Playground exposing (game)
-import Components.Init exposing (init)
-import Components.View exposing (view)
-import Components.Update exposing (update)
+import Browser
+import Html exposing (Html, text, div, h1, img)
+import Html.Attributes exposing (src)
 
+import Bin.Msg exposing (..)
+import Debug exposing (toString)
+import Bin.Types exposing (..)
+
+
+---- MODEL ----
+
+
+type alias Model =
+    {}
+
+
+init : ( Model, Cmd Msg )
+init =
+    ( {}, Cmd.none )
+
+
+
+---- UPDATE ----
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    ( model, Cmd.none )
+
+
+
+---- VIEW ----
+
+
+view : Model -> Html Msg
+view model =
+    div []
+        [ img [ src "/logo.svg" ] []
+        , h1 [] [ text "Your Elm App is working!" ]
+        ]
+
+
+
+---- PROGRAM ----
+
+
+main : Program () Model Msg
 main =
-  game view update init
+    Browser.element
+        { view = view
+        , init = \_ -> init
+        , update = update
+        , subscriptions = always Sub.none
+        }
