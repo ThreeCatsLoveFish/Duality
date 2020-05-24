@@ -1,7 +1,7 @@
 module Bin.Types exposing (..)
 
 import Html exposing (Html, div)
-import Bin.Msg exposing (..)
+import Bin.Message exposing (..)
 
 
 type alias Point =
@@ -25,6 +25,7 @@ blockCheck block point =
     point.x >= lb.x && point.x <= rt.x && point.y >= lb.y && point.y <= rt.y
 
 type alias Poly = List Point -- polygons for collision detection
+
 
 -- Check if is hit
 hitCheck : Poly -> Poly -> Bool
@@ -77,5 +78,12 @@ type alias GameModel =
     { ball: Ball
     , bricks: List Brick
     , paddle: Paddle
+    }
+
+
+type alias MenuModel =
+    { startNew: Bool
+    , pausing: Bool
+    -- TODO: complete rest
     }
 

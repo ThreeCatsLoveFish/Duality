@@ -1,52 +1,18 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
 
-import Bin.Msg exposing (..)
-import Debug exposing (toString)
+import Bin.Initial exposing (..)
 import Bin.Types exposing (..)
-
-
----- MODEL ----
-
-
-type alias Model =
-    {}
-
-
-init : ( Model, Cmd Msg )
-init =
-    ( {}, Cmd.none )
-
-
-
----- UPDATE ----
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    ( model, Cmd.none )
-
-
-
----- VIEW ----
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Your Elm App is working!" ]
-        ]
-
+import Bin.Message exposing (..)
+import Bin.Update exposing (..)
+import Bin.View exposing (..)
 
 
 ---- PROGRAM ----
 
 
-main : Program () Model Msg
+main : Program () GameModel Msg
 main =
     Browser.element
         { view = view
