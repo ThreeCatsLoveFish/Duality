@@ -74,17 +74,11 @@ type alias Paddle =
     --, visual: Visual -- can get by collision
     }
 
-type alias GameModel =
+type alias Model =
     { ball: Ball
     , bricks: List Brick
     , paddle: Paddle
     , menu: Menu
     }
 
-
-type alias MenuModel =
-    { startNew: Bool
-    , pausing: Bool
-    -- TODO: complete rest
-    }
 

@@ -4,9 +4,9 @@ import Bin.Message exposing (..)
 
 -- this file is somehow debug friendly; this gives lots of handly initializations
 
-init : ( GameModel, Cmd Msg )
+init : ( Model, Cmd Msg )
 init =
-    ( GameModel (Ball {x=0,y=0} {x=0,y=0} 1) [brickZero] paddleZero Startup
+    ( Model (Ball {x=0,y=0} {x=0,y=0} 1) [brickZero] paddleZero Startup
     , Cmd.none
     )
 
