@@ -10,3 +10,6 @@ update msg model =
 moveBall : GameModel -> GameModel
 movePaddle : GameModel -> GameModel
 collisionCheck : GameModel -> GameModel
+gameStatus : GameModel -> GameModel
+brickStatus : GameModel -> GameModel
+winOrLose : GameModel -> GameModel
