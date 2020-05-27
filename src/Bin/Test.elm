@@ -6,20 +6,28 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import Debug exposing (..)
 
+import Random
+
 main =
   Browser.sandbox{ init = init, update = update, view = view }
+
 lst = [1,2,3]
 
 type alias Model = Int -- change it!
 
 init : Model
-init = 0
+init =
+    case lst of
+        x :: xs ->
+            x
+        _ ->
+            -1
 
 type Msg
     = ChangeIt
 
 update : Msg -> Model -> Model
-update msg model = 0 -- anything you like!
+update msg model = model -- anything you like!
 
 view : Model -> Html Msg
 view model =
@@ -28,5 +36,5 @@ view model =
         [ style "text-align" "center"
         , style "color" "#1B72BD"
         ]
-        [ text "Hallo!" ]
+        [ text (Debug.toString model) ]
     ]

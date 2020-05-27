@@ -11,7 +11,7 @@ type alias Point =
 
 type alias Block =
     { lb : Point -- left bottom
-    , rt : Point
+    , rt : Point -- right top
     }
 
 
@@ -41,7 +41,7 @@ type BrickStat
 
 type alias Brick =
     { pos: Point -- may not be necessary
-    , collision: Poly --
+    , collision: Poly -- for hitCheck
     , block: Block
     , stat: BrickStat
     --, visual: Visual -- can get by collision
@@ -68,7 +68,7 @@ type PaddleStat
 
 type alias Paddle =
     { pos: Point -- may not be necessary
-    , collision: Poly --
+    , collision: Poly -- for hitCheck
     , block: Block
     , stat: PaddleStat
     --, visual: Visual -- can get by collision
@@ -78,6 +78,7 @@ type alias GameModel =
     { ball: Ball
     , bricks: List Brick
     , paddle: Paddle
+    , menu: Menu
     }
 
 

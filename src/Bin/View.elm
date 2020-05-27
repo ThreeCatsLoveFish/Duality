@@ -17,6 +17,8 @@ visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
     div [] []
 
+
+-- dummy for clear coding
 visualizeGame : GameModel -> Html Msg
 visualizeGame gamemodel =
     div []
@@ -24,16 +26,12 @@ visualizeGame gamemodel =
     , List.map visualizeBrick gamemodel.bricks -- TODO: Complete the following...
     ]
 
-visualizeMenu : MenuModel -> Html Msg -> Html Msg
-visualizeMenu html menu =
-    div [] [] -- TODO
-
-view : GameModel -> Msg -> Html Msg
-view gamemodel msg =
-    case msg of
-        Startup -> visualizeGame gamemodel
+view : GameModel -> Html Msg
+view gamemodel =
+    case gamemodel.menu of
+        Startup -> visualizeGame gamemodel -- TODO: replace dummy
         Running op -> visualizeGame gamemodel
-        Win menumodel -> visualizeGame gamemodel |> (visualizeMenu menumodel)
-        Lose menumodel -> visualizeGame gamemodel |> (visualizeMenu menumodel)
+        Win -> visualizeGame gamemodel
+        Lose -> visualizeGame gamemodel
         _ -> div [] [] -- TODO
 

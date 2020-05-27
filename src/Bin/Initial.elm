@@ -6,10 +6,7 @@ import Bin.Message exposing (..)
 
 init : ( GameModel, Cmd Msg )
 init =
-    ( { ball = {pos={x=0,y=0}, v={x=0,y=0}, r=1 }
-      , bricks = [brickZero]
-      , paddle = paddleZero
-      }
+    ( GameModel (Ball {x=0,y=0} {x=0,y=0} 1) [brickZero] paddleZero Startup
     , Cmd.none
     )
 
