@@ -8,6 +8,7 @@ Prototype of this ChangLog: by Zhimin Sun
 
 #### Big change! On data model and control flow
 
+To complete Milestone 2, we need a new structure.
 Setup the whole structure:
 ```
 |- Main.elm
@@ -26,7 +27,7 @@ Setup the whole structure:
 
 `Bin.Types` contains all the Data needed for View and Update, which are:
 
-1. Point --> a vector
+1 . Point --> a vector
 
 ```
 type alias Point =
@@ -35,7 +36,7 @@ type alias Point =
     }
 ```
 
-2. Block --> a rectangle marked by two Points, which roughly defines a pre-checking box area[^Why_Block]
+2 . Block --> a rectangle marked by two Points, which roughly defines a pre-checking box area[^Why_Block]
 
 ```
 type alias Block =
@@ -45,7 +46,7 @@ type alias Block =
 ```
 [^Why_Block]: The goal of Block was initially reduce calculation pressure (or it's just grammar laziness (X_X)). It works like: ![Block.png](./public/Block.png)
 
-3. Brick, Wall, Ball, Paddle
+3 . Brick, Wall, Ball, Paddle
 
 
 ```
@@ -77,9 +78,49 @@ type alias Paddle =
     --, visual: Visual -- can get by collision
     }
 ```
+4 . Menu & Game
+```
+-- Menu: see control flow
+type alias Model =
+    { ball: Ball
+    , bricks: List Brick
+    , paddle: Paddle
+    , menu: Menu
+    }
+```
 
 #### Control Flow
+##### This part is contributed by Yuchen Zhou.
+Msg: 
+```
+type Op
+    = Left
+    | Right
+    | Stay -- maybe useless..
 
+type Menu
+    = Startup -- before start; welcome
+    | Paused  -- stop updating game model, still updating the menu, show Paused
+    | Win -- stop game model and frame, still menu, show Win
+    | Lose -- stop game model and frame, still menu, show Win
+    | NoMenu -- just in case...
+
+type Msg
+    = Running Op -- running the game, update and view
+    | ShowMenu Menu -- show menu on top
+    | NoOp -- somehow redundant...
+```
+Ideally, this is conveyed to update by subscriptions per 1/30 sec.
+
+We've come to a point where work can be divided:
+```
+moveBall : GameModel -> GameModel
+movePaddle : GameModel -> GameModel
+collisionCheck : GameModel -> GameModel
+gameStatus : GameModel -> GameModel
+brickStatus : GameModel -> GameModel
+winOrLose : GameModel -> GameModel
+```
 
 
 
