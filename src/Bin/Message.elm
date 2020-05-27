@@ -1,5 +1,5 @@
 module Bin.Message exposing (..)
-import Bin.Types exposing (MenuModel)
+import Bin.Types exposing (Model)
 
 type Op
     = Left
@@ -11,6 +11,7 @@ type Menu
     | Paused  -- stop updating game model, still updating the menu, show Paused
     | Win -- stop game model and frame, still menu, show Win
     | Lose -- stop game model and frame, still menu, show Win
+    | Running -- the game is on
     | NoMenu -- just in case...
 
 type Msg

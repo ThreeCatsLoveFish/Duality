@@ -19,19 +19,20 @@ visualizePaddle paddle =
 
 
 -- dummy for clear coding
-visualizeGame : GameModel -> Html Msg
-visualizeGame gamemodel =
+visualizeGame : Model -> Html Msg
+visualizeGame model =
     div []
-    [ gamemodel.ball |> visualizeBall
-    , List.map visualizeBrick gamemodel.bricks -- TODO: Complete the following...
+    [ model.ball |> visualizeBall
+    , List.map visualizeBrick model.bricks -- TODO: Complete the following...
     ]
 
-view : GameModel -> Html Msg
-view gamemodel =
-    case gamemodel.menu of
-        Startup -> visualizeGame gamemodel -- TODO: replace dummy
-        Running op -> visualizeGame gamemodel
-        Win -> visualizeGame gamemodel
-        Lose -> visualizeGame gamemodel
+view : Model -> Html Msg
+view model =
+    case model.menu of
+        Startup -> visualizeGame model -- TODO: replace dummy
+        Running -> visualizeGame model
+        Paused -> visualizeGame model
+        Win -> visualizeGame model
+        Lose -> visualizeGame model
         _ -> div [] [] -- TODO
 
