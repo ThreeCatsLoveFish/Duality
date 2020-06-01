@@ -1,40 +1,37 @@
 module Bin.Test exposing (..)
 
 import Browser
+import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
+
+import Bin.Initial
+import Bin.Types exposing (..)
+import Bin.Message exposing (..)
+import Bin.View
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onClick)
 import Debug exposing (..)
-
+import Svg
+import Svg.Attributes as SA
 import Random
 
+main : Program () Model Msg
 main =
-  Browser.sandbox{ init = init, update = update, view = view }
+  Browser.element
+        { init = \_ -> Bin.Initial.init
+        , view = Bin.View.view
+        , update = update
+        , subscriptions = subscriptions
+        }
 
-lst = [1,2,3]
+--type alias Model = Types.Model -- change it!
 
-type alias Model = Int -- change it!
+--type Msg
+--    = ChangeIt
 
-init : Model
-init =
-    case lst of
-        x :: xs ->
-            x
-        _ ->
-            -1
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model = (model, Cmd.none)-- anything you like!
 
-type Msg
-    = ChangeIt
-
-update : Msg -> Model -> Model
-update msg model = model -- anything you like!
-
-view : Model -> Html Msg
-view model =
-    div []
-    [ h1
-        [ style "text-align" "center"
-        , style "color" "#1B72BD"
-        ]
-        [ text (Debug.toString model) ]
-    ]
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none --TODO: change it.
