@@ -1,6 +1,5 @@
 module Bin.Types exposing (..)
 
-import Html exposing (Html, div)
 import Bin.Message exposing (..)
 
 
@@ -32,8 +31,6 @@ hitCheck : Poly -> Poly -> Bool
 hitCheck ball brick =
     False
 --    TODO: implement it
-
-type alias Visual = Html Msg -- TODO: Could be replaced by separated view functions?
 
 type BrickStat
     = Hit Int -- Tim

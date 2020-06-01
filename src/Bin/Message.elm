@@ -1,5 +1,4 @@
 module Bin.Message exposing (..)
-import Bin.Types exposing (Model)
 
 type Op
     = Left
@@ -15,7 +14,7 @@ type Menu
     | NoMenu -- just in case...
 
 type Msg
-    = Running Op -- running the game, update and view
+    = RunGame Op -- running the game, update and view
     | ShowMenu Menu -- show menu on top
     | NoOp -- somehow redundant...
 
