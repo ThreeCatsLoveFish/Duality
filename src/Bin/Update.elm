@@ -1,12 +1,24 @@
 module Bin.Update exposing (..)
 import Bin.Message exposing (..)
 import Bin.Types exposing (..)
+import Bin.Collision exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    let
+        model0 =
+            case msg of
+                ShowMenu menu ->
+                    { model | menu = menu }
+                RunGame op ->
+                    movePaddle model op
+                        |> moveBall
+                        |> collisionCheck
+                _ ->
+                    model
+    in
+    ( model0 |> winJudge, Cmd.none )
 -- TODO
-
 
 moveBall : Model -> Model -- Done
 moveBall model =
@@ -20,6 +32,7 @@ moveBall model =
             { nmodel | ball = ball}
     in
     setBall (setPos newPos model.ball) model
+
 
 movePaddle : Model -> Op -> Model -- Done
 movePaddle model op =
@@ -40,7 +53,12 @@ movePaddle model op =
     setPaddle (setPos newPos model.paddle) model
 
 
-collisionCheck : Model -> Model
 gameStatus : Model -> Model
+
+
 brickStatus : Model -> Model
-winOrLose : Model -> Model
+
+
+winJudge : Model -> Model
+winJudge model =
+    model
