@@ -2,7 +2,7 @@ module Bin.Initial exposing (init)
 import Bin.Types exposing (..)
 import Bin.Message exposing (..)
 
--- this file is somehow debug friendly; this gives lots of handly initializations
+-- this file is somehow debug friendly; this gives lots of handy initializations
 --import List exposing (range, map)
 
 init : ( Model, Cmd Msg )
@@ -17,7 +17,9 @@ init =
         breath = 10
 
         -- Ball part
-        newBall = Ball (Point (canvas.w/2) (canvas.h - paddle.h - ball.d/2 - breath)) (Point 0 0) (ball.d/2)
+        newBall =
+            Ball (Point (canvas.w/2) (canvas.h - paddle.h - ball.d/2 - breath)) (Point 0 0)
+            (ball.d/2)
 
         -- transfer prepare
         pos2coll pos object =
@@ -47,12 +49,20 @@ init =
                 |> List.map toFloat
                 |> List.map (\x -> x - 0.5 - (toFloat len) /2 )
                 |> List.map (\x -> x * unit)
-        posBrickX = positionConvert layout.x (brick.w + 0.5*breath) |> List.map (\x -> x + canvas.w/2) -- get x
-        posBrickY = positionConvert layout.y (brick.h + 0.5*breath) |> List.map (\x -> x + (layout.y*brick.h/2) + 2*breath) -- get y by proportion TODO: beautify
-        posBricks = List.map (\x -> List.map (Point x) posBrickY) posBrickX |> List.concat -- get pos
+        posBrickX =
+            positionConvert layout.x (brick.w + 0.5*breath)
+            |> List.map (\x -> x + canvas.w/2) -- get x
+        posBrickY =
+            positionConvert layout.y (brick.h + 0.5*breath)
+            |> List.map (\x -> x + (layout.y*brick.h/2) + 2*breath)
+            -- get y by proportion TODO: beautify
+        posBricks =
+            List.map (\x -> List.map (Point x) posBrickY) posBrickX |> List.concat -- get pos
         --newBrick pos =
         --    Brick pos (pos2coll pos) (pos2block pos) (Hit 0)
-        newBricks = List.map (\pos -> Brick pos (pos2coll pos brick) (pos2block pos brick) (Hit 0)) posBricks -- get bricks
+        newBricks =
+            List.map (\pos -> Brick pos (pos2coll pos brick) (pos2block pos brick) (Hit 0)) posBricks
+            -- get bricks
 
         -- Paddle part
         newPaddle =
@@ -83,16 +93,16 @@ polySquare center height width =
 
 brickZero : Brick
 brickZero =
-    { pos=pointZero
-    , collision=(polySquare pointZero 1 1)
-    , block={lb=(Point -1 -1),rt=(Point 1 1)}
-    , stat=Hit 0
+    { pos = pointZero
+    , collision = (polySquare pointZero 1 1)
+    , block = { lt = (Point -1 -1), rb = (Point 1 1) }
+    , stat = Hit 0
     }
 
 paddleZero : Paddle
 paddleZero =
-    { pos=pointZero
-    , collision=(polySquare pointZero 1 1)
-    , block={lb=(Point -1 -1),rt=(Point 1 1)}
-    , stat=Ascending
+    { pos = pointZero
+    , collision = (polySquare pointZero 1 1)
+    , block = { lt = (Point -1 -1), rb = (Point 1 1) }
+    , stat = Ascending
     }
