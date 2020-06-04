@@ -2,37 +2,223 @@ module Bin.View exposing (..)
 
 import Bin.Types exposing (..)
 
-import Html exposing (Html, div)
+import Browser
+import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Html.Attributes exposing (..)
 import Bin.Message exposing (..)
+import Svg
+import Svg.Attributes as SA
 
-visualizeBall : Ball -> Html Msg
-visualizeBall ball =
-    div [] []
+type Color
+    = Color { red : Int, green : Int, blue : Int }
 
-visualizeBrick : Brick -> Html Msg
-visualizeBrick ball =
-    div [] []
+rgb : Int -> Int -> Int -> Color
+rgb red green blue =
+    Color { red = red, green = green, blue = blue }
 
-visualizePaddle : Paddle -> Html Msg
-visualizePaddle paddle =
-    div [] []
+colorToString : Color -> String
+colorToString (Color { red, green, blue }) =
+    "rgb("
+        ++ String.fromInt red
+        ++ ","
+        ++ String.fromInt green
+        ++ ","
+        ++ String.fromInt blue
+        ++ ")"
 
+pointToString : Point -> String
+pointToString point =
+    String.fromFloat (point.x) ++ ", " ++ String.fromFloat (point.y)
+
+polyToString : Poly -> String
+polyToString poly =
+    String.join " " (List.map pointToString poly)
+
+visualizeBall : Ball -> Color -> Svg.Svg Msg
+visualizeBall ball color =
+    Svg.circle
+        [ SA.cx (String.fromFloat ball.pos.x)
+        , SA.cy (String.fromFloat ball.pos.y)
+        , SA.r (String.fromFloat ball.r)
+        , SA.fill (colorToString color) ]
+        []
+
+visualizeBrick : Brick -> Svg.Svg Msg
+visualizeBrick brick=
+    Svg.polygon
+        [ SA.points (polyToString brick.collision)
+        , SA.fill (colorToString (changeBrickColor brick))
+        ]
+        []
+
+changeBrickColor : Brick -> Color
+changeBrickColor brick =
+    case brick.stat of
+        Hit 0 ->
+            rgb 156 156 168
+        Hit 1 ->
+            rgb 188 233 233
+        _ ->
+            rgb 244 244 244
+
+{-
+visualizeBricks : List Brick -> List (Svg.Svg Msg) -> List (Svg.Svg Msg)
+visualizeBricks bricks svgBricks=
+    let
+        newSvgBricks =
+            List.map visualizeBrick bricks
+    in
+        if List.isEmpty svgBricks then
+-}
+
+
+visualizePaddle : Paddle -> Color -> Html Msg
+visualizePaddle paddle color =
+    Svg.svg
+        [ SA.version "1.1"
+        , SA.x "0"
+        , SA.y "0"
+        , SA.viewBox "0 0 800 600"
+        ]
+    [ Svg.polygon
+        [ SA.points (polyToString paddle.collision)
+        , SA.fill (colorToString color)
+        ]
+        []
+    ]
 
 -- dummy for clear coding
-visualizeGame : Model -> Html Msg
-visualizeGame model =
-    div []
-    [ model.ball |> visualizeBall
-    , List.map visualizeBrick model.bricks -- TODO: Complete the following...
-    ]
+visualizeGame : Model -> String -> Html Msg
+visualizeGame model opacity =
+    let
+        elements =
+            List.map visualizeBrick model.bricks
+              |> (::) (visualizeBall model.ball (rgb 33 134 233))
+              |> (::) (visualizePaddle model.paddle (rgb 0 88 99))
+    in
+        div
+            [ style "width" "600px"
+            , style "height" "800px"
+            , style "position" "absolute"
+            , style "left" "0"
+            , style "top" "0"
+            , style "z-index" "2"
+            , style "opacity" opacity
+            ]
+            [ Svg.svg
+                [ SA.version "1.1"
+                , SA.x "0"
+                , SA.y "0"
+                , SA.viewBox "0 0 800 600"
+                ]
+                elements
+            ]
+
+visualizeStartup : Model -> Html Msg
+visualizeStartup model =
+    div
+        [ style "background" "rgba(244, 244, 244, 0.85)"
+        , style "text-align" "center"
+        , style "height" "800px"
+        , style "width" "600px"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#77C0C5"
+        , style "line-height" "500px"
+        , style "display"
+            (if model.menu == Startup then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [text "Press space to start. "]
+
+visualizeWin : Model -> Html Msg
+visualizeWin model =
+    div
+        [ style "background" "rgba(244, 244, 244, 0.85)"
+        , style "text-align" "center"
+        , style "height" "800px"
+        , style "width" "600px"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#F43344"
+        , style "line-height" "500px"
+        , style "display"
+            (if model.menu == Win then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [text "You win! "]
+
+visualizeLose : Model -> Html Msg
+visualizeLose model =
+    div
+        [ style "background" "rgba(244, 244, 244, 0.85)"
+        , style "text-align" "center"
+        , style "height" "800px"
+        , style "width" "600px"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#111111"
+        , style "line-height" "500px"
+        , style "display"
+            (if model.menu == Lose then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [text "You lose! "]
 
 view : Model -> Html Msg
 view model =
     case model.menu of
-        Startup -> visualizeGame model -- TODO: replace dummy
-        Running -> visualizeGame model
-        Paused -> visualizeGame model
-        Win -> visualizeGame model
-        Lose -> visualizeGame model
-        _ -> div [] [] -- TODO
+        Running ->
+            div
+                [ style "width" "600px" --TODO: make the game full page in html
+                , style "height" "800px"
+                , style "position" "absolute"
+                , style "left" "0"
+                , style "top" "0"
+                ]
+                [ visualizeGame model "1"
+                , div
+                    [ style "background-color" "#F4F4F4"
+                    , style "background-position" "center"
+                    , style "z-index" "1"
+                    ]
+                    [ visualizeStartup model
+                    , visualizeWin model
+                    , visualizeLose model
+                    ]
+                ]
+        _ ->
+            div
+                [ style "width" "600px"
+                , style "height" "800px"
+                , style "position" "absolute"
+                , style "left" "0"
+                , style "top" "0"
+                ]
+                [ visualizeGame model "0.3"
+                , div
+                    [ style "background-color" "#F4F4F4"
+                    , style "background-position" "center"
+                    , style "z-index" "1"
+                    ]
+                    [ visualizeStartup model
+                    , visualizeWin model
+                    , visualizeLose model
+                    ]
+                ]
 
