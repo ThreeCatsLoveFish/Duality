@@ -1,4 +1,4 @@
-module Bin.Initial exposing (..)
+module Bin.Initial exposing (init)
 import Bin.Types exposing (..)
 import Bin.Message exposing (..)
 
@@ -9,14 +9,15 @@ init : ( Model, Cmd Msg )
 --init : Model
 init =
     let -- easy to change the value or add input
-        canvas = { w = 800, h = 600 } -- (-400, 400), (-300, 300)
+        canvas = { w = 800, h = 600 } -- (0, 800), (0, 600)
         brick = { w = 60, h = 37 }
         layout = { x = 12, y = 7 }
         ball = { d = 20 }
         paddle = { w = 100, h = 15 }
+        breath = 10
 
         -- Ball part
-        newBall = Ball (Point 0 (-canvas.h/2+paddle.h+ball.d/2)) (Point 0 0) 1
+        newBall = Ball (Point (canvas.w/2) (canvas.h - paddle.h - ball.d/2 - breath)) (Point 0 0) (ball.d/2)
 
         -- transfer prepare
         pos2coll pos object =
@@ -46,8 +47,8 @@ init =
                 |> List.map toFloat
                 |> List.map (\x -> x - 0.5 - (toFloat len) /2 )
                 |> List.map (\x -> x * unit)
-        posBrickX = positionConvert layout.x brick.w -- get x
-        posBrickY = positionConvert layout.y brick.h |> List.map (\x -> x + (layout.y*brick.h/2) ) -- get y by proportion TODO: beautify
+        posBrickX = positionConvert layout.x (brick.w + 0.5*breath) |> List.map (\x -> x + canvas.w/2) -- get x
+        posBrickY = positionConvert layout.y (brick.h + 0.5*breath) |> List.map (\x -> x + (layout.y*brick.h/2) + 2*breath) -- get y by proportion TODO: beautify
         posBricks = List.map (\x -> List.map (Point x) posBrickY) posBrickX |> List.concat -- get pos
         --newBrick pos =
         --    Brick pos (pos2coll pos) (pos2block pos) (Hit 0)
@@ -56,7 +57,7 @@ init =
         -- Paddle part
         newPaddle =
             let
-                pos = Point 0 (-canvas.h/2+paddle.h/2)
+                pos = Point (canvas.w/2) (canvas.h - paddle.h/2 - breath)
             in
             Paddle pos (pos2coll pos paddle) (pos2block pos paddle) Ascending
     in
