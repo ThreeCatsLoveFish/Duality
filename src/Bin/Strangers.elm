@@ -1,11 +1,12 @@
-module Bin.Test exposing (..)
+module Bin.Strangers exposing (..)
 
 import Browser
 import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
 
 import Bin.Initial
-import Bin.Types exposing (..)
-import Bin.Message exposing (..)
+import Bin.Message exposing (Msg)
+import Bin.Types exposing (Model)
+import Bin.Update
 import Bin.View
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Html.Attributes exposing (..)
@@ -20,7 +21,7 @@ main =
   Browser.element
         { init = \_ -> Bin.Initial.init
         , view = Bin.View.view
-        , update = update
+        , update = Bin.Update.update
         , subscriptions = subscriptions
         }
 
@@ -28,9 +29,6 @@ main =
 
 --type Msg
 --    = ChangeIt
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model = (model, Cmd.none)-- anything you like!
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

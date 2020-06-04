@@ -18,8 +18,19 @@ init =
 
         -- Ball part
         newBall =
-            Ball (Point (canvas.w/2) (canvas.h - paddle.h - ball.d/2 - breath)) (Point 0 0)
-            (ball.d/2)
+            let
+                position = Point (canvas.w/2) (canvas.h - paddle.h - ball.d/2 - breath)
+                -- Get the collision, precision: how many points
+                getColl : (Point, Float, Int) -> Poly
+                getColl (pos, r, precision) =
+                    let
+                        angle = List.range 0 (precision - 1) |> List.map (\x -> (toFloat x) / (toFloat precision) * 2 * pi)
+                        points = angle |> List.map (\t -> Point (pos.x + r * cos t) (pos.y + r * sin t))
+                    in
+                    points
+            in
+            Ball position (Point 7.07 7.07) (ball.d/2) (getColl (position,(ball.d/2),16))
+
 
         -- transfer prepare
         pos2coll pos object =
