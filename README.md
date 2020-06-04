@@ -11,6 +11,7 @@
 - [History Versions](ChangeLog.md)
 
 ### Description
+
 **Break the Bricks** is a game, and this project is finished by Zhimin Sun. 
 
 ### File Structure
@@ -41,3 +42,6 @@
 1. The bricks exist and will be broken.
 1. The speed of ball will change when it touches the moving board.
 1. Ball will bounce back when it hit the corner of bricks or board.
+
+
+

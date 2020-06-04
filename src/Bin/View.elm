@@ -158,6 +158,28 @@ visualizeWin model =
         ]
         [text "You win! "]
 
+visualizePause : Model -> Html Msg
+visualizePause model =
+    div
+        [ style "background" "rgba(244, 244, 244, 0.85)"
+        , style "text-align" "center"
+        , style "height" "800px"
+        , style "width" "600px"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#77C0C5"
+        , style "line-height" "500px"
+        , style "display"
+            (if model.menu == Paused then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [text "Paused"]
+
 visualizeLose : Model -> Html Msg
 visualizeLose model =
     div
@@ -182,43 +204,29 @@ visualizeLose model =
 
 view : Model -> Html Msg
 view model =
-    case model.menu of
-        Running ->
-            div
-                [ style "width" "600px" --TODO: make the game full page in html
-                , style "height" "800px"
-                , style "position" "absolute"
-                , style "left" "0"
-                , style "top" "0"
-                ]
-                [ visualizeGame model "1"
-                , div
-                    [ style "background-color" "#F4F4F4"
-                    , style "background-position" "center"
-                    , style "z-index" "1"
-                    ]
-                    [ visualizeStartup model
-                    , visualizeWin model
-                    , visualizeLose model
-                    ]
-                ]
-        _ ->
-            div
-                [ style "width" "600px"
-                , style "height" "800px"
-                , style "position" "absolute"
-                , style "left" "0"
-                , style "top" "0"
-                ]
-                [ visualizeGame model "0.3"
-                , div
-                    [ style "background-color" "#F4F4F4"
-                    , style "background-position" "center"
-                    , style "z-index" "1"
-                    ]
-                    [ visualizeStartup model
-                    , visualizeWin model
-                    , visualizeLose model
-                    ]
-                ]
+    let
+        alpha = case model.menu of
+            Running ->
+                "1"
+            _ ->
+                "0.3"
+    in
+    div
+        [ style "width" "600px"
+        , style "height" "800px"
+        , style "position" "absolute"
+        , style "left" "0"
+        , style "top" "0"
+        ]
+        [ visualizeGame model alpha
+        , div
+            [ style "background-color" "#F4F4F4"
+            , style "background-position" "center"
+            , style "z-index" "1"
+            ]
+            [ visualizeStartup model
+            , visualizeWin model
+            , visualizeLose model
+            ]
+        ]
 
