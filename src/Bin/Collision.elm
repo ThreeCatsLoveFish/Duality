@@ -1,6 +1,7 @@
 module Bin.Collision exposing (..)
 import Bin.Types exposing (..)
 
+{-
 -- Check if is in block
 blockCheck : Block -> Point -> Bool
 blockCheck block point =
@@ -9,6 +10,7 @@ blockCheck block point =
         rb = block.rb
     in
     point.x >= lt.x && point.x <= rb.x && point.y >= rb.y && point.y <= lt.y
+-}
 
 type Hit
     = Danger ( List ( Point, Point ) )
