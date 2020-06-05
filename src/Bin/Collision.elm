@@ -53,7 +53,7 @@ hitCheck ball brick =
                 next : Poly
                 next =
                     case List.tail remain_points of
-                        Just next -> next
+                        Just tail -> tail
                         Nothing -> all_points
 
                 second : Result String Point
@@ -65,6 +65,7 @@ hitCheck ball brick =
                 result =
                     case ( first, second ) of
                         ( Ok l, Ok r ) -> ( l, r )
+                        _ -> ( Point 0 0, Point 0 0 )
 
             in
             case List.length remain_points of

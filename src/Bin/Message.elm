@@ -16,5 +16,6 @@ type Menu
 type Msg
     = RunGame Op -- running the game, update and view
     | ShowMenu Menu -- show menu on top
+    | Tick Float
     | NoOp -- somehow redundant...
 
