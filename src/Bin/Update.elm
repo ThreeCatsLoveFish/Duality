@@ -109,12 +109,6 @@ movePaddle op model =
     setModel (setPaddle newPos model.paddle) model
 
 
---gameStatus : Model -> Model
---
---
---brickStatus : Model -> Model
-
-
 winJudge : Model -> Model
 winJudge model =
     let
