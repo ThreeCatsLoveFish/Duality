@@ -68,6 +68,7 @@ exec model =
         |> movePaddle dir
         |> moveBall
         |> collisionCheck
+        |> paddleCheck
 
 moveBall : Model -> Model -- Done
 moveBall model =
