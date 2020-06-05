@@ -18,8 +18,8 @@ init =
             , paddle = { w = 100, h = 15 }
             , breath = 10
             }
-        xm = toFloat info.layout.x
-        ym = toFloat info.layout.y
+        xm = info.canvas.w
+        ym = info.canvas.h
         lw = Block (Point -100 0) (Point 0 ym)
         rw = Block (Point xm 0) (Point (xm+100) ym)
         tw = Block (Point 0 -100) (Point xm 0)
@@ -36,8 +36,8 @@ init =
 reInit : Model -> Info -> Model
 reInit model info =
     let
-        xm = toFloat info.layout.x
-        ym = toFloat info.layout.y
+        xm = info.canvas.w
+        ym = info.canvas.h
         lw = Block (Point -100 0) (Point 0 ym)
         rw = Block (Point xm 0) (Point (xm+100) ym)
         tw = Block (Point 0 -100) (Point xm 0)

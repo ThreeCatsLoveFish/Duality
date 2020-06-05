@@ -208,6 +208,7 @@ type Orientation
 wallCheck : Model -> Model
 wallCheck model =
     let
+        {-
         old = model.ball
         hWall = model.horizontalWall
         vWall = model.verticalWall
@@ -220,9 +221,23 @@ wallCheck model =
             case blockCheck block ball_.collision of
                 True -> change ball_ ori
                 False -> ball_
-        newH = List.foldl (\block b -> detect b block Horizontal) old hWall
+        newH = List.foldl (\block b -> detect b block Horizontal) old hWa
+ll
         newV = List.foldl (\block b -> detect b block Vertical) newH vWall
         ball = newV
+        -}
+        v = model.ball.v
+        pos = model.ball.pos
+        old = model.ball
+        hcBall =
+            case pos.x <= 10 || pos.x >= 790 of
+                True -> (\b -> { b | v = Point -v.x v.y })
+                False -> identity
+        vcBall =
+            case pos.y <= 10 of
+                True -> (\b -> { b | v = Point v.x -v.y })
+                False -> identity
     in
-    { model | ball = ball }
+    { model | ball = old |> hcBall |> vcBall }
+
 
