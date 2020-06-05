@@ -104,8 +104,6 @@ newPaddle info =
     in
     Paddle pos (pos2coll pos info.paddle) (pos2block pos info.paddle) Ascending
 
-
-
 {-
 
 pointZero : Point

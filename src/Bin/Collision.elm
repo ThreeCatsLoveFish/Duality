@@ -161,7 +161,6 @@ collisionCheck model =
                     )
             }
 
-
 paddleCheck : Model -> Model
 paddleCheck model =
     let

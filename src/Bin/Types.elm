@@ -74,6 +74,7 @@ type alias Model =
     , bricks: List Brick
     , paddle: Paddle
     , menu: Menu
+
     , dir: Maybe Op
     , clock: Float
     }
