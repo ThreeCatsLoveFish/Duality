@@ -127,6 +127,9 @@ winJudge model =
         win =
             case brick_all |> List.filter (\b -> b.stat /= NoMore) |> List.isEmpty of
                 True -> Win
-                False -> model.menu
+                False ->
+                    case model.ball.pos.y > 810 of
+                        True -> Lose
+                        False -> model.menu
     in
     { model | menu = win, bricks = brick_all }
