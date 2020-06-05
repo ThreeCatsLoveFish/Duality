@@ -1,6 +1,7 @@
 module Bin.Update exposing (..)
 import Bin.Message exposing (..)
 import Bin.Types exposing (..)
+import Bin.Initial exposing (..)
 import Bin.Collision exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -16,12 +17,24 @@ update msg model =
                                     { model | menu = Running }
                                 Startup ->
                                     { model | menu = Running }
+                                    --let
+                                    --    info : Info
+                                    --    info =
+                                    --        { canvas = { w = 800, h = 600 } -- (0, 800), (0, 600)
+                                    --        , brick = { w = 60, h = 37 }
+                                    --        , layout = { x = 12, y = 7 }
+                                    --        , ball = { d = 20, v = Point 3.0 -3.0, precision = 16 }
+                                    --        , paddle = { w = 100, h = 15 }
+                                    --        , breath = 10
+                                    --        }
+                                    --in
+                                    --reInit model info
                                 _ ->
                                     { model | menu = Paused }
                         _ ->
                             { model | menu = menu }
                 RunGame op ->
-                    {model | dir = op}
+                    {model | dir = Just op}
                 Tick time ->
                     move (min time 25) model
                 _ ->
@@ -45,23 +58,37 @@ move elapsed model =
 
 exec : Model -> Model
 exec model =
+    let
+        dir =
+            case model.dir of
+                Just dr -> dr
+                Nothing -> Stay
+    in
     model
-        |> movePaddle model.dir
+        |> movePaddle dir
         |> moveBall
         |> collisionCheck
+        |> paddleCheck
 
 moveBall : Model -> Model -- Done
 moveBall model =
     let
         pos = model.ball.pos
         v = model.ball.v
+        r = model.ball.r
         newPos = Point (pos.x + v.x) (pos.y + v.y)
-        setPos npos ball =
-            { ball | pos = npos }
+        getColl =
+            let
+                angle = List.range 0 (16 - 1) |> List.map (\x -> (toFloat x) / (toFloat 16) * 2 * pi)
+                points = angle |> List.map (\t -> Point (newPos.x + r * cos t) (newPos.y + r * sin t))
+            in
+            points
+        setPos npos ncoll ball =
+            { ball | pos = npos, collision = ncoll }
         setBall ball nmodel =
             { nmodel | ball = ball}
     in
-    setBall (setPos newPos model.ball) model
+    setBall (setPos newPos getColl model.ball) model
 
 
 movePaddle : Op -> Model -> Model -- Done
@@ -75,12 +102,13 @@ movePaddle op model =
         pos = model.paddle.pos
 
         newPos = Point (pos.x + v.x) (pos.y + v.y)
-        setPos npos paddle =
-            { paddle | pos = npos }
-        setPaddle paddle nmodel =
+        col = List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) model.paddle.collision
+        setPaddle npos paddle =
+            { paddle | pos = npos, collision = col }
+        setModel paddle nmodel =
             { nmodel | paddle = paddle}
     in
-    setPaddle (setPos newPos model.paddle) model
+    setModel (setPaddle newPos model.paddle) model
 
 
 --gameStatus : Model -> Model
@@ -91,4 +119,16 @@ movePaddle op model =
 
 winJudge : Model -> Model
 winJudge model =
-    model
+    let
+        change_brick : Brick -> Brick
+        change_brick brick =
+            case brick.stat of
+                Hit 1 -> { brick | stat = NoMore}
+                _ -> brick
+        brick_all = List.map change_brick model.bricks
+        win =
+            case brick_all |> List.filter (\b -> b.stat /= NoMore) |> List.isEmpty of
+                True -> Win
+                False -> model.menu
+    in
+    { model | menu = win, bricks = brick_all }
