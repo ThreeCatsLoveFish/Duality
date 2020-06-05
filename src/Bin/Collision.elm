@@ -44,7 +44,7 @@ hitCheck ball brick =
             in
             if ( cross ma_mb ma_na ) * ( cross ma_mb ma_nb ) < 0
             && ( cross na_nb na_ma ) * ( cross na_nb na_mb ) < 0
-            then Just ( ma, mb )
+            then Just ( na, nb )
             else Nothing
 
         gene_lines : Poly -> Poly -> List ( Point, Point )
@@ -59,7 +59,7 @@ hitCheck ball brick =
                 next : Poly
                 next =
                     case List.tail remain_points of
-                        Just tail -> tail
+                        Just next -> next
                         Nothing -> all_points
 
                 second : Result String Point
@@ -71,7 +71,6 @@ hitCheck ball brick =
                 result =
                     case ( first, second ) of
                         ( Ok l, Ok r ) -> ( l, r )
-                        _ -> ( Point 0 0, Point 0 0 )
 
             in
             case List.length remain_points of
@@ -106,6 +105,7 @@ hitCheck ball brick =
 
 
 collisionCheck : Model -> Model
+-- TODO: Waiting for Debug!
 collisionCheck model =
     let
         check_hit =
@@ -202,10 +202,12 @@ paddleCheck model =
             False ->
                 { model | ball = { ball | v = symmetric ball.v total_lines } }
 
+{-
 type Orientation
     = Vertical
     | Horizontal
     | UnChanged
+-}
 
 wallCheck : Model -> Model
 wallCheck model =
