@@ -1,13 +1,8 @@
 # ChangeLog
 
-Prototype of this ChangLog: by Zhimin Sun 
-
 ### Version 0.2.0
-
 ##### 2020.5.14 By Yuchen Jiang
-
 #### Big change! On data model and control flow
-
 To complete Milestone 2, we need a new structure.
 Setup the whole structure:
 ```
@@ -22,33 +17,25 @@ Setup the whole structure:
 |- ...
 ```
 *Note: this version of p1 is not `Playground` based and is not compatible to the former one. Also, this version is merely a draft, which means it has implemented nothing but data models and tools to debug...*
-
 #### Data Model
-
 `Bin.Types` contains all the Data needed for View and Update, which are:
-
 1 . Point --> a vector
-
 ```
 type alias Point =
     { x : Float
     , y : Float
     }
 ```
-
-2 . Block --> a rectangle marked by two Points, which roughly defines a pre-checking box area[^Why_Block]
-
+2 . Block --> a rectangle marked by two Points, which roughly defines a pre-checking box area [^Why_Block]
 ```
 type alias Block =
     { lb : Point -- left bottom
     , rt : Point -- right top
     }
 ```
-[^Why_Block]: The goal of Block was initially reduce calculation pressure (or it's just grammar laziness (X_X)). It works like: ![Block.png](./public/Block.png)
-
+[^Why_Block]: The goal of Block was initially reduce calculation pressure (or it's just grammar laziness (X_X)).
+It works like: ![Block.png](./public/Block.png)
 3 . Brick, Wall, Ball, Paddle
-
-
 ```
 type alias Brick =
     { pos: Point -- may not be necessary
@@ -88,7 +75,6 @@ type alias Model =
     , menu: Menu
     }
 ```
-
 #### Control Flow
 ##### This part is contributed by Yuchen Zhou.
 Msg: 
@@ -122,52 +108,44 @@ brickStatus : GameModel -> GameModel
 winOrLose : GameModel -> GameModel
 ```
 
+---
 
-
+### Version 0.1 Series Abort
+##### 2020.5.23 By Zhimin Sun
+Since I wrote the *0.1* series with Elm-Playground, it is aborted now.
+All functions will not be updated.
 
 ### Version 0.1.1
-
 ##### 2020.5.21 By Zhimin Sun
-
 #### Fix Bug
-
 - The ball will not bounce left or right.
-
 #### New Functions
-
 1. The speed of ball will change when it touches the moving board.
 2. Ball will bounce back when it hit the corner of bricks or board.
 
 ### Version 0.1.0
-
 ##### 2020.5.17 By Zhimin Sun
-
-#### Release the first release version
-
+#### Release the first basic version
 All basic functions complete
 
+---
+
+### Version 0.0 Series Finish
+
 ### Version 0.0.1
-
 ##### 2020.5.17 By Zhimin Sun
-
 #### Main change
-
 1. **Add usage of this game.**
 1. Optimize the structure and add comments.
 1. Add bricks, and the function of break bricks.
 1. Leave the init part of bricks for further design.
 1. Add the winner part!
 1. Change the traditional number to data (easier to change). 
-1. Add MIT LICENSE
 
 ### Version 0.0.0
-
 ##### 2020.5.14 By Zhimin Sun
-
 #### Main change
-
 Setup the whole structure:
-
 ```
 |- Main.elm
 |- Components
@@ -177,9 +155,7 @@ Setup the whole structure:
    |- Update.elm
 |- ...
 ```
-
 #### Functions so far
-
 1. The **start** and **end** UI.
 1. The ball can bounce between walls, and the board that users control.
 1. Board can move left and right, and won't go beyond the walls. 
