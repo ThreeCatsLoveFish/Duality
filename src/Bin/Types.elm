@@ -33,9 +33,7 @@ type alias Brick =
     --, visual: Visual -- can get by collision
     }
 
-type alias Wall =
-    { block: Block
-    }
+type alias Wall = Block
 
 type alias Ball =
     { pos: Point
@@ -73,8 +71,12 @@ type alias Model =
     { ball: Ball
     , bricks: List Brick
     , paddle: Paddle
-    , menu: Menu
+    , horizontalWall: List Wall
+    , verticalWall: List Wall
+    , dropWall: List Wall
 
+    , menu: Menu
     , dir: Maybe Op
     , clock: Float
+    , info: Info
     }

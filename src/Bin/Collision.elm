@@ -1,16 +1,18 @@
 module Bin.Collision exposing (..)
 import Bin.Types exposing (..)
 
-{-
 -- Check if is in block
-blockCheck : Block -> Point -> Bool
-blockCheck block point =
+blockPoint : Block -> Point -> Bool
+blockPoint block point =
     let
         lt = block.lt
         rb = block.rb
     in
     point.x >= lt.x && point.x <= rb.x && point.y >= rb.y && point.y <= lt.y
--}
+
+blockCheck : Block -> Poly -> Bool
+blockCheck block coll =
+    List.foldl (\p hit -> (blockPoint block p) || hit) False coll
 
 type Hit
     = Danger ( List ( Point, Point ) )
@@ -197,3 +199,30 @@ paddleCheck model =
             True -> model
             False ->
                 { model | ball = { ball | v = symmetric ball.v total_lines } }
+
+type Orientation
+    = Vertical
+    | Horizontal
+    | UnChanged
+
+wallCheck : Model -> Model
+wallCheck model =
+    let
+        old = model.ball
+        hWall = model.horizontalWall
+        vWall = model.verticalWall
+        change ball_ ori =
+            case ori of
+                Vertical -> { ball_ | v = Point ball_.pos.x -ball_.pos.y}
+                Horizontal -> { ball_ | v = Point -ball_.pos.x ball_.pos.y}
+                _ -> ball_
+        detect ball_ block ori =
+            case blockCheck block ball_.collision of
+                True -> change ball_ ori
+                False -> ball_
+        newH = List.foldl (\block b -> detect b block Horizontal) old hWall
+        newV = List.foldl (\block b -> detect b block Vertical) newH vWall
+        ball = newV
+    in
+    { model | ball = ball }
+

@@ -2,7 +2,7 @@
 
 ### Version 0.2.0
 ##### 2020.5.14 By Yuchen Jiang
-#### Big change! On data model and control flow
+#### Some changes on data model and control flow
 To complete Milestone 2, we need a new structure.
 Setup the whole structure:
 ```

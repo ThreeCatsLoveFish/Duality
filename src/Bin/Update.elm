@@ -9,30 +9,33 @@ update msg model =
     let
         model0 =
             case msg of
-                ShowMenu menu ->
-                    case menu of
+                ShowMenu Paused ->
+                    case model.menu of
                         Paused ->
-                            case model.menu of
-                                Paused ->
-                                    { model | menu = Running }
-                                Startup ->
-                                    { model | menu = Running }
-                                    --let
-                                    --    info : Info
-                                    --    info =
-                                    --        { canvas = { w = 800, h = 600 } -- (0, 800), (0, 600)
-                                    --        , brick = { w = 60, h = 37 }
-                                    --        , layout = { x = 12, y = 7 }
-                                    --        , ball = { d = 20, v = Point 3.0 -3.0, precision = 16 }
-                                    --        , paddle = { w = 100, h = 15 }
-                                    --        , breath = 10
-                                    --        }
-                                    --in
-                                    --reInit model info
-                                _ ->
-                                    { model | menu = Paused }
+                            { model | menu = Running }
+                        Startup ->
+                            { model | menu = Running }
                         _ ->
-                            { model | menu = menu }
+                            { model | menu = Paused }
+                ShowMenu Startup ->
+                    case model.menu of
+                        Startup ->
+                            { model | menu = Startup }
+                        _ ->
+                            let
+                                info : Info
+                                info =
+                                    { canvas = { w = 800, h = 600 } -- (0, 800), (0, 600)
+                                    , brick = { w = 60, h = 37 }
+                                    , layout = { x = 12, y = 7 }
+                                    , ball = { d = 20, v = Point 3.0 -3.0, precision = 16 }
+                                    , paddle = { w = 100, h = 15 }
+                                    , breath = 10
+                                    }
+                            in
+                            reInit model info
+                ShowMenu menu ->
+                    { model | menu = menu }
                 RunGame op ->
                     {model | dir = Just op}
                 Tick time ->
@@ -69,26 +72,21 @@ exec model =
         |> moveBall
         |> collisionCheck
         |> paddleCheck
+        |> wallCheck
 
 moveBall : Model -> Model -- Done
 moveBall model =
     let
         pos = model.ball.pos
         v = model.ball.v
-        r = model.ball.r
         newPos = Point (pos.x + v.x) (pos.y + v.y)
-        getColl =
-            let
-                angle = List.range 0 (16 - 1) |> List.map (\x -> (toFloat x) / (toFloat 16) * 2 * pi)
-                points = angle |> List.map (\t -> Point (newPos.x + r * cos t) (newPos.y + r * sin t))
-            in
-            points
+        coll = List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) model.ball.collision
         setPos npos ncoll ball =
             { ball | pos = npos, collision = ncoll }
         setBall ball nmodel =
             { nmodel | ball = ball}
     in
-    setBall (setPos newPos getColl model.ball) model
+    setBall (setPos newPos coll model.ball) model
 
 
 movePaddle : Op -> Model -> Model -- Done
