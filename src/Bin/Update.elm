@@ -119,4 +119,16 @@ movePaddle op model =
 
 winJudge : Model -> Model
 winJudge model =
-    model
+    let
+        change_brick : Brick -> Brick
+        change_brick brick =
+            case brick.stat of
+                Hit 1 -> { brick | stat = NoMore}
+                _ -> brick
+        brick_all = List.map change_brick model.bricks
+        win =
+            case brick_all |> List.filter (\b -> b.stat /= NoMore) |> List.isEmpty of
+                True -> Win
+                False -> model.menu
+    in
+    { model | menu = win, bricks = brick_all }
