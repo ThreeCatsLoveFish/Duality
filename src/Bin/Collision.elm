@@ -100,7 +100,6 @@ hitCheck ball brick =
 
 
 collisionCheck : Model -> Model
--- TODO: Waiting for Debug!
 collisionCheck model =
     let
         check_hit =
@@ -159,3 +158,39 @@ collisionCheck model =
                                 a
                     )
             }
+
+
+paddleCheck : Model -> Model
+paddleCheck model =
+    let
+        check_hit =
+            [ hitCheck model.ball.collision model.paddle.collision ]
+
+        hit_turn_lines : Hit -> Maybe (List (Point, Point))
+        hit_turn_lines hit =
+            case hit of
+                Danger list -> Just list
+                Safe -> Nothing
+
+        total_hit =
+            List.filterMap hit_turn_lines check_hit
+            |> List.concat
+
+        total_lines =
+            total_hit
+            |> List.map (\(a, b) -> { x = b.x - a.x, y = b.y - a.y })
+            |> List.foldl (\a -> \b -> { x = a.x + b.x, y = a.y + b.y } ) { x = 0, y = 0 }
+
+        symmetric : Point -> Point -> Point
+        symmetric xy mn =
+            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
+            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
+            }
+
+        ball = model.ball
+
+    in
+    case List.isEmpty total_hit of
+            True -> model
+            False ->
+                { model | ball = { ball | v = symmetric ball.v total_lines } }
