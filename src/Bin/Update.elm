@@ -55,13 +55,20 @@ moveBall model =
     let
         pos = model.ball.pos
         v = model.ball.v
+        r = model.ball.r
         newPos = Point (pos.x + v.x) (pos.y + v.y)
-        setPos npos ball =
-            { ball | pos = npos }
+        getColl =
+            let
+                angle = List.range 0 (16 - 1) |> List.map (\x -> (toFloat x) / (toFloat 16) * 2 * pi)
+                points = angle |> List.map (\t -> Point (newPos.x + r * cos t) (newPos.y + r * sin t))
+            in
+            points
+        setPos npos ncoll ball =
+            { ball | pos = npos, collision = ncoll }
         setBall ball nmodel =
             { nmodel | ball = ball}
     in
-    setBall (setPos newPos model.ball) model
+    setBall (setPos newPos getColl model.ball) model
 
 
 movePaddle : Op -> Model -> Model -- Done
