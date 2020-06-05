@@ -136,28 +136,6 @@ visualizeStartup model =
         ]
         [text "Press space to start. "]
 
-visualizeWin : Model -> Html Msg
-visualizeWin model =
-    div
-        [ style "background" "rgba(244, 244, 244, 0.85)"
-        , style "text-align" "center"
-        , style "height" "800px"
-        , style "width" "600px"
-        , style "left" "0"
-        , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
-        , style "font-size" "48px"
-        , style "color" "#F43344"
-        , style "line-height" "500px"
-        , style "display"
-            (if model.menu == Win then
-                "block"
-             else
-                "none"
-            )
-        ]
-        [text "You win! "]
-
 visualizePause : Model -> Html Msg
 visualizePause model =
     div
@@ -179,6 +157,28 @@ visualizePause model =
             )
         ]
         [text "Paused"]
+
+visualizeWin : Model -> Html Msg
+visualizeWin model =
+    div
+        [ style "background" "rgba(244, 244, 244, 0.85)"
+        , style "text-align" "center"
+        , style "height" "800px"
+        , style "width" "600px"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#F43344"
+        , style "line-height" "500px"
+        , style "display"
+            (if model.menu == Win then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [text "You win! "]
 
 visualizeLose : Model -> Html Msg
 visualizeLose model =
@@ -225,6 +225,7 @@ view model =
             , style "z-index" "1"
             ]
             [ visualizeStartup model
+            , visualizePause model
             , visualizeWin model
             , visualizeLose model
             ]

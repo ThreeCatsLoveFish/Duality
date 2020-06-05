@@ -29,7 +29,7 @@ init =
                     in
                     points
             in
-            Ball position (Point 7.07 7.07) (ball.d/2) (getColl (position,(ball.d/2),16))
+            Ball position (Point 7.07 -7.07) (ball.d/2) (getColl (position,(ball.d/2),16))
 
 
         -- transfer prepare
@@ -79,7 +79,7 @@ init =
             Paddle pos (pos2coll pos paddle) (pos2block pos paddle) Ascending
     in
     {--}
-    ( Model newBall newBricks newPaddle Startup
+    ( Model newBall newBricks newPaddle Startup Stay 0
     , Cmd.none
     )
     --}

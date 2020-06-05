@@ -3,6 +3,12 @@ module Bin.Types exposing (..)
 import Bin.Message exposing (..)
 
 
+type alias AnimationState =
+    Maybe
+        { active : Bool
+        , elapsed : Float
+        }
+
 type alias Point =
     { x : Float
     , y : Float
@@ -57,4 +63,6 @@ type alias Model =
     , bricks: List Brick
     , paddle: Paddle
     , menu: Menu
+    , dir: Op
+    , clock: Float
     }
