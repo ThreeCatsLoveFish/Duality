@@ -1,4 +1,4 @@
-module Bin.Strangers exposing (..)
+module Bin.Strangers exposing (main)
 
 import Browser
 import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
@@ -44,9 +44,9 @@ keyUp : Int -> Msg
 keyUp keycode =
     case keycode of
         37 ->
-            RunGame Left
+            RunGame Stay
         39 ->
-            RunGame Right
+            RunGame Stay
         32 ->
             NoOp
         _ ->
@@ -61,5 +61,7 @@ keyDown keycode =
             RunGame Right
         32 ->
             ShowMenu Paused
+        82 ->
+            ShowMenu Startup
         _ ->
             NoOp
