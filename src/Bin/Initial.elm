@@ -1,4 +1,4 @@
-module Bin.Initial exposing (init)
+module Bin.Initial exposing (init, reInit)
 import Bin.Types exposing (..)
 import Bin.Message exposing (..)
 
@@ -9,86 +9,104 @@ init : ( Model, Cmd Msg )
 --init : Model
 init =
     let -- easy to change the value or add input
-        canvas = { w = 800, h = 600 } -- (0, 800), (0, 600)
-        brick = { w = 60, h = 37 }
-        layout = { x = 12, y = 7 }
-        ball = { d = 20 }
-        paddle = { w = 100, h = 15 }
-        breath = 10
+        info : Info
+        info =
+            { canvas = { w = 800, h = 600 } -- (0, 800), (0, 600)
+            , brick = { w = 60, h = 37 }
+            , layout = { x = 12, y = 7 }
+            , ball = { d = 20, v = Point 3.0 -3.0, precision = 16 }
+            , paddle = { w = 100, h = 15 }
+            , breath = 10
+            }
+    in
+    {--}
+    ( Model ( newBall info ) ( newBricks info ) ( newPaddle info ) Startup ( Just Stay ) 0
+    , Cmd.none
+    )
+    --}
+    --Model newBall newBricks newPaddle Startup
 
-        -- Ball part
-        newBall =
+reInit : Model -> Info -> Model
+reInit model info =
+    Model ( newBall info ) ( newBricks info ) ( newPaddle info ) Startup ( Just Stay ) 0
+
+
+-- Ball part
+newBall : Info -> Ball
+newBall info =
+    let
+        position = Point (info.canvas.w/2) (info.canvas.h - info.paddle.h - info.ball.d/2 - info.breath)
+        -- Get the collision, precision: how many points
+        getColl : (Point, Float, Int) -> Poly
+        getColl (pos, r, precision) =
             let
-                position = Point (canvas.w/2) (canvas.h - paddle.h - ball.d/2 - breath)
-                -- Get the collision, precision: how many points
-                getColl : (Point, Float, Int) -> Poly
-                getColl (pos, r, precision) =
-                    let
-                        angle = List.range 0 (precision - 1) |> List.map (\x -> (toFloat x) / (toFloat precision) * 2 * pi)
-                        points = angle |> List.map (\t -> Point (pos.x + r * cos t) (pos.y + r * sin t))
-                    in
-                    points
+                angle = List.range 0 (precision - 1) |> List.map (\x -> (toFloat x) / (toFloat precision) * 2 * pi)
+                points = angle |> List.map (\t -> Point (pos.x + r * cos t) (pos.y + r * sin t))
             in
-            Ball position (Point 7.07 -7.07) (ball.d/2) (getColl (position,(ball.d/2),16))
+            points
+    in
+    Ball position info.ball.v (info.ball.d/2) (getColl (position,(info.ball.d/2), info.ball.precision))
 
 
-        -- transfer prepare
-        pos2coll pos object =
-            let
-                w = object.w /2
-                h = object.h /2
-                x = pos.x
-                y = pos.y
-            in
-            [ Point (x + w) (y + h)
-            , Point (x - w) (y + h)
-            , Point (x - w) (y - h)
-            , Point (x + w) (y - h)
-            ]
-        pos2block pos object =
-            let
-                w = object.w /2
-                h = object.h /2
-                x = pos.x
-                y = pos.y
-            in
-            Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
+-- transfer prepare
+pos2coll pos object =
+    let
+        w = object.w /2
+        h = object.h /2
+        x = pos.x
+        y = pos.y
+    in
+    [ Point (x + w) (y + h)
+    , Point (x - w) (y + h)
+    , Point (x - w) (y - h)
+    , Point (x + w) (y - h)
+    ]
+pos2block pos object =
+    let
+        w = object.w /2
+        h = object.h /2
+        x = pos.x
+        y = pos.y
+    in
+    Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
 
-        -- Brick part
+
+-- Brick part
+
+newBricks : Info -> List Brick
+newBricks info =
+    let
         positionConvert len unit =
             (List.range 1 len)
                 |> List.map toFloat
                 |> List.map (\x -> x - 0.5 - (toFloat len) /2 )
                 |> List.map (\x -> x * unit)
         posBrickX =
-            positionConvert layout.x (brick.w + 0.5*breath)
-            |> List.map (\x -> x + canvas.w/2) -- get x
+            positionConvert info.layout.x (info.brick.w + 0.5*info.breath)
+            |> List.map (\x -> x + info.canvas.w/2) -- get x
         posBrickY =
-            positionConvert layout.y (brick.h + 0.5*breath)
-            |> List.map (\x -> x + (layout.y*brick.h/2) + 2*breath)
+            positionConvert info.layout.y (info.brick.h + 0.5*info.breath)
+            |> List.map (\x -> x + (toFloat info.layout.y*info.brick.h/2) + 2*info.breath)
             -- get y by proportion TODO: beautify
         posBricks =
             List.map (\x -> List.map (Point x) posBrickY) posBrickX |> List.concat -- get pos
         --newBrick pos =
         --    Brick pos (pos2coll pos) (pos2block pos) (Hit 0)
-        newBricks =
-            List.map (\pos -> Brick pos (pos2coll pos brick) (pos2block pos brick) (Hit 0)) posBricks
-            -- get bricks
-
-        -- Paddle part
-        newPaddle =
-            let
-                pos = Point (canvas.w/2) (canvas.h - paddle.h/2 - breath)
-            in
-            Paddle pos (pos2coll pos paddle) (pos2block pos paddle) Ascending
     in
-    {--}
-    ( Model newBall newBricks newPaddle Startup Stay 0
-    , Cmd.none
-    )
-    --}
-    --Model newBall newBricks newPaddle Startup
+    List.map (\pos -> Brick pos (pos2coll pos info.brick) (pos2block pos info.brick) (Hit 0)) posBricks
+    -- get bricks
 
+-- Paddle part
+newPaddle : Info -> Paddle
+newPaddle info =
+    let
+        pos = Point (info.canvas.w/2) (info.canvas.h - info.paddle.h/2 - info.breath)
+    in
+    Paddle pos (pos2coll pos info.paddle) (pos2block pos info.paddle) Ascending
+
+
+
+{-
 
 pointZero : Point
 pointZero = Point 0 0
@@ -117,3 +135,4 @@ paddleZero =
     , block = { lt = (Point -1 -1), rb = (Point 1 1) }
     , stat = Ascending
     }
+-}

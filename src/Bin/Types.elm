@@ -58,11 +58,22 @@ type alias Paddle =
     --, visual: Visual -- can get by collision
     }
 
+
+type alias Info =
+    { canvas : { w:Float, h:Float }
+    , brick : { w:Float, h:Float }
+    , layout : { x:Int, y:Int }
+    , ball : { d:Float, v:Point, precision:Int }
+    , paddle : { w:Float, h:Float }
+    , breath : Float
+    }
+
+
 type alias Model =
     { ball: Ball
     , bricks: List Brick
     , paddle: Paddle
     , menu: Menu
-    , dir: Op
+    , dir: Maybe Op
     , clock: Float
     }
