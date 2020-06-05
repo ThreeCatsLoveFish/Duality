@@ -18,9 +18,16 @@ init =
             , paddle = { w = 100, h = 15 }
             , breath = 10
             }
+        xm = toFloat info.layout.x
+        ym = toFloat info.layout.y
+        lw = Block (Point -100 0) (Point 0 ym)
+        rw = Block (Point xm 0) (Point (xm+100) ym)
+        tw = Block (Point 0 -100) (Point xm 0)
+        dw = Block (Point 0 ym) (Point xm (ym+100))
     in
     {--}
-    ( Model ( newBall info ) ( newBricks info ) ( newPaddle info ) Startup ( Just Stay ) 0
+    ( Model ( newBall info ) ( newBricks info ) ( newPaddle info ) [lw, rw] [tw] [dw]
+    Startup ( Just Stay ) 0 info
     , Cmd.none
     )
     --}
@@ -28,7 +35,16 @@ init =
 
 reInit : Model -> Info -> Model
 reInit model info =
-    Model ( newBall info ) ( newBricks info ) ( newPaddle info ) Startup ( Just Stay ) 0
+    let
+        xm = toFloat info.layout.x
+        ym = toFloat info.layout.y
+        lw = Block (Point -100 0) (Point 0 ym)
+        rw = Block (Point xm 0) (Point (xm+100) ym)
+        tw = Block (Point 0 -100) (Point xm 0)
+        dw = Block (Point 0 ym) (Point xm (ym+100))
+    in
+    Model ( newBall info ) ( newBricks info ) ( newPaddle info ) [lw, rw] [tw] [dw]
+    Startup ( Just Stay ) 0 info
 
 
 -- Ball part
