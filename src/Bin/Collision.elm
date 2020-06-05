@@ -102,7 +102,6 @@ hitCheck ball brick =
 
 
 collisionCheck : Model -> Model
--- TODO: Waiting for Debug!
 collisionCheck model =
     let
         check_hit =
