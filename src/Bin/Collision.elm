@@ -38,7 +38,7 @@ hitCheck ball brick =
             in
             if ( cross ma_mb ma_na ) * ( cross ma_mb ma_nb ) < 0
             && ( cross na_nb na_ma ) * ( cross na_nb na_mb ) < 0
-            then Just ( na, nb )
+            then Just ( ma, mb )
             else Nothing
 
         gene_lines : Poly -> Poly -> List ( Point, Point )
