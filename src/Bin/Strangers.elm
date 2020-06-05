@@ -1,4 +1,4 @@
-module Bin.Strangers exposing (..)
+module Bin.Strangers exposing (main)
 
 import Browser
 import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
