@@ -4,17 +4,19 @@ import Browser
 import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
 
 import Bin.Initial
-import Bin.Message exposing (Msg)
+import Bin.Message exposing (..)
 import Bin.Types exposing (Model)
 import Bin.Update
 import Bin.View
-import Html exposing (Html, Attribute, button, div, h1, input, text)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onInput, onClick)
-import Debug exposing (..)
-import Svg
-import Svg.Attributes as SA
-import Random
+import Json.Decode as Decode
+import Html.Events exposing (keyCode)
+--import Html exposing (Html, Attribute, button, div, h1, input, text)
+--import Html.Attributes exposing (..)
+--import Html.Events exposing (onInput, onClick)
+--import Debug exposing (..)
+--import Svg
+--import Svg.Attributes as SA
+--import Random
 
 main : Program () Model Msg
 main =
@@ -25,11 +27,39 @@ main =
         , subscriptions = subscriptions
         }
 
---type alias Model = Types.Model -- change it!
-
---type Msg
---    = ChangeIt
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none --TODO: change it.
+    Sub.batch
+        [ if model.menu == Running then
+            onAnimationFrameDelta Tick
+          else
+            Sub.none
+        , onKeyUp (Decode.map keyUp keyCode)
+        , onKeyDown (Decode.map keyDown keyCode)
+        --, onResize Resize
+        ]
+
+keyUp : Int -> Msg
+keyUp keycode =
+    case keycode of
+        37 ->
+            RunGame Left
+        39 ->
+            RunGame Right
+        32 ->
+            NoOp
+        _ ->
+            NoOp
+
+keyDown : Int -> Msg
+keyDown keycode =
+    case keycode of
+        37 ->
+            RunGame Left
+        39 ->
+            RunGame Right
+        32 ->
+            ShowMenu Paused
+        _ ->
+            NoOp
