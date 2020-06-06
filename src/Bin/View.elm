@@ -56,8 +56,7 @@ changeBrickColor brick =
     case brick.stat of
         Hit 0 ->
             rgb 156 156 168
-        Hit 1 ->
-            rgb 188 233 233
+
         _ ->
             rgb 244 244 244
 
@@ -92,8 +91,7 @@ visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
     let
         elements =
-            List.map visualizeBrick model.bricks
-              |> (::) (visualizeBall model.ball (rgb 33 134 233))
+            (List.map visualizeBrick model.bricks) ++ [visualizeBall model.ball (rgb 33 134 233) ]
               |> (::) (visualizePaddle model.paddle (rgb 0 88 99))
     in
         div
@@ -102,7 +100,6 @@ visualizeGame model opacity =
             , style "position" "absolute"
             , style "left" "0"
             , style "top" "0"
-            , style "z-index" "2"
             , style "opacity" opacity
             ]
             [ Svg.svg
@@ -222,7 +219,6 @@ view model =
         , div
             [ style "background-color" "#F4F4F4"
             , style "background-position" "center"
-            , style "z-index" "1"
             ]
             [ visualizeStartup model
             , visualizePause model
