@@ -1,8 +1,8 @@
 module Main exposing (..)
 
-import Bin.Strangers
+import Test
 
 ---- PROGRAM ----
 
 main =
-    Bin.Strangers.main
+    Test.main

@@ -11,11 +11,11 @@ type GameLevel
     | End7
 
 type GameStatus
-    = Startup
+    = Prepare
     | Paused  -- stop updating game model, still updating the menu, show Paused
     | Pass -- stop game model and frame, still menu, show Win
     | Lose -- stop game model and frame, still menu, show Win
-    | Running -- the game is on
+    | Running (Maybe Op) -- the game is on
     | NoMenu -- just in case...
 
 type Op
