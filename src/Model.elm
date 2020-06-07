@@ -41,10 +41,10 @@ polyToString poly =
 
 posToPoly : Float -> Float -> Point -> List Point
 posToPoly w h center =
-    [ Point (center.x + w/2) (center.x + h/2)
-    , Point (center.x - w/2) (center.y + h/2)
-    , Point (center.x - w/2) (center.y - h/2)
+    [ Point (center.x + w/2) (center.y + h/2)
     , Point (center.x + w/2) (center.y - h/2)
+    , Point (center.x - w/2) (center.y - h/2)
+    , Point (center.x - w/2) (center.y + h/2)
     ]
 
 ---

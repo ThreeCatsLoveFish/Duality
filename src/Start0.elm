@@ -7,8 +7,17 @@ import Messages exposing (..)
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model Start0 NoMenu [] [] [] 0 visualizeStart0, Cmd.none)
+    ( Model Start0 NoMenu
+        [] [] []
+        {w=0,h=0} 0
+        visualize
+    , Cmd.none
+    )
 
-visualizeStart0 : Html Msg
-visualizeStart0 =
+visualize : Html Msg
+visualize =
     div [] [] --TODO: Visualize it!
+
+view : Model -> Html Msg
+view model =
+    model.visualization

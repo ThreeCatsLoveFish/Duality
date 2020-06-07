@@ -1,4 +1,4 @@
-module Strangers1.Strangers1 exposing (..)
+module Strangers1 exposing (..)
 
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Html.Attributes exposing (..)
@@ -13,15 +13,32 @@ import Strangers1.ViewTest as ViewTest
 init : ( Model, Cmd Msg )
 init =
     let
-        canvas = { w = 250, h = 625 }
+        canvas = { w = 400, h = 500 }
         ball : Ball
         ball =
             let
                 pos =
                     Point
                         (canvas.w/2)
-                        (paddle.pos.y - paddle.r - paddle.h - r/2)
-                v = Point 5.0 -5.0
+                        (paddle.pos.y - paddle.r - paddle.h - r)
+                v = Point 3.0 -3.0
+                r = 10
+            in
+            { active = True
+            , pos = pos
+            , v = v
+            , r = r
+            , collision = getBallColl (pos, r, 16)
+            , color = rgb 244 244 244
+            }
+        ball2 : Ball
+        ball2 =
+            let
+                pos =
+                    Point
+                        (canvas.w/2)
+                        (canvas.h/4)
+                v = Point 0 0
                 r = 10
             in
             { active = True
@@ -35,10 +52,10 @@ init =
         paddle : Paddle
         paddle =
             let
-                r = 15
+                r = 60
                 h = 3
-                angle = 60 * pi / 180
-                pos = Point (canvas.w/2) (canvas.h - r + r * cos angle)
+                angle = 40 * pi / 180
+                pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
                 center = Point pos.x (pos.y + r)
             in
             { pos = pos -- may not be necessary
@@ -49,10 +66,24 @@ init =
             , h = h
             , angle = angle
             }
+        bricks : List Brick
+        bricks =
+            let
+                brickInfo =
+                    { layout = {x=10, y=2}
+                    , canvas = canvas
+                    , brick = {w=39, h=39}
+                    , breath = 1
+                    , offset = dummyPoint
+                    , color = rgb 100 100 100
+                    --, color = rgb 233 233 233
+                    }
+            in
+            newBricks brickInfo
 
     in
     ( Model Strangers1 Prepare
-        [ball] [paddle] []
+        [ball, ball2] [paddle] bricks
         canvas 0
         (div [] [])
     , Cmd.none
@@ -68,12 +99,30 @@ backgroundColor = rgb 0 0 0
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
     Svg.g []
-        [ Svg.circle
+        [ Svg.defs
+            []
+            [ Svg.filter [id "Gaussian_Blur"]
+                [ Svg.feGaussianBlur
+                    [ SA.in_ "SourceGraphic"
+                    , SA.stdDeviation "4"
+                    ]
+                    []
+                ]
+            , Svg.filter [id "Gaussian_Blur_in"]
+                [ Svg.feGaussianBlur
+                    [ SA.in_ "SourceGraphic"
+                    , SA.stdDeviation "3"
+                    ]
+                    []
+                ]
+            ]
+        , Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat (ball.r * 2.5))
-            , SA.fill (colorToString ball.color)
-            , SA.filter "url(#glow)"
+            , SA.fill (colorToString (rgb 200 200 200))
+            , SA.filter "url(#Gaussian_Blur)"
+            , SA.opacity "0.5"
             ]
             []
         , Svg.circle
@@ -81,6 +130,7 @@ visualizeBall ball =
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color)
+            , SA.filter "url(#Gaussian_Blur_in)"
             ]
             []
         ]
@@ -95,16 +145,27 @@ visualizePaddle paddle =
             , SA.fill (colorToString paddle.color)
             ]
             []
-        , Svg.circle
-            [ SA.cx (String.fromFloat paddle.pos.x)
-            , SA.cy (String.fromFloat paddle.pos.y)
-            , SA.r (String.fromFloat paddle.r)
+        --, Svg.circle
+        --    [ SA.cx (String.fromFloat paddle.pos.x)
+        --    , SA.cy (String.fromFloat paddle.pos.y)
+        --    , SA.r (String.fromFloat paddle.r)
+        --    , SA.fill (colorToString backgroundColor)
+        --    ]
+        --    []
+        , Svg.polygon
+            [
+              --SA.points (polyToString paddle.collision)
+              SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
             , SA.fill (colorToString backgroundColor)
             ]
             []
-        , Svg.polygon
-            [ SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * cos paddle.angle) paddle.pos))
-            , SA.fill (colorToString backgroundColor)
+        , Svg.circle
+            [ SA.cx (String.fromFloat paddle.pos.x)
+            , SA.cy (String.fromFloat paddle.pos.y)
+            , SA.r (String.fromFloat (paddle.r + paddle.h))
+            , SA.fillOpacity "0"
+            , SA.stroke (colorToString paddle.color)
+            , SA.strokeWidth (String.fromFloat paddle.h)
             ]
             []
         ]
@@ -129,7 +190,7 @@ visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
     let
         elements =
-            (List.map visualizeBrick model.bricks) ++ [visualizeBall (Maybe.withDefault dummyBall (List.head model.ball))] ++ (List.map visualizeBall (Maybe.withDefault [dummyBall] (List.tail model.ball)))
+            (List.map visualizeBrick model.bricks) ++ List.map visualizeBall model.ball ++ (List.map visualizeBall (Maybe.withDefault [dummyBall] (List.tail model.ball)))
               |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
     in
         div
@@ -145,8 +206,8 @@ visualizeGame model opacity =
             ]
 
 
-visualizeStrangers1 : Model -> Html Msg
-visualizeStrangers1 model =
+visualize : Model -> Html Msg
+visualize model =
     let
         alpha = case model.gameStatus of
             Running _ ->
@@ -163,15 +224,15 @@ visualizeStrangers1 model =
         , style "background-color" (colorToString backgroundColor)
         ]
         [ visualizeGame model alpha
-        --, div
-        --    [ style "background-color" (colorToString backgroundColor)
-        --    , style "background-position" "center"
-        --    ]
-        --    [ ViewTest.visualizePrepare model
-        --    , ViewTest.visualizePause model
-        --    , ViewTest.visualizeWin model
-        --    , ViewTest.visualizeLose model
-        --    ]
+        , div
+            [ style "background-color" (colorToString backgroundColor)
+            , style "background-position" "center"
+            ]
+            [ ViewTest.visualizePrepare model
+            , ViewTest.visualizePause model
+            , ViewTest.visualizeWin model
+            , ViewTest.visualizeLose model
+            ]
         ]
 
 

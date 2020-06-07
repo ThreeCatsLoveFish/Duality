@@ -5,7 +5,7 @@ import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onRes
 import Json.Decode as Decode
 import Html.Events exposing (keyCode)
 
-import Strangers1.Strangers1 as Strangers1
+import Strangers1
 import Messages exposing (..)
 import Model exposing (Model)
 import TestUpdate
@@ -15,7 +15,7 @@ main =
     -- TODO: Change for test
     Browser.element
         { init = \_ -> Strangers1.init
-        , view = Strangers1.visualizeStrangers1
+        , view = Strangers1.visualize
         , update = TestUpdate.update
         , subscriptions = subscriptions
         }
