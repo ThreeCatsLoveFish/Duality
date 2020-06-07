@@ -142,13 +142,14 @@ collisionCheck model =
             }
 
         ball = getBall model.ball 1
+        ball2 = getBall model.ball 2
 
     in
     case List.isEmpty total_hit of
         True -> model
         False -> {
             model
-            | ball = [{ ball | v = symmetric ball.v total_lines }]
+            | ball = [{ ball | v = symmetric ball.v total_lines }, ball2]
             , bricks =
                 model.bricks
                 |> List.map
@@ -196,12 +197,13 @@ paddleCheck model =
             }
 
         ball = getBall model.ball 1
+        ball2 = getBall model.ball 2
 
     in
     case List.isEmpty total_hit of
             True -> model
             False ->
-                { model | ball = [{ ball | v = symmetric ball.v total_lines }] }
+                { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
 
 type Orientation
     = Vertical
@@ -229,9 +231,9 @@ ll
         newV = List.foldl (\block b -> detect b block Vertical) newH vWall
         ball = newV
         -}
-        v = (getBall model.ball 1).v
-        pos = (getBall model.ball 1).pos
         old = (getBall model.ball 1)
+        v = old.v
+        pos = old.pos
         hcBall =
             case pos.x <= 10 || pos.x >= (model.canvas.w - 10) of
                 True -> (\b -> { b | v = Point -v.x v.y })
@@ -241,6 +243,6 @@ ll
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity
     in
-    { model | ball = [old |> hcBall |> vcBall] }
+    { model | ball = [old |> hcBall |> vcBall, getBall model.ball 2] }
 
 
