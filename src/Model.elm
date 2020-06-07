@@ -1,7 +1,6 @@
 module Model exposing (..)
 import Messages exposing (..)
-import Html.Attributes exposing (..)
-import Html exposing (..)
+import Html exposing (Html)
 
 type alias Point =
     { x : Float
@@ -40,7 +39,7 @@ polyToString : Poly -> String
 polyToString poly =
     String.join " " (List.map pointToString poly)
 
-posToPoly : number -> number -> Point -> List Point
+posToPoly : Float -> Float -> Point -> List Point
 posToPoly w h center =
     [ Point (center.x + w/2) (center.x + h/2)
     , Point (center.x - w/2) (center.y + h/2)
@@ -50,7 +49,8 @@ posToPoly w h center =
 
 ---
 type alias Ball =
-    { pos : Point
+    { active : Bool
+    , pos : Point
     , v : Point -- Could be a function related to time?
     , r : Float
     , collision : Poly -- save for future change
@@ -62,8 +62,9 @@ type alias Paddle =
     , collision : Poly -- for hitCheck
     , block : Block
     , color : Color
-    , center : Point
     , r : Float
+    , h : Float -- thickness
+    , angle : Float -- half paddle's angle
     }
 
 type alias Brick =
@@ -87,6 +88,8 @@ type alias Model =
     , ball : List Ball
     , paddle : List Paddle
     , bricks : List Brick
+
+    , canvas : {w:Float,h:Float}
     , clock : Float
 
     , visualization : Html Msg
