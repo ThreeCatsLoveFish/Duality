@@ -2,7 +2,6 @@
 
 ### Version 0.2.1
 ##### 2020.6.6 VG-100 Group-18
-Loged By Yuchen Jiang & Yuchen Zhou
 #### Milestone 2
 All basic functions completed!
 
