@@ -1,5 +1,10 @@
 # ChangeLog
 
+### Version 0.2.1
+##### 2020.6.6 VG-100 Group-18
+#### Milestone 2
+All basic functions completed!
+
 ### Version 0.2.0
 ##### 2020.5.14 By Yuchen Jiang
 #### Some changes on data model and control flow
