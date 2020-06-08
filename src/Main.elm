@@ -8,25 +8,31 @@ import Messages exposing (Msg(..), GameLevel(..))
 
 import Start0.Init
 import Strangers1.Init
+{--
 import Friends2.Init
 import Lovers3.Init
 import Strangers4.Init
 import Companions5.Init
 import Death6.Init
 import End7.Init
+--}
 
 import Start0.Update
 import Strangers1.Update
+{--
 import Friends2.Update
 import Lovers3.Update
 import Strangers4.Update
 import Companions5.Update
 import Death6.Update
 import End7.Update
+--}
 
 import Subscriptions exposing (subscriptions)
 
+{--
 import Test
+--}
 
 ---- PROGRAM ----
 
@@ -74,6 +80,7 @@ update msg model =
                      Start0.Init.init
                  Strangers1 ->
                      Strangers1.Init.init
+                 {--
                  Friends2 ->
                      Friends2.Init.init
                  Lovers3 ->
@@ -86,6 +93,7 @@ update msg model =
                      Death6.Init.init
                  End7 ->
                      End7.Init.init
+                 --}
                  _ ->
                      Start0.Init.init
         _ ->
@@ -94,6 +102,7 @@ update msg model =
                      Start0.Update.update msg model
                  Strangers1 ->
                      Strangers1.Update.update msg model
+                 {--
                  Friends2 ->
                      Friends2.Update.update msg model
                  Lovers3 ->
@@ -106,8 +115,9 @@ update msg model =
                      Death6.Update.update msg model
                  End7 ->
                      End7.Update.update msg model
+                 --}
                  _ ->
-                     Start0.Update.update
+                     Start0.Update.update msg model
 
 
 view : Model -> Html Msg
