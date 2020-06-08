@@ -81,6 +81,13 @@ type HitTime
     | NoMore
 
 ---
+
+type alias State =
+    { name : String
+    , object : String
+    , t : Float
+    }
+
 type alias Model =
     { gameLevel : GameLevel
     , gameStatus : GameStatus
@@ -89,8 +96,13 @@ type alias Model =
     , paddle : List Paddle
     , bricks : List Brick
 
+    , state : List State
+
     , canvas : {w:Float,h:Float}
+    , size : (Float,Float)
     , clock : Float
+    , activeInput : Bool
+    , activeState : Bool
 
     , visualization : Html Msg
     }

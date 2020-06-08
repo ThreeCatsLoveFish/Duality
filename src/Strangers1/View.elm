@@ -8,7 +8,7 @@ import Svg.Attributes as SA
 import Model exposing (..)
 import Messages exposing (..)
 import InitTools exposing (..)
-import DummyView as ViewTest
+import BasicView as ViewTest
 
 
 backgroundColor : Color
