@@ -1,5 +1,6 @@
-module Bin.Collision exposing (..)
-import Bin.Types exposing (..)
+module Strangers1.Collision exposing (..)
+import InitTools exposing (..)
+import Model exposing (..)
 
 
 -- Check if is in block
@@ -112,9 +113,9 @@ collisionCheck model =
             model.bricks
             |> List.map
             ( \a ->
-                case a.stat of
+                case a.hitTime of
                     Hit 0 ->
-                        hitCheck model.ball.collision a.collision
+                        hitCheck (getBall model.ball 1).collision a.collision
                     _ ->
                         Safe
             )
@@ -140,14 +141,15 @@ collisionCheck model =
             , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
             }
 
-        ball = model.ball
+        ball = getBall model.ball 1
+        ball2 = getBall model.ball 2
 
     in
     case List.isEmpty total_hit of
         True -> model
         False -> {
             model
-            | ball = { ball | v = symmetric ball.v total_lines }
+            | ball = [{ ball | v = symmetric ball.v total_lines }, ball2]
             , bricks =
                 model.bricks
                 |> List.map
@@ -159,7 +161,7 @@ collisionCheck model =
                                 (List.member y a.collision) )
                         of
                             True ->
-                                { a | stat = Hit 1 }
+                                { a | hitTime = Hit 1 }
                             False ->
                                 a
                     )
@@ -169,7 +171,7 @@ paddleCheck : Model -> Model
 paddleCheck model =
     let
         check_hit =
-            [ hitCheck model.ball.collision model.paddle.collision ]
+            [ hitCheck (getBall model.ball 1).collision (getPaddle model.paddle 1).collision ]
 
         hit_turn_lines : Hit -> Maybe (List (Point, Point))
         hit_turn_lines hit =
@@ -194,13 +196,14 @@ paddleCheck model =
             , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
             }
 
-        ball = model.ball
+        ball = getBall model.ball 1
+        ball2 = getBall model.ball 2
 
     in
     case List.isEmpty total_hit of
             True -> model
             False ->
-                { model | ball = { ball | v = symmetric ball.v total_lines } }
+                { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
 
 {-
 type Orientation
@@ -230,18 +233,18 @@ ll
         newV = List.foldl (\block b -> detect b block Vertical) newH vWall
         ball = newV
         -}
-        v = model.ball.v
-        pos = model.ball.pos
-        old = model.ball
+        old = (getBall model.ball 1)
+        v = old.v
+        pos = old.pos
         hcBall =
-            case pos.x <= 10 || pos.x >= 790 of
+            case pos.x <= 10 || pos.x >= (model.canvas.w - 10) of
                 True -> (\b -> { b | v = Point -v.x v.y })
                 False -> identity
         vcBall =
-            case pos.y <= 10 of
+            case pos.y <= 0 of
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity
     in
-    { model | ball = old |> hcBall |> vcBall }
+    { model | ball = [old |> hcBall |> vcBall, getBall model.ball 2] }
 
 
