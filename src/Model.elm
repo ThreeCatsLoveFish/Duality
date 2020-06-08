@@ -85,7 +85,9 @@ type HitTime
 type alias State =
     { name : String
     , object : String
+    , index : Int
     , t : Float
+    , bezierCurve : (Float -> Point)
     }
 
 type alias Model =
