@@ -179,11 +179,8 @@ stateIterate model =
         _ ->
             let
                 state = model.state
-                setState : State -> State
-                setState stat =
-                    { stat | t = stat.t + 0.04}
                 newState =
-                    List.map setState state
+                    List.map (\s -> { s | t = s.t + 0.01} ) state
                 setModel : State -> Model -> Model
                 setModel stat model_ =
                     case stat.name of
@@ -192,7 +189,8 @@ stateIterate model =
                         _ ->
                             bezierBall model_ stat
                 newModel =
-                    List.foldl (\x y -> (setModel x y)) model state
+                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
+
             in
             newModel
 

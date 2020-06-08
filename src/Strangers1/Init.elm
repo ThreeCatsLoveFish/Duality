@@ -44,13 +44,22 @@ init =
             , pos = pos
             , v = v
             , r = r
-            , collision = getBallColl (pos, r, 16)
+            , collision = dummyPoly
             , color = rgb 244 244 244
             }
         --TODO: paddle fix
         state : State
         state =
-            { name = "bezier", object = "ball", index = 2, t = 0, bezierCurve = bezierPos (Point (canvas.w/2) (canvas.h/4)) (Point (canvas.w/2) (canvas.h/4)) }
+            { name = "bezier"
+            , object = "ball"
+            , index = 2
+            , t = 0
+            , bezierCurve = bezierPosPos
+                (Point (canvas.w/2) (canvas.h/4))
+                (Point (canvas.w/2 - 40) (canvas.h/4 + 40))
+                (Point (canvas.w/2 + 40) (canvas.h/4 + 40))
+                (Point (canvas.w/2) (canvas.h/4))
+            }
         paddle : Paddle
         paddle =
             let
