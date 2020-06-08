@@ -36,6 +36,7 @@ import Test
 
 ---- PROGRAM ----
 
+main : Program () Model Msg
 main =
     -- Test.main
     Browser.element
@@ -47,7 +48,9 @@ main =
 
 
 init : ( Model, Cmd Msg )
-init = Start0.Init.init
+init =
+    --Start0.Init.init
+    Strangers1.Init.init
 
 {--
 reinit : Model -> ( Model, Cmd Msg )

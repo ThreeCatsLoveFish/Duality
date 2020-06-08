@@ -9,7 +9,7 @@ import InitTools exposing (..)
 init : ( Model, Cmd Msg )
 init =
     let
-        canvas = { w = 400, h = 500 }
+        canvas = { w = 400, h = 600 }
         ball : Ball
         ball =
             let
