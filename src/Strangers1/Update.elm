@@ -6,7 +6,7 @@ import InitTools exposing (..)
 -- TODO: Change for test
 import Strangers1.Collision exposing (..)
 import Strangers1.Init
-import Strangers1.View
+import Strangers1.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
