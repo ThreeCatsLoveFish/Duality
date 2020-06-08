@@ -1,11 +1,12 @@
-module TestUpdate exposing (..)
+module Strangers1.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
 import InitTools exposing (..)
 
 -- TODO: Change for test
-import Strangers1 as Strangers1 exposing (..)
 import Strangers1.Collision exposing (..)
+import Strangers1.Init
+import Strangers1.View
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -25,7 +26,7 @@ update msg model =
                         Prepare ->
                             { model | gameStatus = Prepare }
                         _ ->
-                            Tuple.first Strangers1.init
+                            Tuple.first Strangers1.Init.init
                 ShowStatus menu ->
                     { model | gameStatus = menu }
                 RunGame op ->
@@ -39,7 +40,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( model0 |> winJudge, Cmd.none )
+    ( { model0 | visualization = Strangers1.View.visualize model} , Cmd.none )
 -- TODO
 
 move : Float -> Model -> Model
@@ -70,6 +71,7 @@ exec model =
         |> collisionCheck
         |> paddleCheck
         |> wallCheck
+        |> winJudge
 
 moveBall : Model -> Model -- Done
 moveBall model =
@@ -141,3 +143,4 @@ winJudge model =
                     --    False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
+

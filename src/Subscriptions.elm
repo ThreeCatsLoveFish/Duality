@@ -1,26 +1,11 @@
-module Test exposing (main)
+module Subscriptions exposing (..)
 
-import Browser
+import Model exposing (..)
+import Messages exposing (..)
+
 import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
 import Json.Decode as Decode
 import Html.Events exposing (keyCode)
-
-import Strangers1
-import Messages exposing (..)
-import Model exposing (Model)
-import TestUpdate
-
-main : Program () Model Msg
-main =
-    -- TODO: Change for test
-    Browser.element
-        { init = \_ -> Strangers1.init
-        , view = Strangers1.visualize
-        , update = TestUpdate.update
-        , subscriptions = subscriptions
-        }
-
-
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch

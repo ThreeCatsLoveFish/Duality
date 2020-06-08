@@ -1,4 +1,4 @@
-module Strangers1.ViewTest exposing (..)
+module DummyView exposing (..)
 
 import Model exposing (..)
 import InitTools exposing (..)
@@ -126,8 +126,8 @@ visualizePause model =
         ]
         [text "Paused"]
 
-visualizeWin : Model -> Html Msg
-visualizeWin model =
+visualizePass : Model -> Html Msg
+visualizePass model =
     div
         [ style "background" "rgba(244, 244, 244, 0.85)"
         , style "text-align" "center"
