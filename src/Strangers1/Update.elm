@@ -58,7 +58,8 @@ update msg model =
                             in
                             {model | gameStatus = status}
                         Tick time ->
-                            move (min time 25) model
+                            model |> move (min time 25)
+                                  |> stateIterate
                         _ -> model
                 _ ->
                     model
@@ -111,7 +112,6 @@ moveBall model =
     in
     { model | ball = List.map done model.ball }
 
-
 movePaddle : Op -> Model -> Model -- Done
 movePaddle op model =
     let
@@ -153,9 +153,9 @@ winJudge model =
         ball = getBall model.ball 1
         ball2 = getBall model.ball 2
         closeEnough =
-            sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 5 * ball.r
+            sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 10 * ball.r
         win =
-            case (ball.pos.y < 400) || closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
+            case closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->
                     Pass
                 False ->
@@ -176,7 +176,36 @@ stateIterate model =
             | gameStatus = ChangeLevel
             , gameLevel = Friends2
             }
-        _ -> model
+        _ ->
+            let
+                state = model.state
+                setState : State -> State
+                setState stat =
+                    { stat | t = stat.t + 0.04}
+                newState =
+                    List.map setState state
+                setModel : State -> Model -> Model
+                setModel stat model_ =
+                    case stat.name of
+                        "bezier" ->
+                            bezierBall model_ stat
+                        _ ->
+                            bezierBall model_ stat
+                newModel =
+                    List.foldl (\x y -> (setModel x y)) model state
+            in
+            newModel
+
+bezierBall : Model -> State -> Model
+bezierBall model state =
+    let
+        ball =
+            getBall model.ball state.index
+        newBallPos =
+            state.bezierCurve state.t
+        newBall = { ball | pos = newBallPos }
+    in
+    { model | ball = [ getBall model.ball 1, newBall ] }
 
 getEndState : Model -> Model
 getEndState model =
