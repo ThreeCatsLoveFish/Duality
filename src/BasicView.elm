@@ -1,4 +1,4 @@
-module DummyView exposing (..)
+module BasicView exposing (..)
 
 import Model exposing (..)
 import InitTools exposing (..)
@@ -9,7 +9,13 @@ import Messages exposing (..)
 import Svg
 import Svg.Attributes as SA
 
+pixelWidth : Float
+pixelWidth =
+    1120
 
+pixelHeight : Float
+pixelHeight =
+    630
 
 --visualizeBall : Ball -> Color -> Svg.Svg Msg
 --visualizeBall ball color =

@@ -12,20 +12,26 @@ subscriptions model =
         [ case model.gameStatus of
             Running _ ->
                 onAnimationFrameDelta Tick
+            ChangeLevel ->
+                onAnimationFrameDelta Tick
+            Animation ->
+                onAnimationFrameDelta Tick
+            Pass ->
+                onAnimationFrameDelta Tick
             _ ->
                 Sub.none
         , onKeyUp (Decode.map keyUp keyCode)
         , onKeyDown (Decode.map keyDown keyCode)
-        --, onResize Resize
+        , onResize Resize
         ]
 
 keyUp : Int -> Msg
 keyUp keycode =
     case keycode of
         37 ->
-            RunGame Stay
+            KeyUp Key_Left
         39 ->
-            RunGame Stay
+            KeyUp Key_Right
         32 ->
             NoOp
         _ ->
@@ -35,12 +41,12 @@ keyDown : Int -> Msg
 keyDown keycode =
     case keycode of
         37 ->
-            RunGame Left
+            KeyDown Key_Left
         39 ->
-            RunGame Right
+            KeyDown Key_Right
         32 ->
-            ShowStatus Paused
+            KeyDown Space
         82 ->
-            ShowStatus Prepare
+            KeyDown Key_R
         _ ->
             NoOp

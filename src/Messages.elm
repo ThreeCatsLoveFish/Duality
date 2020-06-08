@@ -12,11 +12,12 @@ type GameLevel
 
 type GameStatus
     = Animation
+    | ChangeLevel
     | Prepare
     | Paused  -- stop updating game model, still updating the menu, show Paused
     | Pass -- stop game model and frame, still menu, show Win
     | Lose -- stop game model and frame, still menu, show Win
-    | Running (Maybe Op) -- the game is on
+    | Running Op -- the game is on
     | NoMenu -- just in case...
 
 type Op
@@ -24,9 +25,20 @@ type Op
     | Right
     | Stay -- maybe useless..
 
+type KeyType
+    = Space
+    | Key_Left
+    | Key_Right
+    | Key_R
+
 type Msg
-    = RunGame Op -- running the game, update and view
+    = RunGame Op -- abandoned
     | ShowStatus GameStatus -- show menu on top
     | ChooseLevel GameLevel
+    | Resize Int Int
+
+    | KeyDown KeyType
+    | KeyUp KeyType
     | Tick Float
+
     | NoOp -- somehow redundant...

@@ -5,6 +5,8 @@ import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Model exposing (..)
 import Messages exposing (..)
 import InitTools exposing (..)
+import BasicView exposing (..)
+import Strangers1.View
 
 init : ( Model, Cmd Msg )
 init =
@@ -76,12 +78,15 @@ init =
                     }
             in
             newBricks brickInfo
-
+        model =
+            Model
+                Strangers1 Prepare
+                [ball, ball2] [paddle] bricks
+                []
+                canvas (pixelWidth, pixelHeight) 0 True False
+                (div [] [])
     in
-    ( Model Strangers1 Prepare
-        [ball, ball2] [paddle] bricks
-        canvas 0
-        (div [] [])
+    ( { model | visualization = Strangers1.View.visualize model }
     , Cmd.none
     )
 

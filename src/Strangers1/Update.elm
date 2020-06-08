@@ -12,31 +12,54 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
         model0 =
-            case msg of
-                ShowStatus Paused ->
-                    case model.gameStatus of
-                        Paused ->
-                            { model | gameStatus = Running Nothing }
-                        Prepare ->
-                            { model | gameStatus = Running Nothing }
+            case model.gameStatus of
+                Paused ->
+                    case msg of
+                        KeyDown Space ->
+                            { model | gameStatus = Running Stay }
+                        KeyDown Key_R ->
+                            { model | gameStatus = ChangeLevel }
+                        _ -> model
+                Prepare ->
+                    case msg of
+                        KeyDown Space ->
+                            { model | gameStatus = Running Stay }
+                        _ -> model
+                Pass ->
+                    let
+                        model1 = model |> getEndState
+                    in
+                    { model1 | gameStatus = Animation }
+                Animation ->
+                    case msg of
+                        Tick time ->
+                            model |> stateIterate
                         _ ->
-                            { model | gameStatus = Paused }
-                ShowStatus Prepare ->
-                    case model.gameStatus of
-                        Prepare ->
-                            { model | gameStatus = Prepare }
-                        _ ->
-                            Tuple.first Strangers1.Init.init
-                ShowStatus menu ->
-                    { model | gameStatus = menu }
-                RunGame op ->
-                    case model.gameStatus of
-                        Paused -> model
-                        Prepare -> model
-                        _ ->
-                            {model | gameStatus = Running (Just op)}
-                Tick time ->
-                    move (min time 25) model
+                            model
+                Running _ ->
+                    case msg of
+                        KeyDown key ->
+                            let
+                                status =
+                                    case key of
+                                        Key_Left -> Running Left
+                                        Key_Right -> Running Right
+                                        Key_R -> ChangeLevel
+                                        _ -> Paused
+                            in
+                            {model | gameStatus = status}
+                        KeyUp key ->
+                            let
+                                status =
+                                    case key of
+                                        Key_Left -> Running Stay
+                                        Key_Right -> Running Stay
+                                        _ -> model.gameStatus
+                            in
+                            {model | gameStatus = status}
+                        Tick time ->
+                            move (min time 25) model
+                        _ -> model
                 _ ->
                     model
     in
@@ -61,8 +84,7 @@ exec model =
     let
         dir =
             case model.gameStatus of
-                Running (Just dr) -> dr
-                Running Nothing -> Stay -- TODO: can be model.gameStatus
+                Running dr -> dr
                 _ -> Stay
     in
     model
@@ -133,7 +155,7 @@ winJudge model =
         closeEnough =
             sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 5 * ball.r
         win =
-            case closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
+            case (ball.pos.y < 400) || closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->
                     Pass
                 False ->
@@ -144,3 +166,18 @@ winJudge model =
     in
     { model | gameStatus = win, bricks = brick_all }
 
+
+
+stateIterate : Model -> Model
+stateIterate model =
+    case List.isEmpty model.state of
+        True ->
+            { model
+            | gameStatus = ChangeLevel
+            , gameLevel = Friends2
+            }
+        _ -> model
+
+getEndState : Model -> Model
+getEndState model =
+    model

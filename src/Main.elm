@@ -4,7 +4,7 @@ import Html exposing (Html)
 import Browser
 
 import Model exposing (..)
-import Messages exposing (Msg(..), GameLevel(..))
+import Messages exposing (..)
 
 import Start0.Init
 import Strangers1.Init
@@ -49,15 +49,16 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    --Start0.Init.init
-    Strangers1.Init.init
+    Start0.Init.init
+    --Strangers1.Init.init
 
-{--
+{--}
 reinit : Model -> ( Model, Cmd Msg )
 reinit model =
     case model.gameLevel of
         Start0 ->
             Start0.Init.init
+        {--
         Strangers1 ->
             Strangers1.Init.init
         Friends2 ->
@@ -72,13 +73,16 @@ reinit model =
             Death6.Init.init
         End7 ->
             End7.Init.init
+        --}
+        _ ->
+            Start0.Init.init
 --}
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    case msg of
-        ChooseLevel level ->
-            case level of
+    case model.gameStatus of
+        ChangeLevel ->
+            case model.gameLevel of
                  Start0 ->
                      Start0.Init.init
                  Strangers1 ->
