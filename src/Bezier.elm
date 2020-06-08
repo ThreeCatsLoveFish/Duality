@@ -1,11 +1,12 @@
 module Bezier exposing (..)
-import Model exposing (Point, Color, rgb)
+import InitTools exposing (getBall)
+import Model exposing (..)
 
 -- Functions realized by using Bézier curve
 
 -- Fade in / Fade out
-bezier_fade : Float -> Float
-bezier_fade =
+bezierFade : Float -> Float
+bezierFade =
     let
         start = 1
         end = 1
@@ -20,8 +21,8 @@ bezier_fade =
     curve
 
 -- Move position
-bezier_pos : Point -> Point -> ( Float -> Point )
-bezier_pos start end =
+bezierPos : Point -> Point -> ( Float -> Point )
+bezierPos start end =
     let
         newPoint a pa b pb =
             { x = a * pa.x + (1 - a) * pb.x, y = b * pa.y + (1 - b) * pb.y }
@@ -41,8 +42,8 @@ bezier_pos start end =
 
 
 -- Change Color
-bezier_color : Color -> Color -> ( Float -> Color )
-bezier_color (Color startInt) (Color endInt) =
+bezierColor : Color -> Color -> ( Float -> Color )
+bezierColor (Color startInt) (Color endInt) =
     let
         intToFloat int =
             { red = toFloat int.red
@@ -70,4 +71,7 @@ bezier_color (Color startInt) (Color endInt) =
             (round (start.blue*now^3  + mid1.blue*time*now^2  + mid2.blue*now*time^2  + end.blue*time^3)  )
     in
     curve
+
+
+
 

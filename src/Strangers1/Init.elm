@@ -6,6 +6,7 @@ import Model exposing (..)
 import Messages exposing (..)
 import InitTools exposing (..)
 import BasicView exposing (..)
+import Bezier exposing (..)
 import Strangers1.View
 
 init : ( Model, Cmd Msg )
@@ -47,6 +48,9 @@ init =
             , color = rgb 244 244 244
             }
         --TODO: paddle fix
+        state : State
+        state =
+            { name = "bezier", object = "ball", index = 2, t = 0, bezierCurve = bezierPos (Point (canvas.w/2) (canvas.h/4)) (Point (canvas.w/2) (canvas.h/4)) }
         paddle : Paddle
         paddle =
             let
@@ -82,7 +86,7 @@ init =
             Model
                 Strangers1 Prepare
                 [ball, ball2] [paddle] bricks
-                []
+                [state]
                 canvas (pixelWidth, pixelHeight) 0 True False
                 (div [] [])
     in
