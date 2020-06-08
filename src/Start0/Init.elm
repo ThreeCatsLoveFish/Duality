@@ -1,4 +1,4 @@
-module Start0 exposing (init)
+module Start0.Init exposing (..)
 
 import Html exposing (..)
 
@@ -17,7 +17,3 @@ init =
 visualize : Html Msg
 visualize =
     div [] [] --TODO: Visualize it!
-
-view : Model -> Html Msg
-view model =
-    model.visualization
