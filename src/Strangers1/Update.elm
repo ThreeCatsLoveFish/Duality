@@ -7,6 +7,7 @@ import InitTools exposing (..)
 import Strangers1.Collision exposing (..)
 import Strangers1.Init
 import Strangers1.View exposing (..)
+import Collision exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -91,7 +92,7 @@ exec model =
     model
         |> movePaddle dir
         |> moveBall
-        |> collisionCheck
+        |> basic_hit
         |> paddleCheck
         |> wallCheck
         |> winJudge
