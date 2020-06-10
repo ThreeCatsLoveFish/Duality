@@ -22,7 +22,7 @@ block_x ball block =
     && lt.x + ball.r >= ball.pos.x && lt.x - ball.pos.x <= ball.r)
     || (ball.v.x < 0 -- to left
     && rb.x - ball.r <= ball.pos.x && rb.x - ball.pos.x >= -ball.r))
-    && ball.pos.y <= lt.y && ball.pos.y >= rb.y
+    && ball.pos.y > lt.y && ball.pos.y < rb.y
     then X else Safe
 
 
@@ -86,8 +86,8 @@ block_black_box_hit ball block =
                 _ ->
                     case (hit_x, hit_y) of
                         (X, Y) -> Corner
-                        (X, Safe) -> X
-                        (Safe, Y) -> Y
+                        (X, _) -> X
+                        (_, Y) -> Y
                         _ -> Safe
     in
     hit
