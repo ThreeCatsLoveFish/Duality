@@ -16,7 +16,7 @@ bezierFade =
             let
                 now = 1 - time
             in
-            start*now^3 + mid1*time*now^2 + mid2*now*time^2 + end*time^3
+            start*now^3 + 3*mid1*time*now^2 + 3*mid2*now*time^2 + end*time^3
     in
     curve
 
@@ -34,8 +34,8 @@ bezierPos start end =
             let
                 now = 1 - time
             in
-            { x = start.x*now^3 + mid1.x*time*now^2 + mid2.x*now*time^2 + end.x*time^3
-            , y = start.y*now^3 + mid1.y*time*now^2 + mid2.y*now*time^2 + end.y*time^3
+            { x = start.x*now^3 + 3*mid1.x*time*now^2 + 3*mid2.x*now*time^2 + end.x*time^3
+            , y = start.y*now^3 + 3*mid1.y*time*now^2 + 3*mid2.y*now*time^2 + end.y*time^3
             }
     in
     curve
@@ -53,8 +53,8 @@ bezierPosPos start mid1 mid2 end =
             let
                 now = 1 - time
             in
-            { x = start.x*now^3 + mid1.x*time*now^2 + mid2.x*now*time^2 + end.x*time^3
-            , y = start.y*now^3 + mid1.y*time*now^2 + mid2.y*now*time^2 + end.y*time^3
+            { x = start.x*now^3 + 3*mid1.x*time*now^2 + 3*mid2.x*now*time^2 + end.x*time^3
+            , y = start.y*now^3 + 3*mid1.y*time*now^2 + 3*mid2.y*now*time^2 + end.y*time^3
             }
     in
     curve
@@ -85,12 +85,9 @@ bezierColor (Color startInt) (Color endInt) =
                 now = 1 - time
             in
             rgb
-            (round (start.red*now^3   + mid1.red*time*now^2   + mid2.red*now*time^2   + end.red*time^3)  )
-            (round (start.green*now^3 + mid1.green*time*now^2 + mid2.green*now*time^2 + end.green*time^3)  )
-            (round (start.blue*now^3  + mid1.blue*time*now^2  + mid2.blue*now*time^2  + end.blue*time^3)  )
+            (round (start.red*now^3   + 3*mid1.red*time*now^2   + 3*mid2.red*now*time^2   + end.red*time^3)  )
+            (round (start.green*now^3 + 3*mid1.green*time*now^2 + 3*mid2.green*now*time^2 + end.green*time^3)  )
+            (round (start.blue*now^3  + 3*mid1.blue*time*now^2  + 3*mid2.blue*now*time^2  + end.blue*time^3)  )
     in
     curve
-
-
-
 

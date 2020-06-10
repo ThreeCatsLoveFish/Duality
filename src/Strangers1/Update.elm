@@ -5,7 +5,6 @@ import InitTools exposing (..)
 
 -- TODO: Change for test
 import Strangers1.Collision exposing (..)
-import Strangers1.Init
 import Strangers1.View exposing (..)
 import Collision exposing (..)
 
