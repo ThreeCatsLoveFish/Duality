@@ -1,5 +1,7 @@
 module InitTools exposing (..)
 
+import Html exposing (div)
+import Messages exposing (GameLevel(..), GameStatus(..))
 import Model exposing (..)
 
 
@@ -136,3 +138,12 @@ pos2block pos object =
         y = pos.y
     in
     Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
+
+
+dummyModel : Model
+dummyModel =
+    Model Start0 Animation
+        [] [] []
+        []
+        {w=0,h=0} (0, 0) 0 True False
+        (div [] [])

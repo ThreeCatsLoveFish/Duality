@@ -7,6 +7,7 @@ import Messages exposing (..)
 import InitTools exposing (..)
 import BasicView exposing (..)
 import Bezier exposing (..)
+import Strangers1.State exposing (genBezierBall2)
 import Strangers1.View
 
 init : ( Model, Cmd Msg )
@@ -51,14 +52,15 @@ init =
         state : State
         state =
             { name = "bezier"
-            , object = "ball"
             , index = 2
             , t = 0
-            , bezierCurve = bezierPosPos
-                (Point (canvas.w/2) (canvas.h/4))
-                (Point (canvas.w/2 - 40) (canvas.h/4 + 40))
-                (Point (canvas.w/2 + 40) (canvas.h/4 + 40))
-                (Point (canvas.w/2) (canvas.h/4))
+            , function = Func
+                ( genBezierBall2
+                  (Point (canvas.w/2) (canvas.h/4))
+                  (Point (canvas.w/2 - 40) (canvas.h/4 + 40))
+                  (Point (canvas.w/2 + 40) (canvas.h/4 + 40))
+                  (Point (canvas.w/2) (canvas.h/4))
+                )
             , loop = True
             }
         paddle : Paddle
