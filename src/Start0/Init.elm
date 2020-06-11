@@ -22,7 +22,7 @@ init =
             }
         model =
             Model
-                Start0 Prepare
+                Start0 Animation
                 [] [] []
                 [state]
                 canvas (pixelWidth, pixelHeight) 0 True False
