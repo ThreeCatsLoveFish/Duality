@@ -14,6 +14,8 @@ update msg model =
                         Tick time ->
                             model |> move (min time 25)
                                   |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 _ ->
                     model

@@ -5335,7 +5335,7 @@ var $author$project$Start0$View$visualize = function (model) {
 						A2(
 						$elm$html$Html$Attributes$style,
 						'left',
-						$elm$core$String$fromFloat(w / 2) + 'px'),
+						$elm$core$String$fromFloat((w - ($author$project$Start0$View$pixelHeight * r)) / 2) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'top',
@@ -6888,15 +6888,24 @@ var $author$project$Start0$Update$update = F2(
 		var model0 = function () {
 			var _v0 = model.gameStatus;
 			if (_v0.$ === 'Animation') {
-				if (msg.$ === 'Tick') {
-					var time = msg.a;
-					return $author$project$Start0$Update$stateIterate(
-						A2(
-							$author$project$Start0$Update$move,
-							A2($elm$core$Basics$min, time, 25),
-							model));
-				} else {
-					return model;
+				switch (msg.$) {
+					case 'Tick':
+						var time = msg.a;
+						return $author$project$Start0$Update$stateIterate(
+							A2(
+								$author$project$Start0$Update$move,
+								A2($elm$core$Basics$min, time, 25),
+								model));
+					case 'Resize':
+						var w = msg.a;
+						var h = msg.b;
+						return _Utils_update(
+							model,
+							{
+								size: _Utils_Tuple2(w, h)
+							});
+					default:
+						return model;
 				}
 			} else {
 				return model;
