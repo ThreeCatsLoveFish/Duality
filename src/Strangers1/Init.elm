@@ -52,7 +52,7 @@ init =
         state : State
         state =
             { name = "bezier"
-            , index = 2
+            , value = 2
             , t = 0
             , function = Func
                 ( genBezierBall2

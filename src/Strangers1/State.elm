@@ -1,6 +1,6 @@
 module Strangers1.State exposing (..)
 import Bezier exposing (bezierPosPos)
-import InitTools exposing (getBall)
+import Tools exposing (getBall)
 import Model exposing (Model, Point)
 
 

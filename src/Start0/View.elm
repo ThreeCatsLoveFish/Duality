@@ -31,7 +31,6 @@ visualize model =
         r =
             if w / h > pixelWidth / pixelHeight then
                 Basics.min 1 (h / pixelHeight)
-
             else
                 Basics.min 1 (w / pixelWidth)
     in
@@ -49,7 +48,17 @@ visualize model =
               , style "position" "absolute"
               , style "left" (String.fromFloat (w / 2) ++ "px")
               , style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
+              , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
               , alt "Network Failure"
               ]
               []
         ]
+
+genFadeInAndOut : Float -> Float
+genFadeInAndOut t =
+        if  ( t < 0.3 ) then
+            t / 0.3
+        else if ( t >= 0.3 && t <= 0.7 ) then
+            1
+        else
+            ( 0.7 - t ) / 0.3
