@@ -3,7 +3,6 @@ import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 
--- TODO: Change for test
 import Strangers1.Collision exposing (..)
 import Strangers1.View exposing (..)
 import Collision exposing (..)
@@ -197,13 +196,11 @@ stateIterate model =
 bezierBall : Model -> State -> Model
 bezierBall model state =
     let
-        ball =
-            getBall model.ball state.index
-        newBallPos =
-            state.bezierCurve state.t
-        newBall = { ball | pos = newBallPos }
+        getfunc (Func func) = func
+        newBalls =
+            (getfunc state.function model state.t).ball
     in
-    { model | ball = [ getBall model.ball 1, newBall ] }
+    { model | ball = newBalls }
 
 getEndState : Model -> Model
 getEndState model =
