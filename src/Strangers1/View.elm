@@ -146,9 +146,40 @@ visualize model =
             [ style "background-color" (colorToString backgroundColor)
             , style "background-position" "center"
             ]
-            [ ViewTest.visualizePrepare model
+            [ visualizePrepare model
             , ViewTest.visualizePause model
             , ViewTest.visualizePass model
             , ViewTest.visualizeLose model
             ]
         ]
+
+visualizePrepare : Model -> Html Msg
+visualizePrepare model =
+    let
+        ( w, h ) = model.size
+    in
+    div
+        [ style "background" (colorToString backgroundColor)
+        , style "text-align" "center"
+        , style "height" "100%"
+        , style "width" "100%"
+        , style "position" "absolute"
+        , style "left" ((String.fromFloat w)++"px")
+        , style "top" ((String.fromFloat h)++"px")
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#FFFFFF"
+        , style "line-height" "500px"
+        , style "display"
+            (if model.gameStatus == Prepare then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [ div [] [ text "Strangers" ]
+        , div [] []
+        , div [] [ text "Press space to start. "]
+        ]
+
+
