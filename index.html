@@ -5158,7 +5158,9 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Messages$Animation = {$: 'Animation'};
+var $author$project$Model$Func = function (a) {
+	return {$: 'Func', a: a};
+};
 var $author$project$Model$Model = function (gameLevel) {
 	return function (gameStatus) {
 		return function (ball) {
@@ -5184,130 +5186,200 @@ var $author$project$Model$Model = function (gameLevel) {
 		};
 	};
 };
+var $author$project$Messages$Prepare = {$: 'Prepare'};
 var $author$project$Messages$Start0 = {$: 'Start0'};
+var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$BasicView$pixelHeight = 630;
 var $author$project$BasicView$pixelWidth = 1120;
-var $author$project$Messages$KeyDown = function (a) {
-	return {$: 'KeyDown', a: a};
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $author$project$Model$Color = function (a) {
+	return {$: 'Color', a: a};
 };
-var $author$project$Messages$Space = {$: 'Space'};
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$Model$rgb = F3(
+	function (red, green, blue) {
+		return $author$project$Model$Color(
+			{blue: blue, green: green, red: red});
+	});
+var $author$project$Start0$View$backgroundColor = A3($author$project$Model$rgb, 0, 0, 0);
+var $author$project$Model$colorToString = function (_v0) {
+	var red = _v0.a.red;
+	var green = _v0.a.green;
+	var blue = _v0.a.blue;
+	return 'rgb(' + ($elm$core$String$fromInt(red) + (',' + ($elm$core$String$fromInt(green) + (',' + ($elm$core$String$fromInt(blue) + ')')))));
+};
 var $elm$core$String$fromFloat = _String_fromNumber;
+var $elm$core$Basics$ge = _Utils_ge;
+var $author$project$Start0$View$genFadeInAndOut = function (t) {
+	return (t < 0.3) ? (t / 0.3) : (((t >= 0.3) && (t <= 0.7)) ? 1 : ((0.7 - t) / 0.3));
+};
+var $author$project$Tools$dummyState = {
+	_function: $author$project$Model$Func(
+		F2(
+			function (m, _v0) {
+				return m;
+			})),
+	loop: false,
+	name: 'dummy',
+	t: 0,
+	value: 0
+};
+var $elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			$elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $author$project$Tools$getState = F2(
+	function (states, name) {
+		var state_ = A2(
+			$elm$core$List$filter,
+			function (s) {
+				return _Utils_eq(s.name, name);
+			},
+			states);
+		var state = A2(
+			$elm$core$Maybe$withDefault,
+			$author$project$Tools$dummyState,
+			$elm$core$List$head(state_));
+		return state;
+	});
+var $elm$html$Html$Attributes$height = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'height',
+		$elm$core$String$fromInt(n));
+};
+var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$core$Basics$min = F2(
 	function (x, y) {
 		return (_Utils_cmp(x, y) < 0) ? x : y;
 	});
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
+var $author$project$Start0$View$pixelHeight = 834;
+var $author$project$Start0$View$pixelWidth = 834;
+var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Start0$Init$visualize = function () {
-	var _v0 = _Utils_Tuple2($author$project$BasicView$pixelWidth, $author$project$BasicView$pixelHeight);
+var $elm$html$Html$Attributes$width = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'width',
+		$elm$core$String$fromInt(n));
+};
+var $author$project$Start0$View$visualize = function (model) {
+	var _v0 = model.size;
 	var w = _v0.a;
 	var h = _v0.b;
-	var r = (_Utils_cmp(w / h, $author$project$BasicView$pixelWidth / $author$project$BasicView$pixelHeight) > 0) ? A2($elm$core$Basics$min, 1, h / $author$project$BasicView$pixelHeight) : A2($elm$core$Basics$min, 1, w / $author$project$BasicView$pixelWidth);
+	var r = (_Utils_cmp(w / h, $author$project$Start0$View$pixelWidth / $author$project$Start0$View$pixelHeight) > 0) ? A2($elm$core$Basics$min, 1, h / $author$project$Start0$View$pixelHeight) : A2($elm$core$Basics$min, 1, w / $author$project$Start0$View$pixelWidth);
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
 				A2($elm$html$Html$Attributes$style, 'width', '100%'),
 				A2($elm$html$Html$Attributes$style, 'height', '100%'),
-				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+				A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
 				A2($elm$html$Html$Attributes$style, 'left', '0'),
-				A2($elm$html$Html$Attributes$style, 'top', '0')
+				A2(
+				$elm$html$Html$Attributes$style,
+				'top',
+				$elm$core$String$fromFloat((h - ($author$project$Start0$View$pixelHeight * r)) / 2) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				$author$project$Model$colorToString($author$project$Start0$View$backgroundColor))
 			]),
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$div,
+				$elm$html$Html$img,
 				_List_fromArray(
 					[
-						A2(
-						$elm$html$Html$Attributes$style,
-						'width',
-						$elm$core$String$fromFloat($author$project$BasicView$pixelWidth) + 'px'),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'height',
-						$elm$core$String$fromFloat($author$project$BasicView$pixelHeight) + 'px'),
+						$elm$html$Html$Attributes$src('icon.png'),
+						$elm$html$Html$Attributes$width(834),
+						$elm$html$Html$Attributes$height(834),
 						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'left',
-						$elm$core$String$fromFloat((w - ($author$project$BasicView$pixelWidth * r)) / 2) + 'px'),
+						$elm$core$String$fromFloat(w / 2) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'top',
-						$elm$core$String$fromFloat((h - ($author$project$BasicView$pixelHeight * r)) / 2) + 'px'),
-						A2($elm$html$Html$Attributes$style, 'transform-origin', '0 0'),
+						$elm$core$String$fromFloat((h - ($author$project$Start0$View$pixelHeight * r)) / 2) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
-						'transform',
-						'scale(' + ($elm$core$String$fromFloat(r) + ')'))
+						'opacity',
+						$elm$core$String$fromFloat(
+							$author$project$Start0$View$genFadeInAndOut(
+								A2($author$project$Tools$getState, model.state, 'fadeInAndOut').t))),
+						$elm$html$Html$Attributes$alt('Network Failure')
 					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$button,
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$Attributes$style,
-								'width',
-								$elm$core$String$fromFloat($author$project$BasicView$pixelWidth) + 'px'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'height',
-								$elm$core$String$fromFloat($author$project$BasicView$pixelHeight) + 'px'),
-								A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'left',
-								$elm$core$String$fromFloat((w - ($author$project$BasicView$pixelWidth * r)) / 2) + 'px'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'top',
-								$elm$core$String$fromFloat((h - ($author$project$BasicView$pixelHeight * r)) / 2) + 'px'),
-								A2($elm$html$Html$Attributes$style, 'transform-origin', '0 0'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'transform',
-								'scale(' + ($elm$core$String$fromFloat(r) + ')')),
-								$elm$html$Html$Events$onClick(
-								$author$project$Messages$KeyDown($author$project$Messages$Space))
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Press space to continue')
-							]))
-					]))
+				_List_Nil)
 			]));
+};
+var $author$project$Start0$Init$init = function () {
+	var state = {
+		_function: $author$project$Model$Func(
+			F2(
+				function (m, _v0) {
+					return m;
+				})),
+		loop: false,
+		name: 'fadeInAndOut',
+		t: 0,
+		value: 0
+	};
+	var canvas = {h: 600, w: 400};
+	var model = $author$project$Model$Model($author$project$Messages$Start0)($author$project$Messages$Prepare)(_List_Nil)(_List_Nil)(_List_Nil)(
+		_List_fromArray(
+			[state]))(canvas)(
+		_Utils_Tuple2($author$project$BasicView$pixelWidth, $author$project$BasicView$pixelHeight))(0)(true)(false)(
+		A2($elm$html$Html$div, _List_Nil, _List_Nil));
+	return _Utils_Tuple2(
+		_Utils_update(
+			model,
+			{
+				visualization: $author$project$Start0$View$visualize(model)
+			}),
+		$elm$core$Platform$Cmd$none);
 }();
-var $author$project$Start0$Init$init = _Utils_Tuple2(
-	$author$project$Model$Model($author$project$Messages$Start0)($author$project$Messages$Animation)(_List_Nil)(_List_Nil)(_List_Nil)(_List_Nil)(
-		{h: 0, w: 0})(
-		_Utils_Tuple2($author$project$BasicView$pixelWidth, $author$project$BasicView$pixelHeight))(0)(true)(false)($author$project$Start0$Init$visualize),
-	$elm$core$Platform$Cmd$none);
 var $author$project$Main$init = $author$project$Start0$Init$init;
 var $author$project$Messages$Resize = F2(
 	function (a, b) {
@@ -5320,10 +5392,14 @@ var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $elm$html$Html$Events$keyCode = A2($elm$json$Json$Decode$field, 'keyCode', $elm$json$Json$Decode$int);
+var $author$project$Messages$KeyDown = function (a) {
+	return {$: 'KeyDown', a: a};
+};
 var $author$project$Messages$Key_Left = {$: 'Key_Left'};
 var $author$project$Messages$Key_R = {$: 'Key_R'};
 var $author$project$Messages$Key_Right = {$: 'Key_Right'};
 var $author$project$Messages$NoOp = {$: 'NoOp'};
+var $author$project$Messages$Space = {$: 'Space'};
 var $author$project$Subscriptions$keyDown = function (keycode) {
 	switch (keycode) {
 		case 37:
@@ -5933,27 +6009,14 @@ var $author$project$Model$Point = F2(
 	function (x, y) {
 		return {x: x, y: y};
 	});
-var $author$project$Messages$Prepare = {$: 'Prepare'};
 var $author$project$Messages$Strangers1 = {$: 'Strangers1'};
-var $elm$core$Basics$pow = _Basics_pow;
-var $author$project$Bezier$bezierPosPos = F4(
-	function (start, mid1, mid2, end) {
-		var curve = function (time) {
-			var now = 1 - time;
-			return {
-				x: (((start.x * A2($elm$core$Basics$pow, now, 3)) + ((mid1.x * time) * A2($elm$core$Basics$pow, now, 2))) + ((mid2.x * now) * A2($elm$core$Basics$pow, time, 2))) + (end.x * A2($elm$core$Basics$pow, time, 3)),
-				y: (((start.y * A2($elm$core$Basics$pow, now, 3)) + ((mid1.y * time) * A2($elm$core$Basics$pow, now, 2))) + ((mid2.y * now) * A2($elm$core$Basics$pow, time, 2))) + (end.y * A2($elm$core$Basics$pow, time, 3))
-			};
-		};
-		return curve;
-	});
 var $elm$core$Basics$cos = _Basics_cos;
 var $author$project$Model$Block = F2(
 	function (lt, rb) {
 		return {lt: lt, rb: rb};
 	});
-var $author$project$InitTools$dummyPoint = A2($author$project$Model$Point, 0, 0);
-var $author$project$InitTools$dummyBlock = A2($author$project$Model$Block, $author$project$InitTools$dummyPoint, $author$project$InitTools$dummyPoint);
+var $author$project$Tools$dummyPoint = A2($author$project$Model$Point, 0, 0);
+var $author$project$Tools$dummyBlock = A2($author$project$Model$Block, $author$project$Tools$dummyPoint, $author$project$Tools$dummyPoint);
 var $elm$core$List$repeatHelp = F3(
 	function (result, n, value) {
 		repeatHelp:
@@ -5975,10 +6038,89 @@ var $elm$core$List$repeat = F2(
 	function (n, value) {
 		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
 	});
-var $author$project$InitTools$dummyPoly = A2($elm$core$List$repeat, 4, $author$project$InitTools$dummyPoint);
+var $author$project$Tools$dummyPoly = A2($elm$core$List$repeat, 4, $author$project$Tools$dummyPoint);
+var $elm$core$Basics$pow = _Basics_pow;
+var $author$project$Bezier$bezierPosPos = F4(
+	function (start, mid1, mid2, end) {
+		var curve = function (time) {
+			var now = 1 - time;
+			return {
+				x: (((start.x * A2($elm$core$Basics$pow, now, 3)) + (((3 * mid1.x) * time) * A2($elm$core$Basics$pow, now, 2))) + (((3 * mid2.x) * now) * A2($elm$core$Basics$pow, time, 2))) + (end.x * A2($elm$core$Basics$pow, time, 3)),
+				y: (((start.y * A2($elm$core$Basics$pow, now, 3)) + (((3 * mid1.y) * time) * A2($elm$core$Basics$pow, now, 2))) + (((3 * mid2.y) * now) * A2($elm$core$Basics$pow, time, 2))) + (end.y * A2($elm$core$Basics$pow, time, 3))
+			};
+		};
+		return curve;
+	});
+var $elm$core$List$drop = F2(
+	function (n, list) {
+		drop:
+		while (true) {
+			if (n <= 0) {
+				return list;
+			} else {
+				if (!list.b) {
+					return list;
+				} else {
+					var x = list.a;
+					var xs = list.b;
+					var $temp$n = n - 1,
+						$temp$list = xs;
+					n = $temp$n;
+					list = $temp$list;
+					continue drop;
+				}
+			}
+		}
+	});
+var $author$project$Tools$dummyColor = A3($author$project$Model$rgb, 0, 0, 0);
+var $author$project$Tools$dummyBall = function () {
+	var v = $author$project$Tools$dummyPoint;
+	var r = 0;
+	var pos = $author$project$Tools$dummyPoint;
+	return {active: false, collision: $author$project$Tools$dummyPoly, color: $author$project$Tools$dummyColor, pos: pos, r: r, v: v};
+}();
+var $author$project$Tools$getBall = F2(
+	function (lst, n) {
+		getBall:
+		while (true) {
+			if (n === 1) {
+				return A2(
+					$elm$core$Maybe$withDefault,
+					$author$project$Tools$dummyBall,
+					$elm$core$List$head(lst));
+			} else {
+				var $temp$lst = A2($elm$core$List$drop, 1, lst),
+					$temp$n = n - 1;
+				lst = $temp$lst;
+				n = $temp$n;
+				continue getBall;
+			}
+		}
+	});
+var $author$project$Strangers1$State$genBezierBall2 = F4(
+	function (p1, p2, p3, p4) {
+		var bezier = A4($author$project$Bezier$bezierPosPos, p1, p2, p3, p4);
+		var bezierBall2 = F2(
+			function (model_, t_) {
+				var ball2 = A2($author$project$Tools$getBall, model_.ball, 2);
+				var ball2_ = _Utils_update(
+					ball2,
+					{
+						pos: bezier(t_)
+					});
+				var ball1 = A2($author$project$Tools$getBall, model_.ball, 1);
+				return _Utils_update(
+					model_,
+					{
+						ball: _List_fromArray(
+							[ball1, ball2_])
+					});
+			});
+		return bezierBall2;
+	});
 var $elm$core$Basics$pi = _Basics_pi;
 var $elm$core$Basics$sin = _Basics_sin;
-var $author$project$InitTools$getBallColl = function (_v0) {
+var $author$project$Tools$getBallColl = function (_v0) {
 	var pos = _v0.a;
 	var r = _v0.b;
 	var precision = _v0.c;
@@ -5999,7 +6141,7 @@ var $author$project$InitTools$getBallColl = function (_v0) {
 		angle);
 	return points;
 };
-var $author$project$InitTools$getPaddleColl = F5(
+var $author$project$Tools$getPaddleColl = F5(
 	function (pos, r, h, angle, precision) {
 		var unitAngle = (2 * angle) / (precision - 1);
 		var surfaceR = r + h;
@@ -6045,7 +6187,7 @@ var $elm$core$List$concatMap = F2(
 		return $elm$core$List$concat(
 			A2($elm$core$List$map, f, list));
 	});
-var $author$project$InitTools$pos2block = F2(
+var $author$project$Tools$pos2block = F2(
 	function (pos, object) {
 		var y = pos.y;
 		var x = pos.x;
@@ -6056,7 +6198,7 @@ var $author$project$InitTools$pos2block = F2(
 			A2($author$project$Model$Point, x - w, y - h),
 			A2($author$project$Model$Point, x + w, y + h));
 	});
-var $author$project$InitTools$pos2coll = F2(
+var $author$project$Tools$pos2coll = F2(
 	function (pos, object) {
 		var y = pos.y;
 		var x = pos.x;
@@ -6070,7 +6212,7 @@ var $author$project$InitTools$pos2coll = F2(
 				A2($author$project$Model$Point, x + w, y - h)
 			]);
 	});
-var $author$project$InitTools$newBricks = function (info) {
+var $author$project$Tools$newBricks = function (info) {
 	var positionConvert = F2(
 		function (len, unit) {
 			return A2(
@@ -6115,49 +6257,19 @@ var $author$project$InitTools$newBricks = function (info) {
 			return A5(
 				$author$project$Model$Brick,
 				pos,
-				A2($author$project$InitTools$pos2coll, pos, info.brick),
-				A2($author$project$InitTools$pos2block, pos, info.brick),
+				A2($author$project$Tools$pos2coll, pos, info.brick),
+				A2($author$project$Tools$pos2block, pos, info.brick),
 				$author$project$Model$Hit(0),
 				info.color);
 		},
 		posBricks);
 };
-var $author$project$Model$Color = function (a) {
-	return {$: 'Color', a: a};
-};
-var $author$project$Model$rgb = F3(
-	function (red, green, blue) {
-		return $author$project$Model$Color(
-			{blue: blue, green: green, red: red});
-	});
 var $author$project$Strangers1$View$backgroundColor = A3($author$project$Model$rgb, 0, 0, 0);
-var $author$project$Model$colorToString = function (_v0) {
-	var red = _v0.a.red;
-	var green = _v0.a.green;
-	var blue = _v0.a.blue;
-	return 'rgb(' + ($elm$core$String$fromInt(red) + (',' + ($elm$core$String$fromInt(green) + (',' + ($elm$core$String$fromInt(blue) + ')')))));
-};
-var $author$project$InitTools$dummyColor = A3($author$project$Model$rgb, 0, 0, 0);
-var $author$project$InitTools$dummyBall = function () {
-	var v = $author$project$InitTools$dummyPoint;
-	var r = 0;
-	var pos = $author$project$InitTools$dummyPoint;
-	return {active: false, collision: $author$project$InitTools$dummyPoly, color: $author$project$InitTools$dummyColor, pos: pos, r: r, v: v};
-}();
 var $author$project$Model$Paddle = F7(
 	function (pos, collision, block, color, r, h, angle) {
 		return {angle: angle, block: block, collision: collision, color: color, h: h, pos: pos, r: r};
 	});
-var $author$project$InitTools$dummyPaddle = A7($author$project$Model$Paddle, $author$project$InitTools$dummyPoint, $author$project$InitTools$dummyPoly, $author$project$InitTools$dummyBlock, $author$project$InitTools$dummyColor, 0, 0, 0);
-var $elm$core$List$head = function (list) {
-	if (list.b) {
-		var x = list.a;
-		var xs = list.b;
-		return $elm$core$Maybe$Just(x);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
+var $author$project$Tools$dummyPaddle = A7($author$project$Model$Paddle, $author$project$Tools$dummyPoint, $author$project$Tools$dummyPoly, $author$project$Tools$dummyBlock, $author$project$Tools$dummyColor, 0, 0, 0);
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
 var $elm$core$List$tail = function (list) {
@@ -6180,14 +6292,6 @@ var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
 var $elm$svg$Svg$filter = $elm$svg$Svg$trustedNode('filter');
 var $elm$svg$Svg$Attributes$filter = _VirtualDom_attribute('filter');
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$svg$Svg$Attributes$in_ = _VirtualDom_attribute('in');
 var $elm$svg$Svg$Attributes$opacity = _VirtualDom_attribute('opacity');
@@ -6372,15 +6476,6 @@ var $author$project$Strangers1$View$visualizePaddle = function (paddle) {
 				_List_Nil)
 			]));
 };
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
 var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
 var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
 var $author$project$Strangers1$View$visualizeGame = F2(
@@ -6390,7 +6485,7 @@ var $author$project$Strangers1$View$visualizeGame = F2(
 			$author$project$Strangers1$View$visualizePaddle(
 				A2(
 					$elm$core$Maybe$withDefault,
-					$author$project$InitTools$dummyPaddle,
+					$author$project$Tools$dummyPaddle,
 					$elm$core$List$head(model.paddle))),
 			_Utils_ap(
 				A2($elm$core$List$map, $author$project$Strangers1$View$visualizeBrick, model.bricks),
@@ -6402,7 +6497,7 @@ var $author$project$Strangers1$View$visualizeGame = F2(
 						A2(
 							$elm$core$Maybe$withDefault,
 							_List_fromArray(
-								[$author$project$InitTools$dummyBall]),
+								[$author$project$Tools$dummyBall]),
 							$elm$core$List$tail(model.ball))))));
 		return A2(
 			$elm$html$Html$div,
@@ -6426,6 +6521,8 @@ var $author$project$Strangers1$View$visualizeGame = F2(
 				]));
 	});
 var $author$project$Messages$Lose = {$: 'Lose'};
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$BasicView$visualizeLose = function (model) {
 	return A2(
 		$elm$html$Html$div,
@@ -6620,8 +6717,8 @@ var $author$project$Strangers1$Init$init = function () {
 		var center = A2($author$project$Model$Point, pos.x, pos.y + r);
 		return {
 			angle: angle,
-			block: $author$project$InitTools$dummyBlock,
-			collision: A5($author$project$InitTools$getPaddleColl, pos, r, h, angle, 16),
+			block: $author$project$Tools$dummyBlock,
+			collision: A5($author$project$Tools$getPaddleColl, pos, r, h, angle, 16),
 			color: A3($author$project$Model$rgb, 255, 255, 255),
 			h: h,
 			pos: pos,
@@ -6629,16 +6726,17 @@ var $author$project$Strangers1$Init$init = function () {
 		};
 	}();
 	var state = {
-		bezierCurve: A4(
-			$author$project$Bezier$bezierPosPos,
-			A2($author$project$Model$Point, canvas.w / 2, canvas.h / 4),
-			A2($author$project$Model$Point, (canvas.w / 2) - 40, (canvas.h / 4) + 40),
-			A2($author$project$Model$Point, (canvas.w / 2) + 40, (canvas.h / 4) + 40),
-			A2($author$project$Model$Point, canvas.w / 2, canvas.h / 4)),
-		index: 2,
+		_function: $author$project$Model$Func(
+			A4(
+				$author$project$Strangers1$State$genBezierBall2,
+				A2($author$project$Model$Point, canvas.w / 2, canvas.h / 4),
+				A2($author$project$Model$Point, (canvas.w / 2) - 40, (canvas.h / 4) + 40),
+				A2($author$project$Model$Point, (canvas.w / 2) + 40, (canvas.h / 4) + 40),
+				A2($author$project$Model$Point, canvas.w / 2, canvas.h / 4))),
+		loop: true,
 		name: 'bezier',
-		object: 'ball',
-		t: 0
+		t: 0,
+		value: 2
 	};
 	var bricks = function () {
 		var brickInfo = {
@@ -6647,9 +6745,9 @@ var $author$project$Strangers1$Init$init = function () {
 			canvas: canvas,
 			color: A3($author$project$Model$rgb, 100, 100, 100),
 			layout: {x: 10, y: 2},
-			offset: $author$project$InitTools$dummyPoint
+			offset: $author$project$Tools$dummyPoint
 		};
-		return $author$project$InitTools$newBricks(brickInfo);
+		return $author$project$Tools$newBricks(brickInfo);
 	}();
 	var ball2 = function () {
 		var v = A2($author$project$Model$Point, 0, 0);
@@ -6657,7 +6755,7 @@ var $author$project$Strangers1$Init$init = function () {
 		var pos = A2($author$project$Model$Point, canvas.w / 2, canvas.h / 4);
 		return {
 			active: true,
-			collision: $author$project$InitTools$dummyPoly,
+			collision: $author$project$Tools$dummyPoly,
 			color: A3($author$project$Model$rgb, 244, 244, 244),
 			pos: pos,
 			r: r,
@@ -6670,7 +6768,7 @@ var $author$project$Strangers1$Init$init = function () {
 		var pos = A2($author$project$Model$Point, canvas.w / 2, ((paddle.pos.y - paddle.r) - paddle.h) - r);
 		return {
 			active: true,
-			collision: $author$project$InitTools$getBallColl(
+			collision: $author$project$Tools$getBallColl(
 				_Utils_Tuple3(pos, r, 16)),
 			color: A3($author$project$Model$rgb, 244, 244, 244),
 			pos: pos,
@@ -6695,6 +6793,20 @@ var $author$project$Strangers1$Init$init = function () {
 			}),
 		$elm$core$Platform$Cmd$none);
 }();
+var $author$project$Messages$Animation = {$: 'Animation'};
+var $author$project$Start0$Update$getEndState = function (model) {
+	return model;
+};
+var $author$project$Start0$Update$move = F2(
+	function (elapsed, model) {
+		var interval = 15;
+		var elapsed_ = model.clock + elapsed;
+		return (_Utils_cmp(elapsed_, interval) > 0) ? _Utils_update(
+			model,
+			{clock: elapsed_ - interval}) : _Utils_update(
+			model,
+			{clock: elapsed_});
+	});
 var $author$project$Messages$ChangeLevel = {$: 'ChangeLevel'};
 var $elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {
@@ -6703,65 +6815,66 @@ var $elm$core$List$isEmpty = function (xs) {
 		return false;
 	}
 };
+var $author$project$Start0$Update$loopState = F2(
+	function (state, t) {
+		return (state.loop && (state.t < 1)) ? _Utils_update(
+			state,
+			{t: state.t + t}) : _Utils_update(
+			state,
+			{t: state.t - 1});
+	});
 var $author$project$Start0$Update$stateIterate = function (model) {
-	return model;
+	var _v0 = $elm$core$List$isEmpty(model.state);
+	if (_v0) {
+		return _Utils_update(
+			model,
+			{gameLevel: $author$project$Messages$Strangers1, gameStatus: $author$project$Messages$ChangeLevel});
+	} else {
+		var state = model.state;
+		var newState = A2(
+			$elm$core$List$map,
+			function (s) {
+				return A2($author$project$Start0$Update$loopState, s, 0.02);
+			},
+			state);
+		var newModel = _Utils_update(
+			model,
+			{state: newState});
+		return newModel;
+	}
 };
 var $author$project$Start0$Update$update = F2(
 	function (msg, model) {
 		var model0 = function () {
-			_v0$2:
-			while (true) {
-				switch (msg.$) {
-					case 'KeyDown':
-						if (msg.a.$ === 'Space') {
-							var _v1 = msg.a;
-							var _v2 = model.activeInput;
-							if (_v2) {
-								return _Utils_update(
-									model,
-									{gameLevel: $author$project$Messages$Strangers1, gameStatus: $author$project$Messages$ChangeLevel});
-							} else {
-								return model;
-							}
-						} else {
-							break _v0$2;
-						}
-					case 'Tick':
-						var _v3 = _Utils_Tuple2(model.activeState, model.activeInput);
-						_v3$2:
-						while (true) {
-							if (_v3.a) {
-								if (!_v3.b) {
-									var model1 = $author$project$Start0$Update$stateIterate(model);
-									var _v4 = $elm$core$List$isEmpty(model1.state);
-									if (_v4) {
-										return _Utils_update(
-											model1,
-											{activeInput: true, activeState: false});
-									} else {
-										return model1;
-									}
-								} else {
-									break _v3$2;
-								}
-							} else {
-								if (_v3.b) {
-									return model;
-								} else {
-									break _v3$2;
-								}
-							}
-						}
-						return _Utils_update(
-							model,
-							{activeInput: false, activeState: true});
-					default:
-						break _v0$2;
-				}
+			var _v0 = model.gameStatus;
+			switch (_v0.$) {
+				case 'Pass':
+					var model1 = $author$project$Start0$Update$getEndState(model);
+					return _Utils_update(
+						model1,
+						{gameStatus: $author$project$Messages$Animation});
+				case 'Animation':
+					if (msg.$ === 'Tick') {
+						var time = msg.a;
+						return $author$project$Start0$Update$stateIterate(
+							A2(
+								$author$project$Start0$Update$move,
+								A2($elm$core$Basics$min, time, 25),
+								model));
+					} else {
+						return model;
+					}
+				default:
+					return model;
 			}
-			return model;
 		}();
-		return _Utils_Tuple2(model0, $elm$core$Platform$Cmd$none);
+		return _Utils_Tuple2(
+			_Utils_update(
+				model0,
+				{
+					visualization: $author$project$Start0$View$visualize(model)
+				}),
+			$elm$core$Platform$Cmd$none);
 	});
 var $author$project$Messages$Left = {$: 'Left'};
 var $author$project$Messages$Right = {$: 'Right'};
@@ -6795,12 +6908,11 @@ var $author$project$Collision$block_corner = F2(
 			(((-1) * ball.v.x) / $elm$core$Basics$abs(ball.v.x)) * (ball.pos.x - bx),
 			(ball.r / 3) + (width / 2)) < 0)))) ? $author$project$Collision$Corner : $author$project$Collision$Safe;
 	});
-var $elm$core$Basics$ge = _Utils_ge;
 var $author$project$Collision$block_x = F2(
 	function (ball, block) {
 		var rb = block.rb;
 		var lt = block.lt;
-		return ((((ball.v.x > 0) && ((_Utils_cmp(lt.x + ball.r, ball.pos.x) > -1) && (_Utils_cmp(lt.x - ball.pos.x, ball.r) < 1))) || ((ball.v.x < 0) && ((_Utils_cmp(rb.x - ball.r, ball.pos.x) < 1) && (_Utils_cmp(rb.x - ball.pos.x, -ball.r) > -1)))) && ((_Utils_cmp(ball.pos.y, lt.y) < 1) && (_Utils_cmp(ball.pos.y, rb.y) > -1))) ? $author$project$Collision$X : $author$project$Collision$Safe;
+		return ((((ball.v.x > 0) && ((_Utils_cmp(lt.x + ball.r, ball.pos.x) > -1) && (_Utils_cmp(lt.x - ball.pos.x, ball.r) < 1))) || ((ball.v.x < 0) && ((_Utils_cmp(rb.x - ball.r, ball.pos.x) < 1) && (_Utils_cmp(rb.x - ball.pos.x, -ball.r) > -1)))) && ((_Utils_cmp(ball.pos.y, lt.y) > 0) && (_Utils_cmp(ball.pos.y, rb.y) < 0))) ? $author$project$Collision$X : $author$project$Collision$Safe;
 	});
 var $author$project$Collision$block_y = F2(
 	function (ball, block) {
@@ -6818,35 +6930,23 @@ var $author$project$Collision$block_black_box_hit = F2(
 				return $author$project$Collision$Corner;
 			} else {
 				var _v1 = _Utils_Tuple2(hit_x, hit_y);
-				_v1$3:
-				while (true) {
-					switch (_v1.a.$) {
-						case 'X':
-							switch (_v1.b.$) {
-								case 'Y':
-									var _v2 = _v1.a;
-									var _v3 = _v1.b;
-									return $author$project$Collision$Corner;
-								case 'Safe':
-									var _v4 = _v1.a;
-									var _v5 = _v1.b;
-									return $author$project$Collision$X;
-								default:
-									break _v1$3;
-							}
-						case 'Safe':
-							if (_v1.b.$ === 'Y') {
-								var _v6 = _v1.a;
-								var _v7 = _v1.b;
-								return $author$project$Collision$Y;
-							} else {
-								break _v1$3;
-							}
-						default:
-							break _v1$3;
+				if (_v1.a.$ === 'X') {
+					if (_v1.b.$ === 'Y') {
+						var _v2 = _v1.a;
+						var _v3 = _v1.b;
+						return $author$project$Collision$Corner;
+					} else {
+						var _v4 = _v1.a;
+						return $author$project$Collision$X;
+					}
+				} else {
+					if (_v1.b.$ === 'Y') {
+						var _v5 = _v1.b;
+						return $author$project$Collision$Y;
+					} else {
+						return $author$project$Collision$Safe;
 					}
 				}
-				return $author$project$Collision$Safe;
 			}
 		}();
 		return hit;
@@ -6932,49 +7032,10 @@ var $author$project$Collision$block_black_box_hitTime = F2(
 		}();
 		return hit_time;
 	});
-var $elm$core$List$drop = F2(
-	function (n, list) {
-		drop:
-		while (true) {
-			if (n <= 0) {
-				return list;
-			} else {
-				if (!list.b) {
-					return list;
-				} else {
-					var x = list.a;
-					var xs = list.b;
-					var $temp$n = n - 1,
-						$temp$list = xs;
-					n = $temp$n;
-					list = $temp$list;
-					continue drop;
-				}
-			}
-		}
-	});
-var $author$project$InitTools$getBall = F2(
-	function (lst, n) {
-		getBall:
-		while (true) {
-			if (n === 1) {
-				return A2(
-					$elm$core$Maybe$withDefault,
-					$author$project$InitTools$dummyBall,
-					$elm$core$List$head(lst));
-			} else {
-				var $temp$lst = A2($elm$core$List$drop, 1, lst),
-					$temp$n = n - 1;
-				lst = $temp$lst;
-				n = $temp$n;
-				continue getBall;
-			}
-		}
-	});
 var $author$project$Collision$basic_hit = function (model) {
 	var now_bricks = model.bricks;
-	var now_ball2 = A2($author$project$InitTools$getBall, model.ball, 2);
-	var now_ball1 = A2($author$project$InitTools$getBall, model.ball, 1);
+	var now_ball2 = A2($author$project$Tools$getBall, model.ball, 2);
+	var now_ball1 = A2($author$project$Tools$getBall, model.ball, 1);
 	var status = A2($author$project$Collision$ball_direction, now_ball1, now_bricks);
 	return _Utils_update(
 		model,
@@ -7053,14 +7114,14 @@ var $author$project$Strangers1$Update$movePaddle = F2(
 						if (_v1) {
 							return A2($author$project$Model$Point, -vNorm, 0);
 						} else {
-							return $author$project$InitTools$dummyPoint;
+							return $author$project$Tools$dummyPoint;
 						}
 					case 'Right':
 						var _v2 = _Utils_cmp(pos.x, model.canvas.w - 18) < 0;
 						if (_v2) {
 							return A2($author$project$Model$Point, vNorm, 0);
 						} else {
-							return $author$project$InitTools$dummyPoint;
+							return $author$project$Tools$dummyPoint;
 						}
 					default:
 						return A2($author$project$Model$Point, 0, 0);
@@ -7087,14 +7148,14 @@ var $author$project$Strangers1$Update$movePaddle = F2(
 				paddle: A2($elm$core$List$map, done, model.paddle)
 			});
 	});
-var $author$project$InitTools$getPaddle = F2(
+var $author$project$Tools$getPaddle = F2(
 	function (lst, n) {
 		getPaddle:
 		while (true) {
 			if (n === 1) {
 				return A2(
 					$elm$core$Maybe$withDefault,
-					$author$project$InitTools$dummyPaddle,
+					$author$project$Tools$dummyPaddle,
 					$elm$core$List$head(lst));
 			} else {
 				var $temp$lst = A2($elm$core$List$drop, 1, lst),
@@ -7240,8 +7301,8 @@ var $author$project$Strangers1$Collision$paddleCheck = function (model) {
 		[
 			A2(
 			$author$project$Strangers1$Collision$hitCheck,
-			A2($author$project$InitTools$getBall, model.ball, 1).collision,
-			A2($author$project$InitTools$getPaddle, model.paddle, 1).collision)
+			A2($author$project$Tools$getBall, model.ball, 1).collision,
+			A2($author$project$Tools$getPaddle, model.paddle, 1).collision)
 		]);
 	var total_hit = $elm$core$List$concat(
 		A2($elm$core$List$filterMap, hit_turn_lines, check_hit));
@@ -7261,8 +7322,8 @@ var $author$project$Strangers1$Collision$paddleCheck = function (model) {
 				return {x: b.x - a.x, y: b.y - a.y};
 			},
 			total_hit));
-	var ball2 = A2($author$project$InitTools$getBall, model.ball, 2);
-	var ball = A2($author$project$InitTools$getBall, model.ball, 1);
+	var ball2 = A2($author$project$Tools$getBall, model.ball, 2);
+	var ball = A2($author$project$Tools$getBall, model.ball, 1);
 	var _v0 = $elm$core$List$isEmpty(total_hit);
 	if (_v0) {
 		return model;
@@ -7283,7 +7344,7 @@ var $author$project$Strangers1$Collision$paddleCheck = function (model) {
 	}
 };
 var $author$project$Strangers1$Collision$wallCheck = function (model) {
-	var old = A2($author$project$InitTools$getBall, model.ball, 1);
+	var old = A2($author$project$Tools$getBall, model.ball, 1);
 	var pos = old.pos;
 	var v = old.v;
 	var vcBall = function () {
@@ -7321,22 +7382,11 @@ var $author$project$Strangers1$Collision$wallCheck = function (model) {
 				[
 					vcBall(
 					hcBall(old)),
-					A2($author$project$InitTools$getBall, model.ball, 2)
+					A2($author$project$Tools$getBall, model.ball, 2)
 				])
 		});
 };
 var $author$project$Model$NoMore = {$: 'NoMore'};
-var $elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			$elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
 var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$core$Basics$sqrt = _Basics_sqrt;
 var $author$project$Strangers1$Update$winJudge = function (model) {
@@ -7351,8 +7401,8 @@ var $author$project$Strangers1$Update$winJudge = function (model) {
 		}
 	};
 	var brick_all = A2($elm$core$List$map, change_brick, model.bricks);
-	var ball2 = A2($author$project$InitTools$getBall, model.ball, 2);
-	var ball = A2($author$project$InitTools$getBall, model.ball, 1);
+	var ball2 = A2($author$project$Tools$getBall, model.ball, 2);
+	var ball = A2($author$project$Tools$getBall, model.ball, 1);
 	var closeEnough = _Utils_cmp(
 		$elm$core$Basics$sqrt(
 			A2($elm$core$Basics$pow, ball.pos.x - ball2.pos.x, 2) + A2($elm$core$Basics$pow, ball.pos.y - ball2.pos.y, 2)),
@@ -7406,20 +7456,22 @@ var $author$project$Strangers1$Update$move = F2(
 var $author$project$Messages$Friends2 = {$: 'Friends2'};
 var $author$project$Strangers1$Update$bezierBall = F2(
 	function (model, state) {
-		var newBallPos = state.bezierCurve(state.t);
-		var ball = A2($author$project$InitTools$getBall, model.ball, state.index);
-		var newBall = _Utils_update(
-			ball,
-			{pos: newBallPos});
+		var getfunc = function (_v0) {
+			var func = _v0.a;
+			return func;
+		};
+		var newBalls = A3(getfunc, state._function, model, state.t).ball;
 		return _Utils_update(
 			model,
-			{
-				ball: _List_fromArray(
-					[
-						A2($author$project$InitTools$getBall, model.ball, 1),
-						newBall
-					])
-			});
+			{ball: newBalls});
+	});
+var $author$project$Strangers1$Update$loopState = F2(
+	function (state, t) {
+		return (state.loop && (state.t < 1)) ? _Utils_update(
+			state,
+			{t: state.t + t}) : _Utils_update(
+			state,
+			{t: state.t - 1});
 	});
 var $author$project$Strangers1$Update$stateIterate = function (model) {
 	var _v0 = $elm$core$List$isEmpty(model.state);
@@ -7441,9 +7493,7 @@ var $author$project$Strangers1$Update$stateIterate = function (model) {
 		var newState = A2(
 			$elm$core$List$map,
 			function (s) {
-				return _Utils_update(
-					s,
-					{t: s.t + 0.01});
+				return A2($author$project$Strangers1$Update$loopState, s, 0.01);
 			},
 			state);
 		var newModel = A3(

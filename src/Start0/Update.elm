@@ -17,10 +17,6 @@ update msg model =
                 Animation ->
                     case msg of
                         Tick time ->
-                            model |> stateIterate
-                        _ ->
-                            model
-                        Tick time ->
                             model |> move (min time 25)
                                   |> stateIterate
                         _ -> model
@@ -38,21 +34,10 @@ move elapsed model =
         interval = 15
     in
     if elapsed_ > interval then
-        { model | clock = elapsed_ - interval } |> exec
+        { model | clock = elapsed_ - interval }
 
     else
         { model | clock = elapsed_ }
-
-exec : Model -> Model
-exec model =
-    let
-        dir =
-            case model.gameStatus of
-                Running dr -> dr
-                _ -> Stay
-    in
-    model
-        |> fadeImg
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -60,22 +45,15 @@ stateIterate model =
         True ->
             { model
             | gameStatus = ChangeLevel
-            , gameLevel = Friends2
+            , gameLevel = Strangers1
             }
         _ ->
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.01) state
-                setModel : State -> Model -> Model
-                setModel stat model_ =
-                    case stat.name of
-                        "fadeImg" ->
-                            --TODO: fixit
-                        _ ->
-                            model_
+                    List.map (\s -> loopState s 0.02) state
                 newModel =
-                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
+                    { model | state = newState }
 
             in
             newModel

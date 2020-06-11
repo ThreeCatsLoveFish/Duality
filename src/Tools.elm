@@ -78,7 +78,21 @@ getPaddleColl pos r h angle precision =
     in
     List.reverse <| List.map toPoints points
 
+dummyState : State
+dummyState = { name = "dummy"
+             , value = 0
+             , t = 0
+             , function = Func (\m _ -> m)
+             , loop = False
+             }
 
+getState : List State -> String -> State
+getState states name =
+    let
+        state_ = List.filter (\s -> s.name == name) states
+        state = Maybe.withDefault dummyState (List.head state_)
+    in
+    state
 
 dummyBrick : Brick
 dummyBrick =

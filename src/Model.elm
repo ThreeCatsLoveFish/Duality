@@ -84,7 +84,7 @@ type HitTime
 
 type alias State =
     { name : String
-    , index : Int
+    , value : Float
     , t : Float
     , function : StateFunc
     , loop : Bool
