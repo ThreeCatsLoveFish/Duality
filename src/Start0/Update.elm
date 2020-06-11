@@ -1,7 +1,7 @@
 module Start0.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
-
+import Tools exposing (..)
 import Start0.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -9,11 +9,6 @@ update msg model =
     let
         model0 =
             case model.gameStatus of
-                Pass ->
-                    let
-                        model1 = model |> getEndState
-                    in
-                    { model1 | gameStatus = Animation }
                 Animation ->
                     case msg of
                         Tick time ->
@@ -24,7 +19,17 @@ update msg model =
                     model
     in
     ( { model0 | visualization = Start0.View.visualize model} , Cmd.none )
--- TODO
+
+exec : Model -> Model
+exec model =
+    let
+        dir =
+            case model.gameStatus of
+                Running dr -> dr
+                _ -> Stay
+    in
+    model
+        |> winJudge
 
 move : Float -> Model -> Model
 move elapsed model =
@@ -34,7 +39,7 @@ move elapsed model =
         interval = 15
     in
     if elapsed_ > interval then
-        { model | clock = elapsed_ - interval }
+        { model | clock = elapsed_ - interval } |> exec
 
     else
         { model | clock = elapsed_ }
@@ -51,12 +56,20 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.02) state
+                    List.map (\s -> loopState s 0.005) state
                 newModel =
                     { model | state = newState }
 
             in
             newModel
+
+winJudge : Model -> Model
+winJudge model =
+    if ((getState model.state "fadeInAndOut").t > 1) then
+        { model | gameStatus = ChangeLevel
+                , gameLevel = Strangers1 }
+    else
+        model
 
 getEndState : Model -> Model
 getEndState model =
@@ -64,7 +77,11 @@ getEndState model =
 
 loopState : State -> Float -> State
 loopState state t =
-    if (state.loop == True && state.t < 1) then
-         { state | t = state.t + t}
-    else
-         { state | t = state.t - 1}
+    case state.loop of
+        True ->
+            if (state.loop == True && state.t < 1) then
+                 { state | t = state.t + t}
+            else
+                 { state | t = state.t - 1}
+        False ->
+            { state | t = state.t + t}

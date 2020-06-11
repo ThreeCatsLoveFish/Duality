@@ -5158,6 +5158,7 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $author$project$Messages$Animation = {$: 'Animation'};
 var $author$project$Model$Func = function (a) {
 	return {$: 'Func', a: a};
 };
@@ -5186,7 +5187,6 @@ var $author$project$Model$Model = function (gameLevel) {
 		};
 	};
 };
-var $author$project$Messages$Prepare = {$: 'Prepare'};
 var $author$project$Messages$Start0 = {$: 'Start0'};
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
@@ -5367,7 +5367,7 @@ var $author$project$Start0$Init$init = function () {
 		value: 0
 	};
 	var canvas = {h: 600, w: 400};
-	var model = $author$project$Model$Model($author$project$Messages$Start0)($author$project$Messages$Prepare)(_List_Nil)(_List_Nil)(_List_Nil)(
+	var model = $author$project$Model$Model($author$project$Messages$Start0)($author$project$Messages$Animation)(_List_Nil)(_List_Nil)(_List_Nil)(
 		_List_fromArray(
 			[state]))(canvas)(
 		_Utils_Tuple2($author$project$BasicView$pixelWidth, $author$project$BasicView$pixelHeight))(0)(true)(false)(
@@ -6009,6 +6009,7 @@ var $author$project$Model$Point = F2(
 	function (x, y) {
 		return {x: x, y: y};
 	});
+var $author$project$Messages$Prepare = {$: 'Prepare'};
 var $author$project$Messages$Strangers1 = {$: 'Strangers1'};
 var $elm$core$Basics$cos = _Basics_cos;
 var $author$project$Model$Block = F2(
@@ -6793,21 +6794,36 @@ var $author$project$Strangers1$Init$init = function () {
 			}),
 		$elm$core$Platform$Cmd$none);
 }();
-var $author$project$Messages$Animation = {$: 'Animation'};
-var $author$project$Start0$Update$getEndState = function (model) {
-	return model;
+var $author$project$Messages$Stay = {$: 'Stay'};
+var $author$project$Messages$ChangeLevel = {$: 'ChangeLevel'};
+var $author$project$Start0$Update$winJudge = function (model) {
+	return (A2($author$project$Tools$getState, model.state, 'fadeInAndOut').t > 1) ? _Utils_update(
+		model,
+		{gameLevel: $author$project$Messages$Strangers1, gameStatus: $author$project$Messages$ChangeLevel}) : model;
+};
+var $author$project$Start0$Update$exec = function (model) {
+	var dir = function () {
+		var _v0 = model.gameStatus;
+		if (_v0.$ === 'Running') {
+			var dr = _v0.a;
+			return dr;
+		} else {
+			return $author$project$Messages$Stay;
+		}
+	}();
+	return $author$project$Start0$Update$winJudge(model);
 };
 var $author$project$Start0$Update$move = F2(
 	function (elapsed, model) {
 		var interval = 15;
 		var elapsed_ = model.clock + elapsed;
-		return (_Utils_cmp(elapsed_, interval) > 0) ? _Utils_update(
-			model,
-			{clock: elapsed_ - interval}) : _Utils_update(
+		return (_Utils_cmp(elapsed_, interval) > 0) ? $author$project$Start0$Update$exec(
+			_Utils_update(
+				model,
+				{clock: elapsed_ - interval})) : _Utils_update(
 			model,
 			{clock: elapsed_});
 	});
-var $author$project$Messages$ChangeLevel = {$: 'ChangeLevel'};
 var $elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {
 		return true;
@@ -6817,11 +6833,18 @@ var $elm$core$List$isEmpty = function (xs) {
 };
 var $author$project$Start0$Update$loopState = F2(
 	function (state, t) {
-		return (state.loop && (state.t < 1)) ? _Utils_update(
-			state,
-			{t: state.t + t}) : _Utils_update(
-			state,
-			{t: state.t - 1});
+		var _v0 = state.loop;
+		if (_v0) {
+			return (state.loop && (state.t < 1)) ? _Utils_update(
+				state,
+				{t: state.t + t}) : _Utils_update(
+				state,
+				{t: state.t - 1});
+		} else {
+			return _Utils_update(
+				state,
+				{t: state.t + t});
+		}
 	});
 var $author$project$Start0$Update$stateIterate = function (model) {
 	var _v0 = $elm$core$List$isEmpty(model.state);
@@ -6834,7 +6857,7 @@ var $author$project$Start0$Update$stateIterate = function (model) {
 		var newState = A2(
 			$elm$core$List$map,
 			function (s) {
-				return A2($author$project$Start0$Update$loopState, s, 0.02);
+				return A2($author$project$Start0$Update$loopState, s, 0.005);
 			},
 			state);
 		var newModel = _Utils_update(
@@ -6847,25 +6870,19 @@ var $author$project$Start0$Update$update = F2(
 	function (msg, model) {
 		var model0 = function () {
 			var _v0 = model.gameStatus;
-			switch (_v0.$) {
-				case 'Pass':
-					var model1 = $author$project$Start0$Update$getEndState(model);
-					return _Utils_update(
-						model1,
-						{gameStatus: $author$project$Messages$Animation});
-				case 'Animation':
-					if (msg.$ === 'Tick') {
-						var time = msg.a;
-						return $author$project$Start0$Update$stateIterate(
-							A2(
-								$author$project$Start0$Update$move,
-								A2($elm$core$Basics$min, time, 25),
-								model));
-					} else {
-						return model;
-					}
-				default:
+			if (_v0.$ === 'Animation') {
+				if (msg.$ === 'Tick') {
+					var time = msg.a;
+					return $author$project$Start0$Update$stateIterate(
+						A2(
+							$author$project$Start0$Update$move,
+							A2($elm$core$Basics$min, time, 25),
+							model));
+				} else {
 					return model;
+				}
+			} else {
+				return model;
 			}
 		}();
 		return _Utils_Tuple2(
@@ -6881,7 +6898,6 @@ var $author$project$Messages$Right = {$: 'Right'};
 var $author$project$Messages$Running = function (a) {
 	return {$: 'Running', a: a};
 };
-var $author$project$Messages$Stay = {$: 'Stay'};
 var $author$project$Strangers1$Update$getEndState = function (model) {
 	return model;
 };
