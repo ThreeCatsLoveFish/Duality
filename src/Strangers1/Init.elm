@@ -4,7 +4,7 @@ import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
-import InitTools exposing (..)
+import Tools exposing (..)
 import BasicView exposing (..)
 import Bezier exposing (..)
 import Strangers1.View

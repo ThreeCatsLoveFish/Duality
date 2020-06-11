@@ -1,7 +1,7 @@
 module Strangers1.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
-import InitTools exposing (..)
+import Tools exposing (..)
 
 -- TODO: Change for test
 import Strangers1.Collision exposing (..)

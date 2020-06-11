@@ -1,7 +1,7 @@
 module BasicView exposing (..)
 
 import Model exposing (..)
-import InitTools exposing (..)
+import Tools exposing (..)
 
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Html.Attributes exposing (..)
