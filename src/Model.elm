@@ -88,6 +88,7 @@ type alias State =
     , index : Int
     , t : Float
     , bezierCurve : (Float -> Point)
+    , loop : Bool
     }
 
 type alias Model =

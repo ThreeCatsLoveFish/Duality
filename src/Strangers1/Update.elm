@@ -180,7 +180,7 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.map (\s -> { s | t = s.t + 0.01} ) state
+                    List.map (\s -> loopState s 0.01) state
                 setModel : State -> Model -> Model
                 setModel stat model_ =
                     case stat.name of
@@ -208,3 +208,10 @@ bezierBall model state =
 getEndState : Model -> Model
 getEndState model =
     model
+
+loopState : State -> Float -> State
+loopState state t =
+    if (state.loop == True && state.t < 1) then
+         { state | t = state.t + t}
+    else
+         { state | t = state.t - 1}
