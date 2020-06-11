@@ -1,40 +1,92 @@
 module Start0.Update exposing (..)
-
 import Messages exposing (..)
 import Model exposing (..)
 
-update : Msg -> Model -> (Model, Cmd Msg)
+import Start0.View exposing (..)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
         model0 =
-            case msg of
-                KeyDown Space ->
-                    case model.activeInput of
-                        True ->
-                            { model
-                            | gameLevel = Strangers1
-                            , gameStatus = ChangeLevel
-                            }
-                        False ->
-                            model
-                Tick _ ->
-                    case (model.activeState, model.activeInput) of
-                        (True, False) ->
-                            let
-                                model1 =
-                                    model |> stateIterate
-                            in
-                            case List.isEmpty model1.state of
-                                True -> {model1|activeState=False, activeInput=True}
-                                _ -> model1
-                        (False, True) -> model
+            case model.gameStatus of
+                Pass ->
+                    let
+                        model1 = model |> getEndState
+                    in
+                    { model1 | gameStatus = Animation }
+                Animation ->
+                    case msg of
+                        Tick time ->
+                            model |> stateIterate
                         _ ->
-                            { model | activeState = True, activeInput = False}
+                            model
+                        Tick time ->
+                            model |> move (min time 25)
+                                  |> stateIterate
+                        _ -> model
                 _ ->
                     model
     in
-    ( model0, Cmd.none )
+    ( { model0 | visualization = Start0.View.visualize model} , Cmd.none )
+-- TODO
+
+move : Float -> Model -> Model
+move elapsed model =
+    let
+        elapsed_ =
+            model.clock + elapsed
+        interval = 15
+    in
+    if elapsed_ > interval then
+        { model | clock = elapsed_ - interval } |> exec
+
+    else
+        { model | clock = elapsed_ }
+
+exec : Model -> Model
+exec model =
+    let
+        dir =
+            case model.gameStatus of
+                Running dr -> dr
+                _ -> Stay
+    in
+    model
+        |> fadeImg
 
 stateIterate : Model -> Model
-stateIterate model = model
+stateIterate model =
+    case List.isEmpty model.state of
+        True ->
+            { model
+            | gameStatus = ChangeLevel
+            , gameLevel = Friends2
+            }
+        _ ->
+            let
+                state = model.state
+                newState =
+                    List.map (\s -> loopState s 0.01) state
+                setModel : State -> Model -> Model
+                setModel stat model_ =
+                    case stat.name of
+                        "fadeImg" ->
+                            --TODO: fixit
+                        _ ->
+                            model_
+                newModel =
+                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
 
+            in
+            newModel
+
+getEndState : Model -> Model
+getEndState model =
+    model
+
+loopState : State -> Float -> State
+loopState state t =
+    if (state.loop == True && state.t < 1) then
+         { state | t = state.t + t}
+    else
+         { state | t = state.t - 1}

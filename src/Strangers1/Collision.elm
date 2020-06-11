@@ -1,5 +1,5 @@
 module Strangers1.Collision exposing (..)
-import InitTools exposing (..)
+import Tools exposing (..)
 import Model exposing (..)
 
 

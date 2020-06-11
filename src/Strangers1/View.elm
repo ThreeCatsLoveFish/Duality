@@ -7,7 +7,7 @@ import Svg.Attributes as SA
 
 import Model exposing (..)
 import Messages exposing (..)
-import InitTools exposing (..)
+import Tools exposing (..)
 import BasicView as ViewTest
 
 

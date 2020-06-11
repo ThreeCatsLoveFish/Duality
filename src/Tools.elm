@@ -1,4 +1,4 @@
-module InitTools exposing (..)
+module Tools exposing (..)
 
 import Model exposing (..)
 
@@ -136,3 +136,4 @@ pos2block pos object =
         y = pos.y
     in
     Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
+

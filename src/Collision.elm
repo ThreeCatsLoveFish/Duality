@@ -1,5 +1,5 @@
 module Collision exposing (basic_hit)
-import InitTools exposing (getBall)
+import Tools exposing (getBall)
 import Model exposing (Ball, Brick, Block, Model, HitTime(..))
 
 

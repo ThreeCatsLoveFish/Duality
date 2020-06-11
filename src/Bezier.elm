@@ -1,5 +1,5 @@
 module Bezier exposing (..)
-import InitTools exposing (getBall)
+import Tools exposing (getBall)
 import Model exposing (..)
 
 -- Functions realized by using Bézier curve

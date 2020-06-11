@@ -1,6 +1,6 @@
 module Friends2.Find exposing (..)
 
-import InitTools exposing (dummyBrick)
+import Tools exposing (dummyBrick)
 import Model exposing (..)
 import Messages exposing (..)
 
