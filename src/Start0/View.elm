@@ -43,7 +43,7 @@ visualize model =
               , width 834
               , height 834
               , style "position" "relative"
-              , style "left" (String.fromFloat (w / 2) ++ "px")
+              , style "left" (String.fromFloat ((w - pixelHeight * r) / 2) ++ "px")
               , style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
               , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
               , alt "Network Failure"
