@@ -59,6 +59,7 @@ init =
                 (Point (canvas.w/2 - 40) (canvas.h/4 + 40))
                 (Point (canvas.w/2 + 40) (canvas.h/4 + 40))
                 (Point (canvas.w/2) (canvas.h/4))
+            , loop = True
             }
         paddle : Paddle
         paddle =
