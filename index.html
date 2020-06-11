@@ -5220,7 +5220,7 @@ var $author$project$Model$colorToString = function (_v0) {
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm$core$Basics$ge = _Utils_ge;
 var $author$project$Start0$View$genFadeInAndOut = function (t) {
-	return (t < 0.3) ? (t / 0.3) : (((t >= 0.3) && (t <= 0.7)) ? 1 : ((0.7 - t) / 0.3));
+	return (t < 0.3) ? (t / 0.3) : (((t >= 0.3) && (t <= 0.7)) ? 1 : ((1.0 - t) / 0.3));
 };
 var $author$project$Tools$dummyState = {
 	_function: $author$project$Model$Func(
@@ -5316,10 +5316,7 @@ var $author$project$Start0$View$visualize = function (model) {
 				A2($elm$html$Html$Attributes$style, 'height', '100%'),
 				A2($elm$html$Html$Attributes$style, 'position', 'fixed'),
 				A2($elm$html$Html$Attributes$style, 'left', '0'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'top',
-				$elm$core$String$fromFloat((h - ($author$project$Start0$View$pixelHeight * r)) / 2) + 'px'),
+				A2($elm$html$Html$Attributes$style, 'top', '0'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'background-color',
@@ -5334,7 +5331,7 @@ var $author$project$Start0$View$visualize = function (model) {
 						$elm$html$Html$Attributes$src('icon.png'),
 						$elm$html$Html$Attributes$width(834),
 						$elm$html$Html$Attributes$height(834),
-						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+						A2($elm$html$Html$Attributes$style, 'position', 'relative'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'left',
@@ -6622,27 +6619,33 @@ var $author$project$BasicView$visualizePause = function (model) {
 				$elm$html$Html$text('Paused')
 			]));
 };
-var $author$project$BasicView$visualizePrepare = function (model) {
+var $author$project$Strangers1$View$visualizePrepare = function (model) {
+	var _v0 = model.size;
+	var w = _v0.a;
+	var h = _v0.b;
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'background', 'rgba(244, 244, 244, 0.85)'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'background',
+				$author$project$Model$colorToString($author$project$Strangers1$View$backgroundColor)),
 				A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'height',
-				$elm$core$String$fromFloat(model.canvas.h) + 'px'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'width',
-				$elm$core$String$fromFloat(model.canvas.w) + 'px'),
+				A2($elm$html$Html$Attributes$style, 'height', '100%'),
+				A2($elm$html$Html$Attributes$style, 'width', '100%'),
 				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-				A2($elm$html$Html$Attributes$style, 'left', '0'),
-				A2($elm$html$Html$Attributes$style, 'top', '0'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'left',
+				$elm$core$String$fromFloat(w) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'top',
+				$elm$core$String$fromFloat(h) + 'px'),
 				A2($elm$html$Html$Attributes$style, 'font-family', 'Helvetica, Arial, sans-serif'),
 				A2($elm$html$Html$Attributes$style, 'font-size', '48px'),
-				A2($elm$html$Html$Attributes$style, 'color', '#77C0C5'),
+				A2($elm$html$Html$Attributes$style, 'color', '#FFFFFF'),
 				A2($elm$html$Html$Attributes$style, 'line-height', '500px'),
 				A2(
 				$elm$html$Html$Attributes$style,
@@ -6651,7 +6654,21 @@ var $author$project$BasicView$visualizePrepare = function (model) {
 			]),
 		_List_fromArray(
 			[
-				$elm$html$Html$text('Press space to start. ')
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Strangers')
+					])),
+				A2($elm$html$Html$div, _List_Nil, _List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Press space to start. ')
+					]))
 			]));
 };
 var $author$project$Strangers1$View$visualize = function (model) {
@@ -6698,7 +6715,7 @@ var $author$project$Strangers1$View$visualize = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$author$project$BasicView$visualizePrepare(model),
+						$author$project$Strangers1$View$visualizePrepare(model),
 						$author$project$BasicView$visualizePause(model),
 						$author$project$BasicView$visualizePass(model),
 						$author$project$BasicView$visualizeLose(model)
@@ -7531,52 +7548,87 @@ var $author$project$Strangers1$Update$update = F2(
 			var _v0 = model.gameStatus;
 			switch (_v0.$) {
 				case 'Paused':
-					_v1$2:
+					_v1$3:
 					while (true) {
-						if (msg.$ === 'KeyDown') {
-							switch (msg.a.$) {
-								case 'Space':
-									var _v2 = msg.a;
+						switch (msg.$) {
+							case 'KeyDown':
+								switch (msg.a.$) {
+									case 'Space':
+										var _v2 = msg.a;
+										return _Utils_update(
+											model,
+											{
+												gameStatus: $author$project$Messages$Running($author$project$Messages$Stay)
+											});
+									case 'Key_R':
+										var _v3 = msg.a;
+										return _Utils_update(
+											model,
+											{gameStatus: $author$project$Messages$ChangeLevel});
+									default:
+										break _v1$3;
+								}
+							case 'Resize':
+								var w = msg.a;
+								var h = msg.b;
+								return _Utils_update(
+									model,
+									{
+										size: _Utils_Tuple2(w, h)
+									});
+							default:
+								break _v1$3;
+						}
+					}
+					return model;
+				case 'Prepare':
+					_v4$2:
+					while (true) {
+						switch (msg.$) {
+							case 'KeyDown':
+								if (msg.a.$ === 'Space') {
+									var _v5 = msg.a;
 									return _Utils_update(
 										model,
 										{
 											gameStatus: $author$project$Messages$Running($author$project$Messages$Stay)
 										});
-								case 'Key_R':
-									var _v3 = msg.a;
-									return _Utils_update(
-										model,
-										{gameStatus: $author$project$Messages$ChangeLevel});
-								default:
-									break _v1$2;
-							}
-						} else {
-							break _v1$2;
+								} else {
+									break _v4$2;
+								}
+							case 'Resize':
+								var w = msg.a;
+								var h = msg.b;
+								return _Utils_update(
+									model,
+									{
+										size: _Utils_Tuple2(w, h)
+									});
+							default:
+								break _v4$2;
 						}
 					}
 					return model;
-				case 'Prepare':
-					if ((msg.$ === 'KeyDown') && (msg.a.$ === 'Space')) {
-						var _v5 = msg.a;
-						return _Utils_update(
-							model,
-							{
-								gameStatus: $author$project$Messages$Running($author$project$Messages$Stay)
-							});
-					} else {
-						return model;
-					}
 				case 'Pass':
 					var model1 = $author$project$Strangers1$Update$getEndState(model);
 					return _Utils_update(
 						model1,
 						{gameStatus: $author$project$Messages$Animation});
 				case 'Animation':
-					if (msg.$ === 'Tick') {
-						var time = msg.a;
-						return $author$project$Strangers1$Update$stateIterate(model);
-					} else {
-						return model;
+					switch (msg.$) {
+						case 'Tick':
+							var time = msg.a;
+							return $author$project$Strangers1$Update$stateIterate(model);
+						case 'Resize':
+							var w = msg.a;
+							var h = msg.b;
+							return _Utils_update(
+								model,
+								{
+									size: _Utils_Tuple2(w, h)
+								});
+						default:
+							return model;
 					}
 				case 'Running':
 					switch (msg.$) {
@@ -7619,6 +7671,14 @@ var $author$project$Strangers1$Update$update = F2(
 									$author$project$Strangers1$Update$move,
 									A2($elm$core$Basics$min, time, 25),
 									model));
+						case 'Resize':
+							var w = msg.a;
+							var h = msg.b;
+							return _Utils_update(
+								model,
+								{
+									size: _Utils_Tuple2(w, h)
+								});
 						default:
 							return model;
 					}

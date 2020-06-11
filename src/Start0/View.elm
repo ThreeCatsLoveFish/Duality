@@ -2,13 +2,10 @@ module Start0.View exposing (..)
 
 import Html exposing (Html, Attribute, button, div, h1, input, text, img)
 import Html.Attributes exposing (..)
-import Svg
-import Svg.Attributes as SA
 
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
-import BasicView as ViewTest
 
 backgroundColor : Color
 backgroundColor = rgb 0 0 0
@@ -39,13 +36,13 @@ visualize model =
         , style "height" "100%"
         , style "position" "fixed"
         , style "left" "0"
-        , style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
+        , style "top" "0"
         , style "background-color" (colorToString backgroundColor)
         ]
         [ img [ src "icon.png"
               , width 834
               , height 834
-              , style "position" "absolute"
+              , style "position" "relative"
               , style "left" (String.fromFloat (w / 2) ++ "px")
               , style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
               , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
@@ -61,4 +58,4 @@ genFadeInAndOut t =
         else if ( t >= 0.3 && t <= 0.7 ) then
             1
         else
-            ( 0.7 - t ) / 0.3
+            ( 1.0 - t ) / 0.3

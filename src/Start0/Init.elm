@@ -4,9 +4,7 @@ import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
-import Tools exposing (..)
 import BasicView exposing (..)
-import Start0.State exposing (genFadeInAndOut)
 import Start0.View
 
 init : ( Model, Cmd Msg )

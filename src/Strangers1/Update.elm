@@ -18,11 +18,15 @@ update msg model =
                             { model | gameStatus = Running Stay }
                         KeyDown Key_R ->
                             { model | gameStatus = ChangeLevel }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Prepare ->
                     case msg of
                         KeyDown Space ->
                             { model | gameStatus = Running Stay }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Pass ->
                     let
@@ -33,6 +37,8 @@ update msg model =
                     case msg of
                         Tick time ->
                             model |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ ->
                             model
                 Running _ ->
@@ -59,6 +65,8 @@ update msg model =
                         Tick time ->
                             model |> move (min time 25)
                                   |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 _ ->
                     model
