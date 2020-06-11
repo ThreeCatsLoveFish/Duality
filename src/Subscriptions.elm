@@ -25,6 +25,7 @@ subscriptions model =
         , onResize Resize
         ]
 
+
 keyUp : Int -> Msg
 keyUp keycode =
     case keycode of

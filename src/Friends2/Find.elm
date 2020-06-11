@@ -2,7 +2,6 @@ module Friends2.Find exposing (..)
 
 import InitTools exposing (dummyBrick)
 import Model exposing (..)
-import Messages exposing (..)
 
 find : List Brick -> Int -> (Point, Int)
 find bricks lastIndex =

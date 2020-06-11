@@ -84,12 +84,13 @@ type HitTime
 
 type alias State =
     { name : String
-    , object : String
     , index : Int
     , t : Float
-    , bezierCurve : (Float -> Point)
+    , function : StateFunc
     , loop : Bool
     }
+
+type StateFunc = Func (Model->Float->Model)
 
 type alias Model =
     { gameLevel : GameLevel
