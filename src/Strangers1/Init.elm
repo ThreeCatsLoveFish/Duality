@@ -23,7 +23,8 @@ init =
                 v = Point 3.0 -3.0
                 r = 10
             in
-            { active = True
+            { dummyBall
+            | active = True
             , pos = pos
             , v = v
             , r = r
@@ -40,7 +41,8 @@ init =
                 v = Point 0 0
                 r = 10
             in
-            { active = True
+            { dummyBall
+            | active = True
             , pos = pos
             , v = v
             , r = r
@@ -69,9 +71,9 @@ init =
                 h = 3
                 angle = 40 * pi / 180
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
-                center = Point pos.x (pos.y + r)
             in
-            { pos = pos -- may not be necessary
+            { dummyPaddle
+            | pos = pos -- may not be necessary
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
             , block = dummyBlock
             , color = rgb 255 255 255
