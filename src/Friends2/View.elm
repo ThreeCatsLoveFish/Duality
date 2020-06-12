@@ -1,4 +1,4 @@
-module Strangers1.View exposing (..)
+module Friends2.View exposing (..)
 
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Html.Attributes exposing (..)
@@ -188,7 +188,7 @@ visualizePrepare model =
                 "none"
             )
         ]
-        [ div [] [ text "Strangers" ]
+        [ div [] [ text "Friends" ]
         , div [] []
         , div [] [ text "Press space to start. "]
         ]

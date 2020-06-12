@@ -43,12 +43,6 @@ bezierPos start end =
 bezierPosPos : Point -> Point -> Point -> Point -> ( Float -> Point )
 bezierPosPos start mid1 mid2 end =
     let
-        --newPoint a pa b pb =
-        --    { x = a * pa.x + (1 - a) * pb.x, y = b * pa.y + (1 - b) * pb.y }
-        --mid1 =
-        --    newPoint (3/4) start (5/6) end
-        --mid2 =
-        --    newPoint (1/4) start (1/6) end
         curve time =
             let
                 now = 1 - time
@@ -59,6 +53,25 @@ bezierPosPos start mid1 mid2 end =
     in
     curve
 
+bezierPoly : Poly -> ( Float -> Point )
+bezierPoly poly =
+    case poly of
+        start::mid1::mid2::end::_ ->
+            let
+                curve time =
+                    let
+                        now = 1 - time
+                    in
+                    { x = start.x*now^3 + 3*mid1.x*time*now^2 + 3*mid2.x*now*time^2 + end.x*time^3
+                    , y = start.y*now^3 + 3*mid1.y*time*now^2 + 3*mid2.y*now*time^2 + end.y*time^3
+                    }
+            in
+            curve
+        _ ->
+            let
+                curve _ = {x=0,y=0}
+            in
+            curve
 
 -- Change Color
 bezierColor : Color -> Color -> ( Float -> Color )
