@@ -91,7 +91,7 @@ init =
             newBricks brickInfo
         model =
             Model
-                Strangers1 Prepare
+                Strangers1 AnimationPrepare
                 [ball, ball2] [paddle] bricks
                 state
                 canvas (pixelWidth, pixelHeight) 0 True False

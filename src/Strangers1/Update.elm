@@ -22,13 +22,6 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
-                Prepare ->
-                    case msg of
-                        KeyDown Space ->
-                            { model | gameStatus = Running Stay } |> getGameState
-                        Resize w h ->
-                            { model | size = (toFloat w,toFloat h)}
-                        _ -> model
                 AnimationPrepare ->
                     case msg of
                         Tick time ->
@@ -37,6 +30,13 @@ update msg model =
                             { model | size = (toFloat w,toFloat h)}
                         _ ->
                             model
+                Prepare ->
+                    case msg of
+                        KeyDown Space ->
+                            { model | gameStatus = Running Stay } |> getGameState
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ -> model
                 Pass ->
                     let
                         model1 = model |> getEndState

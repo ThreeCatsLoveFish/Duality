@@ -180,7 +180,7 @@ visualize model =
             Running _ ->
                 "1"
             _ ->
-                "0.3"
+                "0"
         r =
             if w / h > model.canvas.w / model.canvas.h then
                 Basics.min 1 (h / model.canvas.h)
@@ -237,8 +237,7 @@ visualizePrepare model =
         --        "none"
         --    )
         ]
-        [ div [] [ text "Strangers" ]
-        , div [] [ text "Press space to start. "]
+        [ div [] [ text "Strangers (Press space to start)" ]
         ]
 
 --visualizePass : Model -> Html Msg

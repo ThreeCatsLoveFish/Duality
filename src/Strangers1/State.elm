@@ -2,7 +2,7 @@ module Strangers1.State exposing (..)
 import Bezier exposing (bezierPos, bezierColor)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Tools exposing (divState, getBall, getState)
-import Model exposing (Color, Model, Point, State, StateFunc(..), rgb)
+import Model exposing (..)
 
 
 genBezierBall2 : Point -> Point -> Point -> Point -> (Model -> Float -> Model)
@@ -31,9 +31,12 @@ genFadeInAndOut model t =
             else
                 ( 1.0 - t ) / 0.3
         (s_, state_) = divState model.state "fadeInAndOut"
-        s = { s_ | value = val}
+        state =
+            case t>1.1 of
+                False -> { s_ | value = val}::state_
+                _ -> state_
     in
-    { model | state = s::state_ }
+    { model | state = state }
 
 genChangeBallColor : Model -> Float -> Model
 genChangeBallColor model t=
@@ -73,13 +76,14 @@ stateIterate model =
                 state = model.state
                 newState =
                     List.map (\s -> loopState s 0.01) state
+                getFunc (Func func) = func
                 setModel : State -> Model -> Model
                 setModel stat model_ =
                     case stat.name of
                         "bezier" ->
                             bezierBall model_ stat
                         _ ->
-                            bezierBall model_ stat
+                            (getFunc stat.function) model_ stat.t
                 newModel =
                     List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
 
