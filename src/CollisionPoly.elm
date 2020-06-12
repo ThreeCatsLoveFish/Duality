@@ -1,4 +1,4 @@
-module Strangers1.Collision exposing (..)
+module CollisionPoly exposing (..)
 import Tools exposing (..)
 import Model exposing (..)
 

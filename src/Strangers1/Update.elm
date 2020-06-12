@@ -3,9 +3,9 @@ import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 
-import Strangers1.Collision exposing (..)
+import CollisionBlock exposing (..)
+import CollisionPoly exposing (..)
 import Strangers1.View exposing (..)
-import Collision exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -160,16 +160,15 @@ winJudge model =
         ball = getBall model.ball 1
         ball2 = getBall model.ball 2
         closeEnough =
-            sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 10 * ball.r
+            sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 6.5 * ball.r
         win =
             case closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->
                     Pass
                 False ->
-                    model.gameStatus
-                    --case (getBall model.ball 1).pos.y > model.canvas.h+10 of
-                    --    True -> Lose
-                    --    False -> model.gameStatus
+                    case (getBall model.ball 1).pos.y > model.canvas.h+10 of
+                        True -> Lose
+                        False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
 

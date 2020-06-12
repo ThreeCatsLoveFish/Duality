@@ -6,7 +6,6 @@ import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
 import BasicView exposing (..)
-import Bezier exposing (..)
 import Strangers1.State exposing (genBezierBall2)
 import Strangers1.View
 
@@ -37,7 +36,7 @@ init =
                 pos =
                     Point
                         (canvas.w/2)
-                        (canvas.h/4)
+                        (canvas.h/5)
                 v = Point 0 0
                 r = 10
             in
@@ -56,10 +55,10 @@ init =
             , t = 0
             , function = Func
                 ( genBezierBall2
-                  (Point (canvas.w/2) (canvas.h/4))
-                  (Point (canvas.w/2 - 40) (canvas.h/4 + 40))
-                  (Point (canvas.w/2 + 40) (canvas.h/4 + 40))
-                  (Point (canvas.w/2) (canvas.h/4))
+                  (Point (ball2.pos.x) (ball2.pos.y))
+                  (Point (ball2.pos.x - 40) (ball2.pos.y + 40))
+                  (Point (ball2.pos.x + 40) (ball2.pos.y + 40))
+                  (Point (ball2.pos.x) (ball2.pos.y))
                 )
             , loop = True
             }
@@ -88,7 +87,7 @@ init =
                     , canvas = canvas
                     , brick = {w=39, h=39}
                     , breath = 1
-                    , offset = dummyPoint
+                    , offset = Point 0 -20
                     , color = rgb 100 100 100
                     --, color = rgb 233 233 233
                     }
