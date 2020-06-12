@@ -2,14 +2,16 @@ module Main exposing (..)
 
 import Html exposing (Html)
 import Browser
+import Browser.Dom exposing (getViewport)
+import Task
 
 import Model exposing (..)
 import Messages exposing (..)
 
 import Start0.Init
 import Strangers1.Init
-{--
 import Friends2.Init
+{--
 import Lovers3.Init
 import Strangers4.Init
 import Companions5.Init
@@ -49,8 +51,8 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    Start0.Init.init
-    --Strangers1.Init.init
+    --Start0.Init.init
+    Friends2.Init.init
 
 {--}
 reinit : Model -> ( Model, Cmd Msg )
