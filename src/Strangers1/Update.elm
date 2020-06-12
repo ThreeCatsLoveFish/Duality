@@ -1,6 +1,7 @@
 module Strangers1.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
+import Strangers1.State exposing (..)
 import Tools exposing (..)
 
 import CollisionBlock exposing (..)
@@ -21,10 +22,18 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                AnimationPrepare ->
+                    case msg of
+                        Tick time ->
+                            model |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
                 Prepare ->
                     case msg of
                         KeyDown Space ->
-                            { model | gameStatus = Running Stay }
+                            { model | gameStatus = Running Stay } |> getGameState
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
@@ -32,8 +41,8 @@ update msg model =
                     let
                         model1 = model |> getEndState
                     in
-                    { model1 | gameStatus = Animation }
-                Animation ->
+                    { model1 | gameStatus = AnimationPass }
+                AnimationPass ->
                     case msg of
                         Tick time ->
                             model |> stateIterate
@@ -174,48 +183,3 @@ winJudge model =
 
 
 
-stateIterate : Model -> Model
-stateIterate model =
-    case List.isEmpty model.state of
-        True ->
-            { model
-            | gameStatus = ChangeLevel
-            , gameLevel = Friends2
-            }
-        _ ->
-            let
-                state = model.state
-                newState =
-                    List.map (\s -> loopState s 0.01) state
-                setModel : State -> Model -> Model
-                setModel stat model_ =
-                    case stat.name of
-                        "bezier" ->
-                            bezierBall model_ stat
-                        _ ->
-                            bezierBall model_ stat
-                newModel =
-                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
-
-            in
-            newModel
-
-bezierBall : Model -> State -> Model
-bezierBall model state =
-    let
-        getfunc (Func func) = func
-        newBalls =
-            (getfunc state.function model state.t).ball
-    in
-    { model | ball = newBalls }
-
-getEndState : Model -> Model
-getEndState model =
-    model
-
-loopState : State -> Float -> State
-loopState state t =
-    if (state.loop == True && state.t < 1) then
-         { state | t = state.t + t}
-    else
-         { state | t = state.t - 1}

@@ -6,7 +6,8 @@ import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
 import BasicView exposing (..)
-import Strangers1.State exposing (genBezierBall2)
+import Bezier exposing (..)
+import Strangers1.State exposing (genBezierBall2, genChangeBallColor, genFadeInAndOut)
 import Strangers1.View
 
 init : ( Model, Cmd Msg )
@@ -50,20 +51,15 @@ init =
             , color = rgb 244 244 244
             }
         --TODO: paddle fix
-        state : State
+        state : List State
         state =
-            { name = "bezier"
-            , value = 2
-            , t = 0
-            , function = Func
-                ( genBezierBall2
-                  (Point (ball2.pos.x) (ball2.pos.y))
-                  (Point (ball2.pos.x - 40) (ball2.pos.y + 40))
-                  (Point (ball2.pos.x + 40) (ball2.pos.y + 40))
-                  (Point (ball2.pos.x) (ball2.pos.y))
-                )
-            , loop = True
-            }
+            [ { name = "fadeInAndOut"
+              , value = 0
+              , t = 0
+              , function = Func genFadeInAndOut
+              , loop = False
+              }
+            ]
         paddle : Paddle
         paddle =
             let
@@ -97,9 +93,9 @@ init =
             newBricks brickInfo
         model =
             Model
-                Strangers1 Prepare
+                Strangers1 AnimationPrepare
                 [ball, ball2] [paddle] bricks
-                [state]
+                state
                 canvas (pixelWidth, pixelHeight) 0 True False
                 (div [] [])
     in
