@@ -32,7 +32,25 @@ genFadeInAndOut model t =
                 ( 1.0 - t ) / 0.3
         (s_, state_) = divState model.state "fadeInAndOut"
         state =
-            case t>1.1 of
+            case t>1 of
+                False -> { s_ | value = val}::state_
+                _ -> state_
+    in
+    { model | state = state }
+
+genFadeOut : Model -> Float -> Model
+genFadeOut model t =
+    let
+        val =
+            if  ( t < 0.4 ) then
+                1
+            else if ( t >= 0.4 && t <= 0.7 ) then
+                (t - 0.4) / 0.3
+            else
+                0
+        (s_, state_) = divState model.state "fadeOut"
+        state =
+            case t>2 of
                 False -> { s_ | value = val}::state_
                 _ -> state_
     in
@@ -54,7 +72,23 @@ genChangeBallColor model t=
     in
     {model | ball = newball, state = state}
 
-
+genChangeBallSize : Model -> Float -> Model
+genChangeBallSize model t=
+    let
+        t_ = min t 1
+        r_ = 10
+        ball1 = getBall model.ball 1
+        ball2 = getBall model.ball 2
+        newBall1 = {ball1 | r = r_ * ( 1 + t_ ) }
+        newBall2 = {ball2 | r = r_ * ( 1 + t_ ) }
+        newball = [newBall1, newBall2]
+        s_ = getState model.state "changeBallSize"
+        state =
+            case s_.t>= 1 of
+                 True -> []
+                 _ -> model.state
+    in
+    {model | ball = newball, state = state}
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -121,14 +155,26 @@ getGameState model =
 getEndState : Model -> Model
 getEndState model =
     let
-        s = { name = "changeBallColor"
+        s1 = { name = "changeBallColor"
             , value = 0
             , t = 0
             , function = Func (genChangeBallColor)
             , loop = False
             }
+        s2 = { name = "changeBallSize"
+            , value = 0
+            , t = 0
+            , function = Func (genChangeBallSize)
+            , loop = False
+            }
+        s3 = { name = "fadeOut"
+            , value = 0
+            , t = -1
+            , function = Func (genFadeOut)
+            , loop = False
+            }
     in
-    { model | state = [s] }
+    { model | state = [s1,s2,s3] }
 
 loopState : State -> Float -> State
 loopState state t =
