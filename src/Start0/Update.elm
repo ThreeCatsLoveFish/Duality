@@ -9,7 +9,7 @@ update msg model =
     let
         model0 =
             case model.gameStatus of
-                Animation ->
+                AnimationPass ->
                     case msg of
                         Tick time ->
                             model |> move (min time 25)

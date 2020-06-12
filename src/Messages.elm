@@ -11,7 +11,8 @@ type GameLevel
     | End7
 
 type GameStatus
-    = Animation
+    = AnimationPrepare
+    | AnimationPass
     | ChangeLevel
     | Prepare
     | Paused  -- stop updating game model, still updating the menu, show Paused
