@@ -50,6 +50,16 @@ update msg model =
                             { model | size = (toFloat w,toFloat h)}
                         _ ->
                             model
+                End ->
+                    case msg of
+                        KeyDown _ ->
+                            {model | gameStatus = AnimationPrepare
+                                   , gameLevel = Friends2
+                            }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
                 Running _ ->
                     case msg of
                         KeyDown key ->
@@ -81,7 +91,6 @@ update msg model =
                     model
     in
     ( { model0 | visualization = Strangers1.View.visualize model} , Cmd.none )
--- TODO
 
 move : Float -> Model -> Model
 move elapsed model =

@@ -84,9 +84,18 @@ visualizePaddle paddle =
 
 visualizeBrick : Brick -> Svg.Svg Msg
 visualizeBrick brick=
+    let
+        alpha =
+            case brick.hitTime of
+                Hit 0 ->
+                    "1"
+                _ ->
+                    "0"
+    in
     Svg.polygon
         [ SA.points (polyToString brick.collision)
         , SA.fill (colorToString (changeBrickColor brick))
+        , SA.opacity alpha
         ]
         []
 
@@ -179,6 +188,10 @@ visualize model =
         alpha = case model.gameStatus of
             Running _ ->
                 "1"
+            AnimationPass ->
+                "1"
+            Pass ->
+                "1"
             _ ->
                 "0"
         r =
@@ -189,8 +202,8 @@ visualize model =
                 Basics.min 1 (w / model.canvas.w)
     in
     div
-        [ style "width" (String.fromFloat w++"px")
-        , style "height" (String.fromFloat h++"px")
+        [ style "width" "100%"
+        , style "height" "100%"
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
@@ -210,7 +223,6 @@ visualize model =
             ]
             [ visualizePrepare model
             , ViewTest.visualizePause model
-            , ViewTest.visualizePass model
             , ViewTest.visualizeLose model
             ]
         ]
@@ -239,6 +251,3 @@ visualizePrepare model =
         ]
         [ div [] [ text "Strangers (Press space to start)" ]
         ]
-
---visualizePass : Model -> Html Msg
---visualizePass model =
