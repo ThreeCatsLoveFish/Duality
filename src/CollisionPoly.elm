@@ -239,7 +239,9 @@ ll
                 True -> (\b -> { b | v = Point -v.x v.y })
                 False -> identity
         vcBall =
-            case pos.y <= 0 of
+            case pos.y <= 0
+                || pos.y >= (model.canvas.h - 10)  -- Todo: ???
+                of
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity
     in

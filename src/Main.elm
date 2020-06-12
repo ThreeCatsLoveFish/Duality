@@ -111,11 +111,11 @@ update msg model =
                      Start0.Update.update msg model
                  Strangers1 ->
                      Strangers1.Update.update msg model
-                 {--
                  Friends2 ->
                      Friends2.Update.update msg model
                  Lovers3 ->
                      Lovers3.Update.update msg model
+                 {--
                  Strangers4 ->
                      Strangers4.Update.update msg model
                  Companions5 ->

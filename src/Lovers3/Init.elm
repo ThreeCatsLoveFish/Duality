@@ -6,7 +6,7 @@ import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
 import BasicView exposing (..)
-import Lovers3.State exposing (bezierBrick, getSpeed)
+import Lovers3.State exposing (genBezierBrick, getSpeed)
 import Lovers3.View
 
 init : ( Model, Cmd Msg )
@@ -20,7 +20,7 @@ init =
                     Point
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
-                v = Point 3.0 -3.0
+                v = Point 0 -3.0
                 r = 10
             in
             { active = True
@@ -36,7 +36,7 @@ init =
             { name = "heart"
             , value = getSpeed ball.v
             , t = 0
-            , function = Func bezierBrick
+            , function = Func (genBezierBrick bricks)
             , loop = True
             }
         paddle : Paddle
@@ -64,7 +64,7 @@ init =
                     { canvas = canvas
                     , brick = {w=29, h=29}
                     , breath = 1
-                    , offset = dummyPoint
+                    , offset = Point 0 -10
                     , color = rgb 233 233 233
                     --, color = rgb 233 233 233
                     }

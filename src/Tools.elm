@@ -170,10 +170,4 @@ dummyModel =
         {w=0,h=0} (0, 0) 0 True False
         (div [] [])
 
-divState : List State -> String -> (State, List State)
-divState states name =
-    let
-        (state_, lst) = List.partition (\s -> s.name == name) states
-        state = Maybe.withDefault dummyState (List.head state_)
-    in
-    ( state, lst )
+
