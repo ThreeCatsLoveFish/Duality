@@ -164,9 +164,16 @@ pos2block pos object =
 
 dummyModel : Model
 dummyModel =
-    Model Start0 Animation
+    Model Start0 AnimationPass
         [] [] []
         []
         {w=0,h=0} (0, 0) 0 True False
         (div [] [])
 
+divState : List State -> String -> (State, List State)
+divState states name =
+    let
+        (state_, lst) = List.partition (\s -> s.name == name) states
+        state = Maybe.withDefault dummyState (List.head state_)
+    in
+    ( state, lst )
