@@ -119,10 +119,10 @@ newBricks info =
                 |> List.map (\x -> x * unit)
         posBrickX =
             positionConvert info.layout.x (info.brick.w + info.breath)
-            |> List.map (\x -> x + info.canvas.w/2) -- get x
+            |> List.map (\x -> x + info.canvas.w/2 + info.offset.x) -- get x
         posBrickY =
             positionConvert info.layout.y (info.brick.h + info.breath)
-            |> List.map (\y -> y + info.canvas.h/2)
+            |> List.map (\y -> y + info.canvas.h/2 + info.offset.y)
             -- get y by proportion TODO: beautify
         posBricks =
             List.concatMap (\x -> List.map (Point x) posBrickY) posBrickX -- get pos
