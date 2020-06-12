@@ -5,13 +5,9 @@ import Model exposing (..)
 -- Functions realized by using Bézier curve
 
 -- Fade in / Fade out
-bezierFade : Float -> Float
-bezierFade =
+bezierFade : Float -> Float -> Float -> Float -> (Float -> Float)
+bezierFade start end mid1 mid2 =
     let
-        start = 1
-        end = 1
-        mid1 = 1/4
-        mid2 = 1/3
         curve time =
             let
                 now = 1 - time
@@ -20,35 +16,11 @@ bezierFade =
     in
     curve
 
--- Move position
-bezierPos : Point -> Point -> ( Float -> Point )
-bezierPos start end =
-    let
-        newPoint a pa b pb =
-            { x = a * pa.x + (1 - a) * pb.x, y = b * pa.y + (1 - b) * pb.y }
-        mid1 =
-            newPoint (3/4) start (5/6) end
-        mid2 =
-            newPoint (1/4) start (1/6) end
-        curve time =
-            let
-                now = 1 - time
-            in
-            { x = start.x*now^3 + 3*mid1.x*time*now^2 + 3*mid2.x*now*time^2 + end.x*time^3
-            , y = start.y*now^3 + 3*mid1.y*time*now^2 + 3*mid2.y*now*time^2 + end.y*time^3
-            }
-    in
-    curve
 
-bezierPosPos : Point -> Point -> Point -> Point -> ( Float -> Point )
-bezierPosPos start mid1 mid2 end =
+-- Move position
+bezierPos : Point -> Point -> Point -> Point -> ( Float -> Point )
+bezierPos start mid1 mid2 end =
     let
-        --newPoint a pa b pb =
-        --    { x = a * pa.x + (1 - a) * pb.x, y = b * pa.y + (1 - b) * pb.y }
-        --mid1 =
-        --    newPoint (3/4) start (5/6) end
-        --mid2 =
-        --    newPoint (1/4) start (1/6) end
         curve time =
             let
                 now = 1 - time
