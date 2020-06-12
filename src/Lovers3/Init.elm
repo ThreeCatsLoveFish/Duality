@@ -46,7 +46,7 @@ init =
                 h = 3
                 angle = 40 * pi / 180
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
-                center = Point pos.x (pos.y + r)
+                --center = Point pos.x (pos.y + r)
             in
             { pos = pos -- may not be necessary
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
@@ -62,10 +62,10 @@ init =
             let
                 hi = --heartInfo
                     { canvas = canvas
-                    , brick = {w=20, h=20}
-                    , breath = 0
+                    , brick = {w=29, h=29}
+                    , breath = 1
                     , offset = dummyPoint
-                    , color = rgb 100 100 100
+                    , color = rgb 233 233 233
                     --, color = rgb 233 233 233
                     }
                 posInfo =
@@ -108,7 +108,7 @@ init =
                     )
         model =
             Model
-                Strangers1 Prepare
+                Lovers3 Prepare
                 [ball] [paddle] bricks
                 [state]
                 canvas (pixelWidth, pixelHeight) 0 True False

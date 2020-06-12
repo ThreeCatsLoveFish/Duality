@@ -3,9 +3,9 @@ import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 
-import Strangers1.Collision exposing (..)
-import Strangers1.View exposing (..)
-import Collision exposing (..)
+import Friends2.Collision exposing (..)
+import Friends2.View exposing (..)
+import CollisionBlock exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -71,7 +71,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( { model0 | visualization = Strangers1.View.visualize model} , Cmd.none )
+    ( { model0 | visualization = Friends2.View.visualize model} , Cmd.none )
 -- TODO
 
 move : Float -> Model -> Model

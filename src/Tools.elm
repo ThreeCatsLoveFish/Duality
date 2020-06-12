@@ -94,6 +94,14 @@ getState states name =
     in
     state
 
+divState : List State -> String -> (State, List State)
+divState states name =
+    let
+        (state_, lst) = List.partition (\s -> s.name == name) states
+        state = Maybe.withDefault dummyState (List.head state_)
+    in
+    ( state, lst )
+
 dummyBrick : Brick
 dummyBrick =
     Brick dummyPoint dummyPoly dummyBlock NoMore dummyColor
