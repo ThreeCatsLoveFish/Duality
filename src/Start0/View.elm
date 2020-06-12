@@ -38,11 +38,11 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString backgroundColor)
-        , style "opacity" (String.fromFloat (bezierFade 0 0 1 1 (getState model.state "fadeInAndOut").t))
         ]
         [ img [ src "icon.png"
               , style "width" "50%"
               , style "position" "relative"
+              , style "opacity" (String.fromFloat (bezierFade 0 0 1.8 1.8 (getState model.state "fadeInAndOut").t))
               --, style "left" (String.fromFloat ((w - pixelHeight * r) / 2) ++ "px")
               --, style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
               , alt "Network Failure"
