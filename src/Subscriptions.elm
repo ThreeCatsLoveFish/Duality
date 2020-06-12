@@ -14,7 +14,7 @@ subscriptions model =
                 onAnimationFrameDelta Tick
             ChangeLevel ->
                 onAnimationFrameDelta Tick
-            Animation ->
+            AnimationPass ->
                 onAnimationFrameDelta Tick
             Pass ->
                 onAnimationFrameDelta Tick

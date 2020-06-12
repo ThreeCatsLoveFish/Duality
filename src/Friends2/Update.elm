@@ -32,8 +32,8 @@ update msg model =
                     let
                         model1 = model |> getEndState
                     in
-                    { model1 | gameStatus = Animation }
-                Animation ->
+                    { model1 | gameStatus = AnimationPass }
+                AnimationPass ->
                     case msg of
                         Tick time ->
                             model |> stateIterate
