@@ -17,6 +17,7 @@ type GameStatus
     | Prepare
     | Paused  -- stop updating game model, still updating the menu, show Paused
     | Pass -- stop game model and frame, still menu, show Win
+    | End -- after animationPass
     | Lose -- stop game model and frame, still menu, show Win
     | Running Op -- the game is on
     | NoMenu -- just in case...
