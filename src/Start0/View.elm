@@ -21,18 +21,19 @@ pixelHeight =
 
 visualize : Model -> Html Msg
 visualize model =
-    let
-        ( w, h ) =
-            model.size
-
-        r =
-            if w / h > pixelWidth / pixelHeight then
-                Basics.min 1 (h / pixelHeight)
-            else
-                Basics.min 1 (w / pixelWidth)
-    in
+    --let
+    --    ( w, h ) =
+    --        model.size
+    --
+    --    r =
+    --        if w / h > pixelWidth / pixelHeight then
+    --            Basics.min 1 (h / pixelHeight)
+    --        else
+    --            Basics.min 1 (w / pixelWidth)
+    --in
     div
-        [ style "width" "100%"
+        [ align "center"
+        , style "width" "100%"
         , style "height" "100%"
         , style "position" "fixed"
         , style "left" "0"
@@ -40,11 +41,10 @@ visualize model =
         , style "background-color" (colorToString backgroundColor)
         ]
         [ img [ src "icon.png"
-              , width 834
-              , height 834
+              , style "width" "50%"
               , style "position" "relative"
-              , style "left" (String.fromFloat ((w - pixelHeight * r) / 2) ++ "px")
-              , style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
+              --, style "left" (String.fromFloat ((w - pixelHeight * r) / 2) ++ "px")
+              --, style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")
               , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
               , alt "Network Failure"
               ]
