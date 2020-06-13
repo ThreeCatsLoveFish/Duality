@@ -3,9 +3,10 @@ import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 
-import Friends2.Collision exposing (..)
 import Friends2.View exposing (..)
+import Friends2.State exposing (..)
 import CollisionBlock exposing (..)
+import CollisionPoly exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -24,7 +25,7 @@ update msg model =
                 Prepare ->
                     case msg of
                         KeyDown Space ->
-                            { model | gameStatus = Running Stay }
+                            { model | gameStatus = Running Stay } |> getGameState
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
@@ -65,6 +66,7 @@ update msg model =
                         Tick time ->
                             model |> move (min time 25)
                                   |> stateIterate
+                                  |> moveBall2
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
@@ -165,60 +167,5 @@ winJudge model =
                     Pass
                 False ->
                     model.gameStatus
-                    --case (getBall model.ball 1).pos.y > model.canvas.h+10 of
-                    --    True -> Lose
-                    --    False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
-
-
-
-stateIterate : Model -> Model
-stateIterate model =
-    case List.isEmpty model.state of
-        True ->
-            { model
-            | gameStatus = ChangeLevel
-            , gameLevel = Friends2
-            }
-        _ ->
-            let
-                state = model.state
-                newState =
-                    List.map (\s -> loopState s 0.01) state
-                setModel : State -> Model -> Model
-                setModel stat model_ =
-                    case stat.name of
-                        "bezier" ->
-                            moveBall2 model_ stat
-                        _ ->
-                            moveBall2 model_ stat
-                newModel =
-                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
-
-            in
-            newModel
-
-moveBall2 : Model -> State -> Model
-moveBall2 model state =
-    let
-        getfunc (Func func) = func
-        newBalls =
-            (getfunc state.function model state.t).ball
-    in
-    { model | ball = newBalls }
-
-getEndState : Model -> Model
-getEndState model =
-    model
-
-loopState : State -> Float -> State
-loopState state t =
-    case state.loop of
-        True ->
-            if (state.loop == True && state.t < 1) then
-                 { state | t = state.t + t}
-            else
-                 { state | t = state.t - 1}
-        False ->
-            { state | t = state.t + t}
