@@ -46,7 +46,10 @@ moveBall2 model =
     let
         --state = Maybe.withDefault dummyState (List.head model.state) --NB!
         state = getState model.state "moveBall2"
-        (pos_, index_) = find model.bricks (round state.value)
+        valid = model.bricks |> List.filter (\b -> b.hitTime /= NoMore) |> List.length
+        (pos_, index_) =
+            if valid < 1 then (pos, round state.value)
+            else find model.bricks (round state.value)
         pos = (getBrick model.bricks (round state.value)).pos
         ball = getBall model.ball 2
         statePToK =
@@ -140,7 +143,7 @@ stateIterate model =
                 AnimationPass ->
                     { model
                     | gameStatus = ChangeLevel
-                    , gameLevel = Friends2
+                    , gameLevel = Lovers3
                     }
                 _ -> model
         _ ->

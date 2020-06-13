@@ -2,13 +2,13 @@ module Friends2.Init exposing (..)
 
 import Fade exposing (fadeInAndOut)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Browser.Dom exposing (getViewport)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Task
 import Tools exposing (..)
 import BasicView exposing (..)
-import Bezier exposing (..)
-import Friends2.State exposing (genBezierBall2,moveBall2)
 import Friends2.View
 import Friends2.Find exposing (find)
 
@@ -97,7 +97,7 @@ init =
                 (div [] [])
     in
     ( { model | visualization = Friends2.View.visualize model }
-    , Cmd.none
+    , Task.perform GetViewport getViewport
     )
 
 

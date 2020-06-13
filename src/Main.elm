@@ -2,8 +2,6 @@ module Main exposing (..)
 
 import Html exposing (Html)
 import Browser
-import Browser.Dom exposing (getViewport)
-import Task
 
 import Model exposing (..)
 import Messages exposing (..)

@@ -15,7 +15,8 @@ dummyBlock =
 
 dummyPoly : Poly
 dummyPoly =
-    List.repeat 4 dummyPoint
+    --List.repeat 4 dummyPoint
+    []
 
 dummyColor : Color
 dummyColor =

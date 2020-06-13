@@ -1,14 +1,15 @@
-module Friends2.Update exposing (..)
+module Companions5.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 
-import Friends2.View exposing (..)
-import Friends2.State exposing (..)
 import CollisionBlock exposing (..)
 import CollisionPoly exposing (..)
+import Companions5.State exposing (..)
+import Companions5.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
+-- Todo: Resize
 update msg model =
     let
         model0 =
@@ -22,12 +23,10 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
-                Prepare ->
+                AnimationPrepare ->
                     case msg of
-                        KeyDown Space ->
-                            { model | gameStatus = Running Stay } |> getGameState
-                        Resize w h ->
-                            { model | size = (toFloat w,toFloat h)}
+                        Tick time ->
+                            model |> stateIterate
                         GetViewport { viewport } ->
                             { model
                                 | size =
@@ -35,6 +34,16 @@ update msg model =
                                     , viewport.height
                                     )
                             }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
+                Prepare ->
+                    case msg of
+                        KeyDown Space ->
+                            { model | gameStatus = Running Stay } |> getGameState
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Pass ->
                     let
@@ -45,6 +54,16 @@ update msg model =
                     case msg of
                         Tick time ->
                             model |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
+                End ->
+                    case msg of
+                        KeyDown _ ->
+                            {model | gameStatus = AnimationPrepare
+                                   , gameLevel = Strangers4
+                            }
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ ->
@@ -73,15 +92,13 @@ update msg model =
                         Tick time ->
                             model |> move (min time 25)
                                   |> stateIterate
-                                  |> moveBall2
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 _ ->
                     model
     in
-    ( { model0 | visualization = Friends2.View.visualize model} , Cmd.none )
--- TODO
+    ( { model0 | visualization = Companions5.View.visualize model} , Cmd.none )
 
 move : Float -> Model -> Model
 move elapsed model =
@@ -133,7 +150,7 @@ movePaddle op model =
     let
         done paddle =
             let
-                vNorm = 4 -- the speed of paddle
+                vNorm = 6 -- the speed of paddle
                 v = case op of
                     Left ->
                         case pos.x > 18 of
@@ -167,12 +184,15 @@ winJudge model =
                 _ -> brick
         brick_all = List.map change_brick model.bricks
         ball = getBall model.ball 1
-        ball2 = getBall model.ball 2
         win =
             case ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->
                     Pass
                 False ->
-                    model.gameStatus
+                    case ball.pos.y > model.canvas.h+10 of
+                        True -> Lose
+                        False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
+
+
