@@ -9,7 +9,7 @@ import Messages exposing (..)
 import Task
 import Tools exposing (..)
 import BasicView exposing (..)
-import Lovers3.State exposing (genBezierBrick, getSpeed)
+--import Lovers3.State exposing (genBezierBrick, getSpeed)
 import Lovers3.View
 
 init : ( Model, Cmd Msg )

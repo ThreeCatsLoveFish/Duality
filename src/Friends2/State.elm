@@ -20,8 +20,8 @@ genBezierBall2 p1 p2 p3 p4 =
     in
     bezierBall2
 
-getBezierPoints : Point -> Point -> Float -> Float -> (Model -> Float -> Model)
-getBezierPoints p1 p4 degree ratio =
+genBezierPoints : Point -> Point -> Float -> Float -> (Model -> Float -> Model)
+genBezierPoints p1 p4 degree ratio =
     let
         theta = degree * pi / 180
         a1 = cos theta
@@ -59,19 +59,19 @@ moveBall2 model =
             { state
             | value = toFloat index_
             , t = 0
-            , function = Func (getBezierPoints p1 p4 degree ratio)
+            , function = Func (genBezierPoints p1 p4 degree ratio)
             , loop = False
             }
         stateKToP =
             let
                 p1 = {x=ball.pos.x, y=ball.pos.y}
+                p2 = {x=ball.pos.x+5, y=ball.pos.y+5}
+                p3 = {x=ball.pos.x- 10, y=ball.pos.y+2}
                 p4 = {x=ball.pos.x, y=ball.pos.y}
-                degree = 46
-                ratio = 0.55
             in
             { state
             | t = 0
-            , function = Func (getBezierPoints p1 p4 degree ratio)
+            , function = Func (genBezierBall2 p1 p2 p3 p4)
             , loop = True
             }
         stateKToK =
@@ -83,7 +83,7 @@ moveBall2 model =
             in
             { state
             | t = 0
-            , function = Func (getBezierPoints p1 p4 degree ratio)
+            , function = Func (genBezierPoints p1 p4 degree ratio)
             , value = toFloat index_
             }
     in
@@ -161,16 +161,20 @@ stateIterate model =
 getGameState : Model -> Model
 getGameState model =
     let
-        s = { name = "moveBall2"
-            , value = 1
+        s =
+            let
+                --(pos, index) = find model.bricks 1
+                index = 27
+                pos = (getBrick model.bricks index).pos
+                p1 = {x=pos.x, y=pos.y}
+                p2 = {x=pos.x+10, y=pos.y+10}
+                p3 = {x=pos.x- 20, y=pos.y+4}
+                p4 = {x=pos.x, y=pos.y}
+            in
+            { name = "moveBall2"
             , t = 0
-            , function = Func
-                ( genBezierBall2
-                  (Point ((getBall model.ball 2).pos.x) ((getBall model.ball 2).pos.y))
-                  (Point ((getBall model.ball 2).pos.x - 10) ((getBall model.ball 2).pos.y + 10))
-                  (Point ((getBall model.ball 2).pos.x + 10) ((getBall model.ball 2).pos.y + 10))
-                  (Point ((getBall model.ball 2).pos.x) ((getBall model.ball 2).pos.y))
-                )
+            , value = toFloat index
+            , function = Func (genBezierBall2 p1 p2 p3 p4)
             , loop = True
             }
     in

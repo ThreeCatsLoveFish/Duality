@@ -24,14 +24,14 @@ init =
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
                 v = Point 3.0 -3.0
-                r = 7.5
+                r = 15
             in
             { active = True
             , pos = pos
             , v = v
             , r = r
             , collision = getBallColl (pos, r, 16)
-            , color = rgb 244 244 244
+            , color = rgb 66 150 240
             }
         ball2 : Ball
         ball2 =
@@ -39,14 +39,14 @@ init =
                 pos =
                     Tuple.first (find bricks 1)
                 v = Point 0 0
-                r = 7.5
+                r = 15
             in
             { active = True
             , pos = pos
             , v = v
             , r = r
             , collision = dummyPoly
-            , color = rgb 244 244 244
+            , color = rgb 250 200 50
             }
         state : List State
         state =

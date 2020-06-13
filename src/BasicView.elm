@@ -3,7 +3,7 @@ module BasicView exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 
-import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Html exposing (Attribute, Html, button, div, h1, input, p, text)
 import Html.Attributes exposing (..)
 import Messages exposing (..)
 import Svg
@@ -86,28 +86,65 @@ pixelHeight =
 --                elements
 --            ]
 
-visualizePrepare : Model -> Html Msg
-visualizePrepare model =
+visualizePrepare : Model -> Color -> Html Msg
+visualizePrepare model bColor =
+    let
+        txt =
+            case model.gameLevel of
+                Strangers1 -> "Strangers"
+                Friends2 -> "Friends"
+                Lovers3 -> "Lovers"
+                Strangers4 -> "Strangers"
+                Companions5 -> "Companions"
+                Death6 -> "Death"
+                _ -> ""
+    in
     div
-        [ style "background" "rgba(244, 244, 244, 0.85)"
+        [ style "background" (colorToString bColor)
         , style "text-align" "center"
-        , style "height" ((String.fromFloat model.canvas.h)++"px")
-        , style "width" ((String.fromFloat model.canvas.w)++"px")
+        , style "height" "100%"
+        , style "width" "100%"
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
         , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
-        , style "color" "#77C0C5"
-        , style "line-height" "500px"
+        , style "color" "#FFFFFF"
+        --, style "line-height" "500px"
+        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
         , style "display"
-            (if model.gameStatus == Prepare then
+            (if model.gameStatus == AnimationPrepare then
                 "block"
              else
                 "none"
             )
         ]
-        [text "Press space to start. "]
+        [ div
+            [
+              style "text-align" "center"
+            --, style "display" "table-cell"
+            --, style "vertical" "bottom"
+            --, style "horizontal" "center"
+            ]
+            [ p
+                [ style "position" "absolute"
+                , style "top" "55%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "24px"
+                ]
+                [ text "Press space to start" ]
+            , p
+                [ style "position" "absolute"
+                , style "top" "30%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "48px"
+                ]
+                [ text txt ]
+
+            ]
+        ]
 
 visualizePause : Model -> Html Msg
 visualizePause model =
