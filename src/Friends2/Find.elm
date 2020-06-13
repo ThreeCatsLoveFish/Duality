@@ -13,11 +13,16 @@ find bricks lastIndex =
 
 getBrick : List Brick -> Int -> Brick
 getBrick lst n =
-    case n of
-        1 ->
-            (List.head lst)
-                |> Maybe.withDefault {dummyBrick|pos=Point(30)(20)}
-        _ -> getBrick (List.drop 1 lst) (n - 1)
+    List.indexedMap (\i brick -> if (i==n) then Just brick else Nothing ) lst
+        |> List.filter (\e -> e /= Nothing)
+        |> List.map (\b -> Maybe.withDefault dummyBrick b)
+        |> List.head
+        |> Maybe.withDefault dummyBrick
+    --case n of
+    --    1 ->
+    --        (List.head lst)
+    --            |> Maybe.withDefault {dummyBrick|pos=Point(30)(20)}
+    --    _ -> getBrick (List.drop 1 lst) (n - 1)
 
 --find : List Brick -> Int -> (Brick, Int)
 --find bricks lastIndex =
