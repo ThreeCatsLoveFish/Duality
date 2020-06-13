@@ -1,22 +1,21 @@
 module Friends2.Init exposing (..)
 
-import Browser.Dom exposing (getViewport)
+import Fade exposing (fadeInAndOut)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
-import Task
 import Tools exposing (..)
 import BasicView exposing (..)
 import Bezier exposing (..)
-import Friends2.State exposing (genBezierBall2,genMoveBall2)
+import Friends2.State exposing (genBezierBall2,moveBall2)
 import Friends2.View
 import Friends2.Find exposing (find)
 
 init : ( Model, Cmd Msg )
 init =
     let
-        canvas = { w = 400, h = 600 }
+        canvas = { w = 800, h = 600 }
         ball : Ball
         ball =
             let
@@ -25,7 +24,7 @@ init =
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
                 v = Point 3.0 -3.0
-                r = 10
+                r = 7.5
             in
             { active = True
             , pos = pos
@@ -40,7 +39,7 @@ init =
                 pos =
                     Tuple.first (find bricks 1)
                 v = Point 0 0
-                r = 10
+                r = 7.5
             in
             { active = True
             , pos = pos
@@ -51,20 +50,10 @@ init =
             }
         state : List State
         state =
-            [ { name = "bezier"
-              , value = 2
+            [ { name = "fadeInAndOut"
+              , value = 0
               , t = 0
-              , function = Func
-                  ( genBezierBall2
-                    (pos2coll (Tuple.first (find bricks 1)) bricksize)
-                  )
-              , loop = True
-              }
-            , { name = "moveBall2"
-              , value = 1
-              , t = 0
-              , function = Func
-                  ( genMoveBall2 )
+              , function = Func fadeInAndOut
               , loop = False
               }
             ]
@@ -85,7 +74,7 @@ init =
             , h = h
             , angle = angle
             }
-        bricksize = {w=39, h=39}
+        bricksize = {w=60, h=60}
         bricks : List Brick
         bricks =
             let
@@ -93,8 +82,8 @@ init =
                     { layout = {x=10, y=3}
                     , canvas = canvas
                     , brick = bricksize
-                    , breath = 1
-                    , offset = dummyPoint
+                    , breath = 10
+                    , offset = Point 0 -120
                     , color = rgb 100 100 100
                     }
             in
@@ -108,7 +97,7 @@ init =
                 (div [] [])
     in
     ( { model | visualization = Friends2.View.visualize model }
-    , Task.perform GetViewport getViewport
+    , Cmd.none
     )
 
 
