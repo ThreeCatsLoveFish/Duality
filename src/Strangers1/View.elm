@@ -1,6 +1,6 @@
 module Strangers1.View exposing (..)
 
-import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Html exposing (Attribute, Html, button, div, h1, input, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -9,7 +9,6 @@ import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
 import BasicView as ViewTest
-import Strangers1.State exposing (genFadeInAndOut)
 
 
 backgroundColor : Color
@@ -189,7 +188,7 @@ visualize model =
             Running _ ->
                 "1"
             AnimationPass ->
-                "1"
+                (String.fromFloat (getState model.state "fadeOut").value)
             Pass ->
                 "1"
             _ ->
@@ -227,6 +226,7 @@ visualize model =
             ]
         ]
 
+
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
     div
@@ -240,14 +240,38 @@ visualizePrepare model =
         , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
-        , style "line-height" "500px"
+        --, style "line-height" "500px"
         , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
-        --, style "display"
-        --    (if model.gameStatus == Prepare then
-        --        "block"
-        --     else
-        --        "none"
-        --    )
+        , style "display"
+            (if model.gameStatus == AnimationPrepare then
+                "block"
+             else
+                "none"
+            )
         ]
-        [ div [] [ text "Strangers (Press space to start)" ]
+        [ div
+            [
+              style "text-align" "center"
+            --, style "display" "table-cell"
+            --, style "vertical" "bottom"
+            --, style "horizontal" "center"
+            ]
+            [ p
+                [ style "position" "absolute"
+                , style "top" "55%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "24px"
+                ]
+                [ text "Press space to start" ]
+            , p
+                [ style "position" "absolute"
+                , style "top" "30%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "48px"
+                ]
+                [ text "Strangers" ]
+
+            ]
         ]

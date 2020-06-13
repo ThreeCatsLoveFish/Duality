@@ -1,11 +1,11 @@
 module Strangers1.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
-import Strangers1.State exposing (..)
 import Tools exposing (..)
 
 import CollisionBlock exposing (..)
 import CollisionPoly exposing (..)
+import Strangers1.State exposing (..)
 import Strangers1.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -26,6 +26,13 @@ update msg model =
                     case msg of
                         Tick time ->
                             model |> stateIterate
+                        GetViewport { viewport } ->
+                            { model
+                                | size =
+                                    ( viewport.width
+                                    , viewport.height
+                                    )
+                            }
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ ->

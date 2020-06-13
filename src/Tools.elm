@@ -67,10 +67,10 @@ getPaddle lst n =
 getPaddleColl : Point -> Float -> Float -> Float -> Int -> Poly
 getPaddleColl pos r h angle precision =
     let
-        unitAngle = 2*angle/(toFloat precision - 1)
+        unitAngle = 2*(angle+0.2)/(toFloat precision - 1)
         points = List.range 0 (precision - 1) |> List.map (\x -> toFloat x)
         initAngle = (pi/2) - angle
-        surfaceR = r + h
+        surfaceR = r + h + 4
         toPoints t =
             Point
                 (pos.x + surfaceR * cos (unitAngle * t + initAngle))

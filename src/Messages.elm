@@ -1,5 +1,7 @@
 module Messages exposing (..)
 
+import Browser.Dom exposing (Viewport)
+
 type GameLevel
     = Start0
     | Strangers1
@@ -37,6 +39,8 @@ type Msg
     = RunGame Op -- abandoned
     | ShowStatus GameStatus -- show menu on top
     | ChooseLevel GameLevel
+
+    | GetViewport Viewport
     | Resize Int Int
 
     | KeyDown KeyType

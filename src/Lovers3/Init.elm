@@ -1,9 +1,12 @@
 module Lovers3.Init exposing (..)
 
+import Browser.Dom exposing (getViewport)
+import Fade exposing (fadeInAndOut)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Task
 import Tools exposing (..)
 import BasicView exposing (..)
 import Lovers3.State exposing (genBezierBrick, getSpeed)
@@ -20,7 +23,7 @@ init =
                     Point
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
-                v = Point 0 -3.0
+                v = Point 3.0 -3.0
                 r = 10
             in
             { active = True
@@ -30,15 +33,18 @@ init =
             , collision = getBallColl (pos, r, 16)
             , color = rgb 244 244 244
             }
-        --TODO: paddle fix
-        state : State
+
+        state : List State
         state =
-            { name = "heart"
-            , value = getSpeed ball.v
-            , t = 0
-            , function = Func (genBezierBrick bricks)
-            , loop = True
-            }
+            [
+                { name = "fadeInAndOut"
+                , value = 0
+                , t = 0
+                , function = Func fadeInAndOut
+                , loop = False
+                }
+            ]
+
         paddle : Paddle
         paddle =
             let
@@ -64,7 +70,7 @@ init =
                     { canvas = canvas
                     , brick = {w=29, h=29}
                     , breath = 1
-                    , offset = Point 0 -10
+                    , offset = Point 0 -40
                     , color = rgb 233 233 233
                     --, color = rgb 233 233 233
                     }
@@ -108,14 +114,14 @@ init =
                     )
         model =
             Model
-                Lovers3 Prepare
+                Lovers3 AnimationPrepare
                 [ball] [paddle] bricks
-                [state]
+                state
                 canvas (pixelWidth, pixelHeight) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Lovers3.View.visualize model }
-    , Cmd.none
+    , Task.perform GetViewport getViewport
     )
 
 

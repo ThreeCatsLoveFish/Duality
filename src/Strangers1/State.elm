@@ -1,5 +1,6 @@
 module Strangers1.State exposing (..)
 import Bezier exposing (bezierPos, bezierColor)
+import Fade exposing (fadeOut)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Tools exposing (divState, getBall, getState)
 import Model exposing (..)
@@ -20,41 +21,6 @@ genBezierBall2 p1 p2 p3 p4 =
     in
     bezierBall2
 
-genFadeInAndOut : Model -> Float -> Model
-genFadeInAndOut model t =
-    let
-        val =
-            if  ( t < 0.3 ) then
-                t / 0.3
-            else if ( t >= 0.3 && t <= 0.7 ) then
-                1
-            else
-                ( 1.0 - t ) / 0.3
-        (s_, state_) = divState model.state "fadeInAndOut"
-        state =
-            case t>1 of
-                False -> { s_ | value = val}::state_
-                _ -> state_
-    in
-    { model | state = state }
-
-genFadeOut : Model -> Float -> Model
-genFadeOut model t =
-    let
-        val =
-            if  ( t < 0.4 ) then
-                1
-            else if ( t >= 0.4 && t <= 0.7 ) then
-                (t - 0.4) / 0.3
-            else
-                0
-        (s_, state_) = divState model.state "fadeOut"
-        state =
-            case t>2 of
-                False -> { s_ | value = val}::state_
-                _ -> state_
-    in
-    { model | state = state }
 
 genChangeBallColor : Model -> Float -> Model
 genChangeBallColor model t=
@@ -64,10 +30,10 @@ genChangeBallColor model t=
         newBall1 = {ball1 | color = bezierColor ball1.color (rgb 66 150 240) t }
         newBall2 = {ball2 | color = bezierColor ball1.color (rgb 250 200 50) t }
         newball = [newBall1, newBall2]
-        s_ = getState model.state "changeBallColor"
+        (s_,state_) = divState model.state "changeBallColor"
         state =
             case s_.t>= 1 of
-                 True -> []
+                 True -> state_
                  _ -> model.state
     in
     {model | ball = newball, state = state}
@@ -82,10 +48,10 @@ genChangeBallSize model t=
         newBall1 = {ball1 | r = r_ * ( 1 + t_ ) }
         newBall2 = {ball2 | r = r_ * ( 1 + t_ ) }
         newball = [newBall1, newBall2]
-        s_ = getState model.state "changeBallSize"
+        (s_,state_) = divState model.state "changeBallSize"
         state =
             case s_.t>= 1 of
-                 True -> []
+                 True -> state_
                  _ -> model.state
     in
     {model | ball = newball, state = state}
@@ -109,7 +75,7 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.01) state
+                    List.map (\s -> loopState s 0.007) state
                 getFunc (Func func) = func
                 setModel : State -> Model -> Model
                 setModel stat model_ =
@@ -170,7 +136,7 @@ getEndState model =
         s3 = { name = "fadeOut"
             , value = 0
             , t = -1
-            , function = Func (genFadeOut)
+            , function = Func (fadeOut)
             , loop = False
             }
     in

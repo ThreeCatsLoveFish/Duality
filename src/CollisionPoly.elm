@@ -235,11 +235,11 @@ ll
         v = old.v
         pos = old.pos
         hcBall =
-            case pos.x <= 10 || pos.x >= (model.canvas.w - 10) of
+            case (pos.x <= 10 && v.x < 0) || (pos.x >= (model.canvas.w - 10) && v.x > 0) of
                 True -> (\b -> { b | v = Point -v.x v.y })
                 False -> identity
         vcBall =
-            case pos.y <= 0
+            case ( pos.y <= 0 && v.y < 0)
                 || pos.y >= (model.canvas.h - 10)  -- Todo: ???
                 of
                 True -> (\b -> { b | v = Point v.x -v.y })
