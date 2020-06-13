@@ -203,7 +203,7 @@ visualizeGame model opacity =
     let
         elements =
             (List.map visualizeBrick model.bricks) ++ [(visualizeBall1 (getBall model.ball 1)),(visualizeBall2 (getBall model.ball 2))]
-              |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
+              |> (::) (visualizePaddle (getPaddle model.paddle 1))
               |> (::) (visualizeCanvas model)
     in
         div

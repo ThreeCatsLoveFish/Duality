@@ -63,6 +63,20 @@ init =
             , angle = angle
             }
 
+        paddle2 : Paddle
+        paddle2 =
+            let
+                pos_ = paddle.pos
+                reflect p =
+                    Point (canvas.w - p.x) (canvas.h - p.y)
+            in
+            { paddle
+            | pos = reflect pos_
+            , collision =
+                (getPaddleColl pos_ paddle.r paddle.h paddle.angle 16)
+                |> List.map reflect
+            }
+
         bricks : List Brick
         bricks =
             let
@@ -114,8 +128,8 @@ init =
                     )
         model =
             Model
-                Lovers3 AnimationPrepare
-                [ball] [paddle] bricks
+                Companions5 AnimationPrepare
+                [ball] [paddle, paddle2] bricks
                 state
                 canvas (pixelWidth, pixelHeight) 0 True False
                 (div [] [])

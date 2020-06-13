@@ -22,7 +22,7 @@ init =
                 pos =
                     Point
                         (canvas.w/2)
-                        (paddle.pos.y - paddle.r - paddle.h - r)
+                        (paddle.pos.y - paddle.r - paddle.h - r - 3)
                 v = Point 3.0 -3.0
                 r = 15
             in

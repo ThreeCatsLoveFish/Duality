@@ -4,7 +4,7 @@ import Model exposing (..)
 import Tools exposing (..)
 
 import CollisionBlock exposing (..)
-import CollisionPoly exposing (..)
+import Companions5.Collision exposing (..)
 import Companions5.State exposing (..)
 import Companions5.View exposing (..)
 
@@ -125,7 +125,8 @@ exec model =
         |> movePaddle dir
         |> moveBall
         |> basic_hit
-        |> paddleCheck
+        |> paddleCheckIndex 1
+        |> paddleCheckIndex 2
         |> wallCheck
         |> winJudge
 
@@ -189,7 +190,7 @@ winJudge model =
                 True ->
                     Pass
                 False ->
-                    case ball.pos.y > model.canvas.h+10 of
+                    case (ball.pos.y > model.canvas.h+10) || (ball.pos.y < -10) of
                         True -> Lose
                         False -> model.gameStatus
     in

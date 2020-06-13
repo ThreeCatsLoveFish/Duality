@@ -68,16 +68,28 @@ getPaddle lst n =
 getPaddleColl : Point -> Float -> Float -> Float -> Int -> Poly
 getPaddleColl pos r h angle precision =
     let
-        unitAngle = 2*(angle+0.2)/(toFloat precision - 1)
-        points = List.range 0 (precision - 1) |> List.map (\x -> toFloat x)
-        initAngle = (pi/2) - angle
+        rulerAngle = angle+0.2
+        length = toFloat (precision - 1)
+        points = List.range 0 (precision - 1)
+            |> List.map (\x -> ( (toFloat x) - length / 2) / length)
         surfaceR = r + h + 4
         toPoints t =
             Point
-                (pos.x + surfaceR * cos (unitAngle * t + initAngle))
-                (pos.y - surfaceR * sin (unitAngle * t + initAngle))
+                (pos.x + surfaceR * sin (rulerAngle * t))
+                (pos.y - surfaceR * cos (rulerAngle * t))
     in
-    List.reverse <| List.map toPoints points
+    List.map toPoints points
+    --let
+    --    unitAngle = 2*(angle+0.2)/(toFloat precision - 1)
+    --    points = List.range 0 (precision - 1) |> List.map (\x -> toFloat x)
+    --    initAngle = (pi/2) - angle
+    --    surfaceR = r + h + 4
+    --    toPoints t =
+    --        Point
+    --            (pos.x + surfaceR * cos (unitAngle * t + initAngle))
+    --            (pos.y - surfaceR * sin (unitAngle * t + initAngle))
+    --in
+    --List.reverse <| List.map toPoints points
 
 dummyState : State
 dummyState = { name = "dummy"
