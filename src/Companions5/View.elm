@@ -164,7 +164,8 @@ visualizeGame model opacity =
     let
         elements =
             (List.map visualizeBrick model.bricks) ++ List.map visualizeBall model.ball ++ (List.map visualizeBall (Maybe.withDefault [dummyBall] (List.tail model.ball)))
-              |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
+              |> (::) (visualizePaddle (getPaddle model.paddle 1))
+              |> (::) (visualizePaddle (getPaddle model.paddle 2))
               |> (::) (visualizeCanvas model)
     in
         div
@@ -270,7 +271,7 @@ visualizePrepare model =
                 , style "text-align" "center"
                 , style "font-size" "48px"
                 ]
-                [ text "Lovers" ]
+                [ text "Companions" ]
 
             ]
         ]
