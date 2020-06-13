@@ -37,8 +37,8 @@ visualizeBall1 ball =
           Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
-            , SA.r (String.fromFloat (ball.r * 2.5))
-            , SA.fill (colorToString (rgb 66 150 240))
+            , SA.r (String.fromFloat ball.r)
+            , SA.fill (colorToString ball.color )
             --, SA.filter "url(#Gaussian_Blur)"
             --, SA.opacity "0.5"
             ]
@@ -76,8 +76,8 @@ visualizeBall2 ball =
           Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
-            , SA.r (String.fromFloat (ball.r * 2.5))
-            , SA.fill (colorToString (rgb 250 200 50))
+            , SA.r (String.fromFloat ball.r)
+            , SA.fill (colorToString ball.color)
             --, SA.filter "url(#Gaussian_Blur)"
             , SA.opacity "0.85"
             ]
@@ -202,9 +202,7 @@ visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
     let
         elements =
-            (List.map visualizeBrick model.bricks)
-              |> (::) (visualizeBall1 (getBall model.ball 1))
-              |> (::) (visualizeBall2 (getBall model.ball 2))
+            (List.map visualizeBrick model.bricks) ++ [(visualizeBall1 (getBall model.ball 1)),(visualizeBall2 (getBall model.ball 2))]
               |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
               |> (::) (visualizeCanvas model)
     in

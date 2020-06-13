@@ -15,8 +15,8 @@ getBrick : List Brick -> Int -> Brick
 getBrick lst n =
     case n of
         1 ->
-            List.head lst
-                |> Maybe.withDefault dummyBrick
+            (List.head lst)
+                |> Maybe.withDefault {dummyBrick|pos=Point(30)(20)}
         _ -> getBrick (List.drop 1 lst) (n - 1)
 
 --find : List Brick -> Int -> (Brick, Int)
