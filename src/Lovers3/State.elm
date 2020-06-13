@@ -1,5 +1,6 @@
 module Lovers3.State exposing (..)
 import Bezier exposing (bezierPos)
+import Fade exposing (fadeOut)
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (divState, getBall)
@@ -15,7 +16,7 @@ genBezierBrick bricks__ =
 
                 t = timeMap t_ s.value
 
-                center = Point (model.canvas.w/2) (model.canvas.h/2 - 20)
+                center = Point (model.canvas.w/2) (model.canvas.h/2 - 50)
                 pos2curve pos_ =
                     let
                         outpoint = vecAway pos_ center 0.6
@@ -118,7 +119,7 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.01) state
+                    List.map (\s -> loopState s 0.007) state
                 getFunc (Func func) = func
                 setModel : State -> Model -> Model
                 setModel stat model_ =
@@ -129,13 +130,37 @@ stateIterate model =
             in
             newModel
 
+getGameState : Model -> Model
+getGameState model =
+    let
+        s = { name = "heart"
+            , value = getSpeed (getBall model.ball 1).v
+            , t = 0
+            , function = Func (genBezierBrick model.bricks)
+            , loop = True
+            }
+    in
+    { model | state = [s] }
+
 getEndState : Model -> Model
 getEndState model =
-    model
+    let
+        s = { name = "fadeOut"
+            , value = 0
+            , t = 0
+            , function = Func (fadeOut)
+            , loop = False
+            }
+    in
+    { model | state = [s] }
 
 loopState : State -> Float -> State
 loopState state t =
-    if (state.loop == True && state.t < 1) then
-         { state | t = state.t + t}
-    else
-         { state | t = state.t - 1}
+    case state.loop of
+        True ->
+            if (state.loop == True && state.t < 1) then
+                 { state | t = state.t + t}
+            else
+                 { state | t = state.t - 1}
+        False ->
+            { state | t = state.t + t}

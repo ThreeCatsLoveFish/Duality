@@ -12,8 +12,16 @@ update msg model =
                 AnimationPass ->
                     case msg of
                         Tick time ->
-                            model |> move (min time 25)
-                                  |> stateIterate
+                            model
+                                |> move (min time 25)
+                                |> stateIterate
+                        GetViewport { viewport } ->
+                            { model
+                                | size =
+                                    ( viewport.width
+                                    , viewport.height
+                                    )
+                            }
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model

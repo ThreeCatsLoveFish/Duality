@@ -23,10 +23,25 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                AnimationPrepare ->
+                    case msg of
+                        Tick time ->
+                            model |> stateIterate
+                        GetViewport { viewport } ->
+                            { model
+                                | size =
+                                    ( viewport.width
+                                    , viewport.height
+                                    )
+                            }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
                 Prepare ->
                     case msg of
                         KeyDown Space ->
-                            { model | gameStatus = Running Stay }
+                            { model | gameStatus = Running Stay } |> getGameState
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
@@ -39,6 +54,16 @@ update msg model =
                     case msg of
                         Tick time ->
                             model |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
+                End ->
+                    case msg of
+                        KeyDown _ ->
+                            {model | gameStatus = AnimationPrepare
+                                   , gameLevel = Strangers4
+                            }
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ ->
@@ -74,7 +99,6 @@ update msg model =
                     model
     in
     ( { model0 | visualization = Lovers3.View.visualize model} , Cmd.none )
--- TODO
 
 move : Float -> Model -> Model
 move elapsed model =
@@ -126,7 +150,7 @@ movePaddle op model =
     let
         done paddle =
             let
-                vNorm = 4 -- the speed of paddle
+                vNorm = 6 -- the speed of paddle
                 v = case op of
                     Left ->
                         case pos.x > 18 of

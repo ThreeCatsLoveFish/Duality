@@ -52,9 +52,10 @@ main =
 init : ( Model, Cmd Msg )
 init =
     --Start0.Init.init
-    Lovers3.Init.init
+    Strangers1.Init.init
+    --Lovers3.Init.init
 
-{--}
+{--
 reinit : Model -> ( Model, Cmd Msg )
 reinit model =
     case model.gameLevel of

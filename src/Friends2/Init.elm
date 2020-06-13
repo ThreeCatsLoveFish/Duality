@@ -1,9 +1,11 @@
 module Friends2.Init exposing (..)
 
+import Browser.Dom exposing (getViewport)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Task
 import Tools exposing (..)
 import BasicView exposing (..)
 import Bezier exposing (..)
@@ -106,7 +108,7 @@ init =
                 (div [] [])
     in
     ( { model | visualization = Friends2.View.visualize model }
-    , Cmd.none
+    , Task.perform GetViewport getViewport
     )
 
 

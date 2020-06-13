@@ -1,13 +1,16 @@
 module Strangers1.Init exposing (..)
 
+import Browser.Dom exposing (getViewport)
+import Fade exposing (fadeInAndOut)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Task
 import Tools exposing (..)
 import BasicView exposing (..)
 import Bezier exposing (..)
-import Strangers1.State exposing (genBezierBall2, genChangeBallColor, genFadeInAndOut)
+import Strangers1.State exposing (genBezierBall2, genChangeBallColor)
 import Strangers1.View
 
 init : ( Model, Cmd Msg )
@@ -56,7 +59,7 @@ init =
             [ { name = "fadeInAndOut"
               , value = 0
               , t = 0
-              , function = Func genFadeInAndOut
+              , function = Func fadeInAndOut
               , loop = False
               }
             ]
@@ -85,7 +88,7 @@ init =
                     , canvas = canvas
                     , brick = {w=39, h=39}
                     , breath = 1
-                    , offset = Point 0 -20
+                    , offset = Point 0 -30
                     , color = rgb 100 100 100
                     --, color = rgb 233 233 233
                     }
@@ -100,7 +103,7 @@ init =
                 (div [] [])
     in
     ( { model | visualization = Strangers1.View.visualize model }
-    , Cmd.none
+    , Task.perform GetViewport getViewport
     )
 
 
