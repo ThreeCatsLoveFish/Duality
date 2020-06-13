@@ -1,4 +1,4 @@
-module CollisionBlock4 exposing (basic_hit4)
+module Strangers4.CollisionBlock exposing (basic_hit4)
 import Tools exposing (getBall)
 import Model exposing (Ball, Block, Brick, HitTime(..), Model, StateFunc(..), rgb)
 import CollisionBlock exposing (Hit(..), ball_direction, block_black_box_hit)

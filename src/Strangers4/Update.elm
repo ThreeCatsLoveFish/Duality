@@ -4,7 +4,7 @@ import Model exposing (..)
 import Tools exposing (..)
 
 import Strangers4.View exposing (..)
-import CollisionBlock4 exposing (basic_hit4)
+import Strangers4.CollisionBlock exposing (basic_hit4)
 import CollisionPoly exposing (paddleCheck, wallCheck)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
