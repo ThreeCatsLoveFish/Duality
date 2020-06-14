@@ -2,15 +2,16 @@ module Strangers4.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
+import CollisionPoly exposing (wallCheck)
 
+import Strangers4.State exposing (getEndState)
 import Strangers4.View exposing (..)
-import Strangers4.CollisionBlock exposing (basic_hit4)
-import CollisionPoly exposing (paddleCheck, wallCheck)
+import Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        model0 =
+        model4 =
             case model.gameStatus of
                 Paused ->
                     case msg of
@@ -21,6 +22,21 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                AnimationPrepare ->
+                    case msg of
+                        Tick _ ->
+                            model |> stateIterate
+                        GetViewport { viewport } ->
+                            { model
+                                | size =
+                                    ( viewport.width
+                                    , viewport.height
+                                    )
+                            }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
                 Prepare ->
                     case msg of
                         KeyDown Space ->
@@ -32,11 +48,21 @@ update msg model =
                     let
                         model1 = model |> getEndState
                     in
-                    { model1 | gameStatus = Animation }
-                Animation ->
+                    { model1 | gameStatus = AnimationPass }
+                AnimationPass ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
+                End ->
+                    case msg of
+                        KeyDown _ ->
+                            {model | gameStatus = AnimationPrepare
+                                   , gameLevel = Companions5
+                            }
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ ->
@@ -71,8 +97,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( { model0 | visualization = Strangers4.View.visualize model} , Cmd.none )
--- TODO
+    ( { model4 | visualization = Strangers4.View.visualize model} , Cmd.none )
 
 
 move : Float -> Model -> Model
@@ -100,8 +125,8 @@ exec model =
     model
         |> movePaddle dir
         |> moveBall
-        |> basic_hit4
-        |> paddleCheck
+        |> block_hit
+        |> paddle_hit
         |> wallCheck
         |> winJudge
 
@@ -140,12 +165,14 @@ movePaddle op model =
                             _ -> dummyPoint
                     Stay -> Point 0 0
                 pos = paddle.pos
-
                 newPos =
                     Point (pos.x + v.x) (pos.y + v.y)
+                block = paddle.block
+                newBlock =
+                    Block (Point (block.lt.x + v.x) (block.lt.y + v.y)) (Point (block.rb.x + v.x) (block.rb.y + v.y))
                 col = List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) paddle.collision
                 setPaddle npos paddle_ =
-                    { paddle_ | pos = npos, collision = col }
+                    { paddle_ | pos = npos, block = newBlock, collision = col }
             in
             setPaddle newPos paddle
     in
@@ -201,11 +228,6 @@ bezierBricks model state =
             (getfunc state.function model state.t).bricks
     in
     { model | bricks = newBricks }
-
-
-getEndState : Model -> Model
-getEndState model =
-    model
 
 
 loopState : State -> Float -> Maybe State
