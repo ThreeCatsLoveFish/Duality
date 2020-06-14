@@ -1,9 +1,11 @@
 module Strangers4.Init exposing (..)
 
+import Browser.Dom exposing (getViewport)
 import Fade exposing (fadeInAndOut)
 import Html exposing (Html, Attribute, div)
 import Model exposing (..)
 import Messages exposing (..)
+import Task
 import Tools exposing (..)
 
 import Strangers4.View
@@ -56,7 +58,6 @@ init =
                 , loop = False
                 }
             ]
-
         bricks : List Brick
         bricks =
             let
@@ -96,13 +97,13 @@ init =
                     )
         model =
             Model
-                Strangers4 Prepare
+                Strangers4 AnimationPrepare
                 [ball] [paddle] bricks
                 state
                 canvas (canvas.w, canvas.h) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Strangers4.View.visualize model }
-    , Cmd.none
+    , Task.perform GetViewport getViewport
     )
 
