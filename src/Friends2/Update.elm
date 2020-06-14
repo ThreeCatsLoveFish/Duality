@@ -22,12 +22,10 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
-                Prepare ->
+                AnimationPrepare ->
                     case msg of
-                        KeyDown Space ->
-                            { model | gameStatus = Running Stay } |> getGameState
-                        Resize w h ->
-                            { model | size = (toFloat w,toFloat h)}
+                        Tick time ->
+                            model |> stateIterate
                         GetViewport { viewport } ->
                             { model
                                 | size =
@@ -35,6 +33,16 @@ update msg model =
                                     , viewport.height
                                     )
                             }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
+                Prepare ->
+                    case msg of
+                        KeyDown Space ->
+                            { model | gameStatus = Running Stay } |> getGameState
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Pass ->
                     let

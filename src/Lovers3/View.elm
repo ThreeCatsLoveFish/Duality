@@ -55,21 +55,37 @@ visualizeBall ball =
 
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
+    let
+        w = 2 * (paddle.r + paddle.h + 1)
+        h = 2 * paddle.r * (cos paddle.angle)
+        pos_ = { x= paddle.pos.x, y= paddle.pos.y- h }
+    in
     Svg.g []
-        [ Svg.circle
+        [ Svg.defs
+            []
+            [ Svg.mask [id "mask_"]
+                [ Svg.polygon
+                    [ SA.points (polyToString (posToPoly w h pos_))
+                    , SA.fill (colorToString paddle.color)
+                    ]
+                    []
+                ]
+            ]
+        , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
             , SA.r (String.fromFloat (paddle.r + paddle.h))
             , SA.fill (colorToString paddle.color)
+            , SA.mask "url(#mask_)"
             ]
             []
-        , Svg.polygon
-            [
-              --SA.points (polyToString paddle.collision)
-              SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-            , SA.fill (colorToString backgroundColor)
-            ]
-            []
+        --, Svg.polygon
+        --    [
+        --      --SA.points (polyToString paddle.collision)
+        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
+        --    , SA.fill (colorToString backgroundColor)
+        --    ]
+        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -216,7 +232,7 @@ visualize model =
             , style "height" (String.fromFloat model.canvas.h++"px")
             , style "position" "absolute"
             , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" "0"
+            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
             , style "background-color" (colorToString backgroundColor)
             ]
             [ visualizeGame model alpha ]
