@@ -131,7 +131,7 @@ init =
                 Companions5 AnimationPrepare
                 [ball] [paddle, paddle2] bricks
                 state
-                canvas (pixelWidth, pixelHeight) 0 True False
+                canvas (0, 0) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Companions5.View.visualize model }

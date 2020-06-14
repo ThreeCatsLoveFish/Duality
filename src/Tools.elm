@@ -68,15 +68,16 @@ getPaddle lst n =
 getPaddleColl : Point -> Float -> Float -> Float -> Int -> Poly
 getPaddleColl pos r h angle precision =
     let
-        rulerAngle = angle+0.2
+        pos_ = Point (pos.x) (pos.y+5)
+        rulerAngle = angle+1.2
         length = toFloat (precision - 1)
         points = List.range 0 (precision - 1)
             |> List.map (\x -> ( (toFloat x) - length / 2) / length)
-        surfaceR = r + h + 4
+        surfaceR = r + h + 5
         toPoints t =
             Point
-                (pos.x + surfaceR * sin (rulerAngle * t))
-                (pos.y - surfaceR * cos (rulerAngle * t))
+                (pos_.x + surfaceR * sin (rulerAngle * t))
+                (pos_.y - surfaceR * cos (rulerAngle * t))
     in
     List.map toPoints points
     --let

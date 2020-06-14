@@ -117,7 +117,7 @@ init =
                 Lovers3 AnimationPrepare
                 [ball] [paddle] bricks
                 state
-                canvas (pixelWidth, pixelHeight) 0 True False
+                canvas (0, 0) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Lovers3.View.visualize model }

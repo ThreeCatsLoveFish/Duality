@@ -51,8 +51,8 @@ init : ( Model, Cmd Msg )
 init =
     --Start0.Init.init
     --Friends2.Init.init
-    --Lovers3.Init.init
-    Companions5.Init.init
+    Lovers3.Init.init
+    --Companions5.Init.init
 
 {--
 reinit : Model -> ( Model, Cmd Msg )
