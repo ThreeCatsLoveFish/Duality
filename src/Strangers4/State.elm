@@ -2,6 +2,8 @@ module Strangers4.State exposing (..)
 import Bezier exposing (bezierColor)
 import Model exposing (Brick, Color, HitTime(..), Model, Point, rgb)
 
+startColor = rgb 75 213 232
+endColor = rgb 208 19 72
 
 genBezierColor : Color -> Color -> (Model -> Float -> Model)
 genBezierColor p1 p2 =
@@ -15,7 +17,7 @@ genBezierColor p1 p2 =
                     |> List.map (\a ->
                                 case a.hitTime of
                                     Hit 1 ->
-                                        if a.color /= rgb 208 19 72
+                                        if a.color /= endColor
                                         then { a | color = bezier t_ }
                                         else a
                                     _ -> a
@@ -24,3 +26,9 @@ genBezierColor p1 p2 =
             { model_ | bricks = targetBrick}
     in
     bezierBrickColor
+
+
+getEndState : Model -> Model
+getEndState model =
+    model
+

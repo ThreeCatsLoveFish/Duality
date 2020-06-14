@@ -1,7 +1,8 @@
 module Strangers4.View exposing (..)
 
-import Html exposing (Html, Attribute, div, text)
+import Html exposing (Attribute, Html, div, p, text)
 import Html.Attributes exposing (..)
+import Strangers4.State exposing (startColor)
 import Svg
 import Svg.Attributes as SA
 
@@ -57,34 +58,9 @@ visualizeBall ball =
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
     Svg.g []
-        [ Svg.circle
-            [ SA.cx (String.fromFloat paddle.pos.x)
-            , SA.cy (String.fromFloat paddle.pos.y)
-            , SA.r (String.fromFloat (paddle.r + paddle.h))
+        [ Svg.polygon
+            [ SA.points (polyToString paddle.collision)
             , SA.fill (colorToString paddle.color)
-            ]
-            []
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat paddle.pos.x)
-        --    , SA.cy (String.fromFloat paddle.pos.y)
-        --    , SA.r (String.fromFloat paddle.r)
-        --    , SA.fill (colorToString backgroundColor)
-        --    ]
-        --    []
-        , Svg.polygon
-            [
-              --SA.points (polyToString paddle.collision)
-              SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-            , SA.fill (colorToString backgroundColor)
-            ]
-            []
-        , Svg.circle
-            [ SA.cx (String.fromFloat paddle.pos.x)
-            , SA.cy (String.fromFloat paddle.pos.y)
-            , SA.r (String.fromFloat (paddle.r + paddle.h))
-            , SA.fillOpacity "0"
-            , SA.stroke (colorToString paddle.color)
-            , SA.strokeWidth (String.fromFloat paddle.h)
             ]
             []
         ]
@@ -103,11 +79,12 @@ changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
-            rgb 75 213 232
+            startColor
         Hit 1 ->
             brick.color
         _ ->
             backgroundColor
+
 
 visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
@@ -152,37 +129,55 @@ visualize model =
             , style "background-position" "center"
             ]
             [ visualizePrepare model
-            , ViewTest.visualizePause model
-            , ViewTest.visualizePass model
-            , ViewTest.visualizeLose model
+            , ViewTest.visualizeBlock model
             ]
         ]
 
+
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
-    let
-        ( w, h ) = model.size
-    in
     div
         [ style "background" (colorToString backgroundColor)
         , style "text-align" "center"
         , style "height" "100%"
         , style "width" "100%"
         , style "position" "absolute"
-        , style "left" ((String.fromFloat w)++"px")
-        , style "top" ((String.fromFloat h)++"px")
+        , style "left" "0"
+        , style "top" "0"
         , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
-        , style "line-height" "500px"
-        , style "display"
-            (if model.gameStatus == Prepare then
-                "block"
-             else
-                "none"
-            )
+        --, style "line-height" "500px"
+        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
+        --, style "display"
+        --    (if model.gameStatus == Prepare then
+        --        "block"
+        --     else
+        --        "none"
+        --    )
         ]
-        [ div [] [ text "Strangers II" ]
-        , div [] []
-        , div [] [ text "Press space to start. "]
+        [ div
+            [
+              style "text-align" "center"
+            --, style "display" "table-cell"
+            --, style "vertical" "bottom"
+            --, style "horizontal" "center"
+            ]
+            [ p
+                [ style "position" "absolute"
+                , style "top" "55%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "24px"
+                ]
+                [ text "Press space to start" ]
+            , p
+                [ style "position" "absolute"
+                , style "top" "30%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "48px"
+                ]
+                [ text "Strangers II" ]
+            ]
         ]
