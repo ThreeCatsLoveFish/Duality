@@ -84,8 +84,12 @@ update msg model =
                             let
                                 status =
                                     case key of
-                                        Key_Left -> Running Stay
-                                        Key_Right -> Running Stay
+                                        Key_Left ->
+                                            if model.gameStatus == Running Left then Running Stay
+                                            else model.gameStatus
+                                        Key_Right ->
+                                            if model.gameStatus == Running Right then Running Stay
+                                            else model.gameStatus
                                         _ -> model.gameStatus
                             in
                             {model | gameStatus = status}

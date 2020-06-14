@@ -80,6 +80,13 @@ visualizeBlock model =
                 Lose ->
                     ( "...The ball of life has dropped...", "Press R to revisit" )
                 _ -> ("","")
+        alpha =
+            case model.gameStatus of
+                Paused ->
+                    "0.7"
+                Lose ->
+                    "1"
+                _ -> "0"
     in
     div
         [ style "background" (colorToString (rgb 40 40 40))
@@ -91,7 +98,7 @@ visualizeBlock model =
         , style "top" "0"
         , style "font-family" "Helvetica, Arial, sans-serif"
         --, style "line-height" "500px"
-        , style "opacity" (String.fromFloat 0.7)
+        , style "opacity" alpha
         , style "display"
             (   if model.gameStatus == Paused then
                     "inline"
