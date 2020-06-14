@@ -12,7 +12,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 0 0 0
+backgroundColor = rgb 72 45 21
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -66,7 +66,7 @@ visualizePaddle paddle =
             [ Svg.mask [id "mask_"]
                 [ Svg.polygon
                     [ SA.points (polyToString (posToPoly w h pos_))
-                    , SA.fill (colorToString paddle.color)
+                    , SA.fill (colorToString (rgb 255 255 255))
                     ]
                     []
                 ]
@@ -105,7 +105,7 @@ visualizeBrick brick=
                 Hit 0 ->
                     "1"
                 _ ->
-                    "0"
+                    "0.3"
     in
     Svg.polygon
         [ SA.points (polyToString brick.collision)
@@ -118,9 +118,9 @@ changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
-            brick.color
+            rgb 150 0 13
         _ ->
-            backgroundColor
+            rgb 150 150 150
 
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
@@ -167,7 +167,7 @@ visualizeCanvas model =
             []
         , Svg.polygon
             [ SA.points (polyToString [lt,lb,rb,rt])
-            , SA.fill (colorToString (rgb 0 0 0))
+            , SA.fill (colorToString backgroundColor)
             , SA.filter "url(#Gaussian_Blur_in1)"
             , SA.opacity "1"
             ]

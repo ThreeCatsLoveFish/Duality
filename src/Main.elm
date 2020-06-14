@@ -10,7 +10,7 @@ import Start0.Init
 import Strangers1.Init
 import Friends2.Init
 import Lovers3.Init
---import Strangers4.Init
+import Strangers4.Init
 import Companions5.Init
 {--
 import Death6.Init
@@ -21,7 +21,7 @@ import Start0.Update
 import Strangers1.Update
 import Friends2.Update
 import Lovers3.Update
---import Strangers4.Update
+import Strangers4.Update
 import Companions5.Update
 {--
 import Death6.Update
@@ -51,8 +51,9 @@ init : ( Model, Cmd Msg )
 init =
     --Start0.Init.init
     --Strangers1.Init.init
-    Friends2.Init.init
+    --Friends2.Init.init
     --Lovers3.Init.init
+    Strangers4.Init.init
     --Companions5.Init.init
 
 {--
@@ -94,8 +95,8 @@ update msg model =
                      Friends2.Init.init
                  Lovers3 ->
                      Lovers3.Init.init
-                 --Strangers4 ->
-                 --    Strangers4.Init.init
+                 Strangers4 ->
+                     Strangers4.Init.init
                  Companions5 ->
                      Companions5.Init.init
                  {--
@@ -116,8 +117,8 @@ update msg model =
                      Friends2.Update.update msg model
                  Lovers3 ->
                      Lovers3.Update.update msg model
-                 --Strangers4 ->
-                 --    Strangers4.Update.update msg model
+                 Strangers4 ->
+                     Strangers4.Update.update msg model
                  Companions5 ->
                      Companions5.Update.update msg model
                  {--
