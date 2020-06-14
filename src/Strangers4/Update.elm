@@ -4,7 +4,7 @@ import Model exposing (..)
 import Tools exposing (..)
 import CollisionPoly exposing (wallCheck)
 
-import Strangers4.State exposing (getEndState)
+import Strangers4.State exposing (..)
 import Strangers4.View exposing (..)
 import Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
 
@@ -40,7 +40,7 @@ update msg model =
                 Prepare ->
                     case msg of
                         KeyDown Space ->
-                            { model | gameStatus = Running Stay }
+                            { model | gameStatus = Running Stay } |> getGameState
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
@@ -199,41 +199,3 @@ winJudge model =
                     --    False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
-
-
-stateIterate : Model -> Model
-stateIterate model =
-    case List.isEmpty model.state of
-        True ->
-            model
-        _ ->
-            let
-                state = model.state
-                newState =
-                    List.filterMap (\s -> loopState s 0.1) state
-                setModel : State -> Model -> Model
-                setModel stat model_ =
-                    bezierBricks model_ stat
-                newModel =
-                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
-            in
-            newModel
-
-
-bezierBricks : Model -> State -> Model
-bezierBricks model state =
-    let
-        getfunc (Func func) = func
-        newBricks =
-            (getfunc state.function model state.t).bricks
-    in
-    { model | bricks = newBricks }
-
-
-loopState : State -> Float -> Maybe State
-loopState state t =
-    if state.t <= 1 then
-         Just { state | t = state.t + t}
-    else
-         Nothing
-
