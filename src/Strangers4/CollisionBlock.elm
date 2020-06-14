@@ -1,13 +1,13 @@
 module Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
 import Tools exposing (getBall)
 import Model exposing (Ball, Block, Brick, HitTime(..), Model, Paddle, StateFunc(..))
-import CollisionBlock exposing (Hit(..), block_black_box_hit)
+import CollisionBlock exposing (Hit(..), block_black_box_hit, xyToCorner)
 import Strangers4.State exposing (..)
 
 
 -- Direction
-ball_direction_brick : Ball -> List Brick -> Hit
-ball_direction_brick ball box =
+ball_direction : Ball -> List Brick -> Hit
+ball_direction ball box =
     let
         init = Safe
         hit block status =
@@ -21,11 +21,7 @@ ball_direction_brick ball box =
                         Just head ->
                             case head.hitTime of
                                 Hit _ ->
-                                    case status of
-                                        Corner -> Corner
-                                        X -> X
-                                        Y -> Y
-                                        _ -> hit tail (block_black_box_hit ball head.block)
+                                    xyToCorner status (hit tail (block_black_box_hit ball head.block))
                                 _ -> hit tail status
                         Nothing -> status
                 Nothing ->
@@ -33,11 +29,7 @@ ball_direction_brick ball box =
                         Just head ->
                             case head.hitTime of
                                 Hit _ ->
-                                    case status of
-                                        Corner -> Corner
-                                        X -> X
-                                        Y -> Y
-                                        _ -> hit [] (block_black_box_hit ball head.block)
+                                    xyToCorner status (hit [] (block_black_box_hit ball head.block))
                                 _ -> status
                         Nothing -> status
     in
@@ -57,20 +49,12 @@ ball_direction_paddle ball box =
                 Just tail ->
                     case tmp of
                         Just head ->
-                            case status of
-                                Corner -> Corner
-                                X -> X
-                                Y -> Y
-                                _ -> hit tail (block_black_box_hit ball head.block)
+                            xyToCorner status (hit tail (block_black_box_hit ball head.block))
                         Nothing -> status
                 Nothing ->
                     case tmp of
                         Just head ->
-                            case status of
-                                Corner -> Corner
-                                X -> X
-                                Y -> Y
-                                _ -> hit [] (block_black_box_hit ball head.block)
+                            xyToCorner status (hit [] (block_black_box_hit ball head.block))
                         Nothing -> status
     in
     hit box init
@@ -109,15 +93,15 @@ block_hit model =
     let
         now_ball1 = getBall model.ball 1
         now_bricks = model.bricks
-        status = ball_direction_brick now_ball1 now_bricks
+        status = ball_direction now_ball1 now_bricks
     in
     { model
     | bricks =
         now_bricks
         |> List.map (\a ->
                         case a.hitTime of
-                            Hit 1 -> { a | hitTime = block_black_box_hitTime2 now_ball1 a.block }
                             Hit 0 -> { a | hitTime = block_black_box_hitTime1 now_ball1 a.block }
+                            Hit 1 -> { a | hitTime = block_black_box_hitTime2 now_ball1 a.block }
                             _ -> a
                         )
     , ball = [{ now_ball1

@@ -1,6 +1,7 @@
 module Strangers4.State exposing (..)
 import Bezier exposing (bezierColor)
-import Model exposing (Brick, Color, HitTime(..), Model, Point, rgb)
+import Fade exposing (fadeOut)
+import Model exposing (Brick, Color, HitTime(..), Model, Point, StateFunc(..), rgb)
 
 startColor = rgb 75 213 232
 endColor = rgb 208 19 72
@@ -27,8 +28,14 @@ genBezierColor p1 p2 =
     in
     bezierBrickColor
 
-
 getEndState : Model -> Model
 getEndState model =
-    model
-
+    let
+        s1 = { name = "fadeOut"
+            , value = 0
+            , t = -1
+            , function = Func (fadeOut)
+            , loop = False
+            }
+    in
+    { model | state = [s1] }

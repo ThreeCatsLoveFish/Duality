@@ -83,14 +83,24 @@ block_black_box_hit ball block =
         hit =
             case hit_corner of
                 Corner -> Corner
-                _ ->
-                    case (hit_x, hit_y) of
-                        (X, Y) -> Corner
-                        (X, _) -> X
-                        (_, Y) -> Y
-                        _ -> Safe
+                _ -> xyToCorner hit_x hit_y
     in
     hit
+
+
+-- helper
+xyToCorner : Hit -> Hit -> Hit
+xyToCorner hit_x hit_y =
+    case (hit_x, hit_y) of
+        (Corner, _) -> Corner
+        (_, Corner) -> Corner
+        (X, Y) -> Corner
+        (Y, X) -> Corner
+        (X, Safe) -> X
+        (Safe, X) -> X
+        (Y, Safe) -> Y
+        (Safe, Y) -> Y
+        _ -> Safe
 
 
 -- Direction
@@ -109,11 +119,7 @@ ball_direction ball box =
                         Just head ->
                             case head.hitTime of
                                 Hit 0 ->
-                                    case status of
-                                        Corner -> Corner
-                                        X -> X
-                                        Y -> Y
-                                        _ -> hit tail (block_black_box_hit ball head.block)
+                                    xyToCorner status (hit tail (block_black_box_hit ball head.block))
                                 _ -> hit tail status
                         Nothing -> status
                 Nothing ->
@@ -121,11 +127,7 @@ ball_direction ball box =
                         Just head ->
                             case head.hitTime of
                                 Hit 0 ->
-                                    case status of
-                                        Corner -> Corner
-                                        X -> X
-                                        Y -> Y
-                                        _ -> hit [] (block_black_box_hit ball head.block)
+                                    xyToCorner status (hit [] (block_black_box_hit ball head.block))
                                 _ -> status
                         Nothing -> status
     in
