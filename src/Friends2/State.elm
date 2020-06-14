@@ -1,5 +1,6 @@
 module Friends2.State exposing (..)
 import Bezier exposing (..)
+import Fade exposing (fadeOut)
 import Tools exposing (divState, dummyState, getBall, getState)
 import Model exposing (..)
 import Messages exposing (..)
@@ -113,23 +114,6 @@ moveBall2 model =
 
 
 ---
-genFadeOut : Model -> Float -> Model
-genFadeOut model t =
-    let
-        val =
-            if  ( t < 0.4 ) then
-                1
-            else if ( t >= 0.4 && t <= 0.7 ) then
-                (t - 0.4) / 0.3
-            else
-                0
-        (s_, state_) = divState model.state "fadeOut"
-        state =
-            case t>2 of
-                False -> { s_ | value = val}::state_
-                _ -> state_
-    in
-    { model | state = state }
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -189,8 +173,8 @@ getEndState model =
     let
         s1 = { name = "fadeOut"
             , value = 0
-            , t = -1
-            , function = Func (genFadeOut)
+            , t = 0
+            , function = Func (fadeOut)
             , loop = False
             }
     in

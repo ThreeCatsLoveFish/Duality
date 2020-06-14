@@ -247,7 +247,7 @@ visualize model =
             Paused ->
                 "1"
             AnimationPass ->
-                "1"
+                (String.fromFloat (getState model.state "fadeOut").value)
             Pass ->
                 "1"
             _ ->
