@@ -12,7 +12,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 0 0 0
+backgroundColor = rgb 138 182 165
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -61,31 +61,24 @@ visualizePaddle paddle =
         pos_ = { x= paddle.pos.x, y= paddle.pos.y- h }
     in
     Svg.g []
-        [ Svg.defs
-            []
-            [ Svg.mask [id "mask_"]
-                [ Svg.polygon
-                    [ SA.points (polyToString (posToPoly w h pos_))
-                    , SA.fill (colorToString paddle.color)
-                    ]
-                    []
-                ]
-            ]
-        , Svg.circle
+         --[ Svg.defs
+        --    []
+        --    [ Svg.mask [id "mask_"]
+        --        [ Svg.polygon
+        --            [ SA.points (polyToString (posToPoly w h pos_))
+        --            , SA.fill (colorToString paddle.color)
+        --            ]
+        --            []
+        --        ]
+        --    ]
+        [ Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
             , SA.r (String.fromFloat (paddle.r + paddle.h))
             , SA.fill (colorToString paddle.color)
-            , SA.mask "url(#mask_)"
+            --, SA.mask "url(#mask_)"
             ]
             []
-        --, Svg.polygon
-        --    [
-        --      --SA.points (polyToString paddle.collision)
-        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-        --    , SA.fill (colorToString backgroundColor)
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -167,7 +160,7 @@ visualizeCanvas model =
             []
         , Svg.polygon
             [ SA.points (polyToString [lt,lb,rb,rt])
-            , SA.fill (colorToString (rgb 0 0 0))
+            , SA.fill (colorToString backgroundColor)
             , SA.filter "url(#Gaussian_Blur_in1)"
             , SA.opacity "1"
             ]

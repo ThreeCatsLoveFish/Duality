@@ -15,7 +15,7 @@ import Lovers3.View
 init : ( Model, Cmd Msg )
 init =
     let
-        canvas = { w = 400, h = 600 }
+        canvas = { w = 500, h = 600 }
         ball : Ball
         ball =
             let
@@ -31,7 +31,7 @@ init =
             , v = v
             , r = r
             , collision = getBallColl (pos, r, 16)
-            , color = rgb 244 244 244
+            , color = rgb 250 200 50
             }
 
         state : List State
@@ -71,7 +71,7 @@ init =
                     , brick = {w=29, h=29}
                     , breath = 1
                     , offset = Point 0 -40
-                    , color = rgb 233 233 233
+                    , color = rgb 66 150 240
                     --, color = rgb 233 233 233
                     }
                 posInfo =

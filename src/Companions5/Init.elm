@@ -15,7 +15,7 @@ import Companions5.View
 init : ( Model, Cmd Msg )
 init =
     let
-        canvas = { w = 400, h = 600 }
+        canvas = { w = 550, h = 700 }
         ball : Ball
         ball =
             let
@@ -57,7 +57,7 @@ init =
             { pos = pos -- may not be necessary
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
             , block = dummyBlock
-            , color = rgb 255 255 255
+            , color = rgb 66 150 240
             , r = r
             , h = h
             , angle = angle
@@ -75,57 +75,94 @@ init =
             , collision =
                 (getPaddleColl pos_ paddle.r paddle.h paddle.angle 16)
                 |> List.map reflect
+            , color = rgb 250 200 50
             }
-
+        bricksize = {w=39, h=39}
         bricks : List Brick
         bricks =
             let
-                hi = --heartInfo
-                    { canvas = canvas
-                    , brick = {w=29, h=29}
-                    , breath = 1
-                    , offset = Point 0 -40
-                    , color = rgb 233 233 233
-                    --, color = rgb 233 233 233
+                brickInfo =
+                    { layout = {x=10, y=10}
+                    , canvas = canvas
+                    , brick = bricksize
+                    , breath = 10
+                    , offset = Point 0 0
+                    --, color = rgb 20 70 20
+                    , color = rgb 232 166 227
                     }
-                posInfo =
-                    [ Point 0 -1
-                    , Point 0 0
-                    , Point 0 1
-                    , Point 0 2
-                    , Point -1 -2
-                    , Point -1 -1
-                    , Point -1 0
-                    , Point -1 1
-                    , Point -2 0
-                    , Point -2 -1
-                    , Point -2 -2
-                    , Point -3 -1
-                    , Point 1 -2
-                    , Point 1 -1
-                    , Point 1 0
-                    , Point 1 1
-                    , Point 2 0
-                    , Point 2 -1
-                    , Point 2 -2
-                    , Point 3 -1
-                    ]
-
+                valid a = a==3||a==4||a==5||a== -3|| a== -4 || a== -5
+                newBricks_ : BrickInfo -> List Brick
+                newBricks_ info =
+                    let
+                        positionConvert len unit =
+                            (List.range 1 len)
+                                |> List.map toFloat
+                                |> List.map (\x -> x - 0.5 - (toFloat len) /2 )
+                                |> List.map (\x -> x * unit)
+                        posBrickX =
+                            positionConvert info.layout.x (info.brick.w + info.breath)
+                            |> List.filter (\x -> valid (x / (info.brick.w + info.breath)))
+                            |> List.map (\x -> x + info.canvas.w/2 + info.offset.x)
+                        posBrickY =
+                            positionConvert info.layout.y (info.brick.h + info.breath)
+                            |> List.map (\y -> y + info.canvas.h/2 + info.offset.y)
+                        posBricks =
+                            List.concatMap (\x -> List.map (Point x) posBrickY) posBrickX -- get pos
+                    in
+                    List.map (\pos -> Brick pos (pos2coll pos info.brick) (pos2block pos info.brick) (Hit 0) info.color) posBricks
             in
-            posInfo
-                |> List.map
-                    (\p -> Point
-                        ((hi.brick.w+hi.breath)*p.x+hi.canvas.w/2+hi.offset.x)
-                        ((hi.brick.h+hi.breath)*p.y+hi.canvas.h/2+hi.offset.y)
-                    )
-                |> List.map
-                    (\p -> Brick
-                        p
-                        (pos2coll p hi.brick)
-                        (pos2block p hi.brick)
-                        (Hit 0)
-                        hi.color
-                    )
+            newBricks brickInfo
+            --newBricks_ brickInfo
+        --bricks : List Brick
+        --bricks =
+        --    let
+        --        hi = --heartInfo
+        --            { canvas = canvas
+        --            , brick = {w=39, h=39}
+        --            , breath = 1
+        --            , offset = Point 0 -40
+        --            , color = rgb 233 233 233
+        --            --, color = rgb 233 233 233
+        --            }
+        --        posInfo =
+        --            List.indexedMap (\i x -> Point x (toFloat i)) [-5, -4, -3, 3, 4, 5]
+        --            --[ Point -5 5
+        --            --, Point -5 -4
+        --            --, Point -5 -3
+        --            --, Point -5 -2
+        --            --, Point -5 -1
+        --            --, Point -5 0
+        --            --, Point -1 0
+        --            --, Point -1 1
+        --            --, Point -2 0
+        --            --, Point -2 -1
+        --            --, Point -2 -2
+        --            --, Point -3 -1
+        --            --, Point 1 -2
+        --            --, Point 1 -1
+        --            --, Point 1 0
+        --            --, Point 1 1
+        --            --, Point 2 0
+        --            --, Point 2 -1
+        --            --, Point 2 -2
+        --            --, Point 3 -1
+        --            --]
+        --
+        --    in
+        --    posInfo
+        --        |> List.map
+        --            (\p -> Point
+        --                ((hi.brick.w+hi.breath)*p.x+hi.canvas.w/2+hi.offset.x)
+        --                ((hi.brick.h+hi.breath)*p.y+hi.canvas.h/2+hi.offset.y)
+        --            )
+        --        |> List.map
+        --            (\p -> Brick
+        --                p
+        --                (pos2coll p hi.brick)
+        --                (pos2block p hi.brick)
+        --                (Hit 0)
+        --                hi.color
+        --            )
         model =
             Model
                 Companions5 AnimationPrepare
