@@ -99,7 +99,7 @@ init =
                 Strangers1 AnimationPrepare
                 [ball, ball2] [paddle] bricks
                 state
-                canvas (pixelWidth, pixelHeight) 0 True False
+                canvas (0, 0) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Strangers1.View.visualize model }

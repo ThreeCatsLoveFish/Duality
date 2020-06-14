@@ -8,7 +8,7 @@ import Svg.Attributes as SA
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
-import BasicView as ViewTest
+import BasicView
 
 
 backgroundColor : Color
@@ -185,12 +185,16 @@ visualize model =
     let
         (w,h) = model.size
         alpha = case model.gameStatus of
+            Prepare ->
+                "1"
             Running _ ->
+                "1"
+            Paused ->
+                "1"
+            Pass ->
                 "1"
             AnimationPass ->
                 (String.fromFloat (getState model.state "fadeOut").value)
-            Pass ->
-                "1"
             _ ->
                 "0"
         r =
@@ -221,14 +225,20 @@ visualize model =
             , style "background-position" "center"
             ]
             [ visualizePrepare model
-            , ViewTest.visualizePause model
-            , ViewTest.visualizeLose model
+            , BasicView.visualizeBlock model
             ]
         ]
 
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
+    let
+        alpha =
+            case model.gameStatus of
+                AnimationPrepare ->
+                    (getState model.state "fadeInAndOut").value
+                _ -> 0
+    in
     div
         [ style "background" (colorToString backgroundColor)
         , style "text-align" "center"
@@ -241,7 +251,7 @@ visualizePrepare model =
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
         --, style "line-height" "500px"
-        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
+        , style "opacity" (String.fromFloat alpha)
         , style "display"
             (if model.gameStatus == AnimationPrepare then
                 "block"
@@ -249,29 +259,20 @@ visualizePrepare model =
                 "none"
             )
         ]
-        [ div
-            [
-              style "text-align" "center"
-            --, style "display" "table-cell"
-            --, style "vertical" "bottom"
-            --, style "horizontal" "center"
+        [ p
+            [ style "position" "absolute"
+            , style "top" "55%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "24px"
             ]
-            [ p
-                [ style "position" "absolute"
-                , style "top" "55%"
-                , style "width" "100%"
-                , style "text-align" "center"
-                , style "font-size" "24px"
-                ]
-                [ text "Press space to start" ]
-            , p
-                [ style "position" "absolute"
-                , style "top" "30%"
-                , style "width" "100%"
-                , style "text-align" "center"
-                , style "font-size" "48px"
-                ]
-                [ text "Strangers" ]
-
+            [ text "Press space to start" ]
+        , p
+            [ style "position" "absolute"
+            , style "top" "30%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "48px"
             ]
+            [ text "Strangers" ]
         ]

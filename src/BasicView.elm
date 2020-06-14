@@ -9,82 +9,6 @@ import Messages exposing (..)
 import Svg
 import Svg.Attributes as SA
 
-pixelWidth : Float
-pixelWidth =
-    1120
-
-pixelHeight : Float
-pixelHeight =
-    630
-
---visualizeBall : Ball -> Color -> Svg.Svg Msg
---visualizeBall ball color =
---    Svg.circle
---        [ SA.cx (String.fromFloat ball.pos.x)
---        , SA.cy (String.fromFloat ball.pos.y)
---        , SA.r (String.fromFloat ball.r)
---        , SA.fill (colorToString color) ]
---        []
---
---visualizeBrick : Brick -> Svg.Svg Msg
---visualizeBrick brick=
---    Svg.polygon
---        [ SA.points (polyToString brick.collision)
---        , SA.fill (colorToString (brick.color))
---        ]
---        []
---
---
---{-
---visualizeBricks : List Brick -> List (Svg.Svg Msg) -> List (Svg.Svg Msg)
---visualizeBricks bricks svgBricks=
---    let
---        newSvgBricks =
---            List.map visualizeBrick bricks
---    in
---        if List.isEmpty svgBricks then
----}
---
---
---visualizePaddle : Paddle -> Color -> Html Msg
---visualizePaddle paddle color =
---    Svg.svg
---        [ SA.version "1.1"
---        , SA.x "0"
---        , SA.y "0"
---        , SA.viewBox "0 0 625 250"
---        ]
---    [ Svg.polygon
---        [ SA.points (polyToString paddle.collision)
---        , SA.fill (colorToString color)
---        ]
---        []
---    ]
---
----- dummy for clear coding
---visualizeGame : Model -> String -> Html Msg
---visualizeGame model opacity =
---    let
---        elements =
---            (List.map visualizeBrick model.bricks) ++ [visualizeBall (getBall model.ball 1) (rgb 33 134 233) ]
---              |> (::) (visualizePaddle (getPaddle model.paddle 1) (rgb 0 88 99))
---    in
---        div
---            [ style "width" "250px"
---            , style "height" "625px"
---            , style "position" "absolute"
---            , style "left" "0"
---            , style "top" "0"
---            , style "opacity" opacity
---            ]
---            [ Svg.svg
---                [ SA.version "1.1"
---                , SA.x "0"
---                , SA.y "0"
---                , SA.viewBox "0 0 625 250"
---                ]
---                elements
---            ]
 
 visualizePrepare : Model -> Color -> Html Msg
 visualizePrepare model bColor =
@@ -146,74 +70,100 @@ visualizePrepare model bColor =
             ]
         ]
 
-visualizePause : Model -> Html Msg
-visualizePause model =
+visualizeBlock : Model -> Html Msg
+visualizeBlock model =
+    let
+        (status, description) =
+            case model.gameStatus of
+                Paused ->
+                    ( "Paused", "Press Space to continue" )
+                Lose ->
+                    ( "...The ball of life has dropped...", "Press R to revisit" )
+                _ -> ("","")
+    in
     div
-        [ style "background" "rgba(244, 244, 244, 0.85)"
+        [ style "background" (colorToString (rgb 40 40 40))
         , style "text-align" "center"
-        , style "height" ((String.fromFloat model.canvas.h)++"px")
-        , style "width" ((String.fromFloat model.canvas.w)++"px")
+        , style "height" "100%"
+        , style "width" "100%"
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
         , style "font-family" "Helvetica, Arial, sans-serif"
-        , style "font-size" "48px"
-        , style "color" "#77C0C5"
-        , style "line-height" "500px"
+        --, style "line-height" "500px"
+        , style "opacity" (String.fromFloat 0.7)
         , style "display"
-            (if model.gameStatus == Paused then
-                "block"
-             else
-                "none"
+            (   if model.gameStatus == Paused then
+                    "inline"
+                else
+                    "none"
             )
         ]
-        [text "Paused"]
+        [ p -- Description / Instruction
+            [ style "width" "100%"
+            , style "position" "absolute"
+            , style "left" "0"
+            , style "top" "55%"
+            , style "font-size" "20px"
+            , style "color" "#AAAAAA"
+            ]
+            [text description]
+        , p -- Title
+            [ style "width" "100%"
+            , style "position" "absolute"
+            , style "left" "0"
+            , style "top" "30%"
+            , style "font-size" "40px"
+            , style "color" "#FFFFFF"
+            ]
+            [text status]
+        ]
 
-visualizePass : Model -> Html Msg
-visualizePass model =
-    div
-        [ style "background" "rgba(244, 244, 244, 0.85)"
-        , style "text-align" "center"
-        , style "height" ((String.fromFloat model.canvas.h)++"px")
-        , style "width" ((String.fromFloat model.canvas.w)++"px")
-        , style "position" "absolute"
-        , style "left" "0"
-        , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
-        , style "font-size" "48px"
-        , style "color" "#F43344"
-        , style "line-height" "500px"
-        , style "display"
-            (if model.gameStatus == Pass then
-                "block"
-             else
-                "none"
-            )
-        ]
-        [text "You win! "]
+--visualizePass : Model -> Html Msg
+--visualizePass model =
+--    div
+--        [ style "background" "rgba(244, 244, 244, 0.85)"
+--        , style "text-align" "center"
+--        , style "height" ((String.fromFloat model.canvas.h)++"px")
+--        , style "width" ((String.fromFloat model.canvas.w)++"px")
+--        , style "position" "absolute"
+--        , style "left" "0"
+--        , style "top" "0"
+--        , style "font-family" "Helvetica, Arial, sans-serif"
+--        , style "font-size" "48px"
+--        , style "color" "#F43344"
+--        , style "line-height" "500px"
+--        , style "display"
+--            (if model.gameStatus == Pass then
+--                "block"
+--             else
+--                "none"
+--            )
+--        ]
+--        [text "You win! "]
 
-visualizeLose : Model -> Html Msg
-visualizeLose model =
-    div
-        [ style "background" "rgba(244, 244, 244, 0.85)"
-        , style "text-align" "center"
-        , style "height" ((String.fromFloat model.canvas.h)++"px")
-        , style "width" ((String.fromFloat model.canvas.w)++"px")
-        , style "position" "absolute"
-        , style "left" "0"
-        , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
-        , style "font-size" "48px"
-        , style "color" "#111111"
-        , style "line-height" "500px"
-        , style "display"
-            (if model.gameStatus == Lose then
-                "block"
-             else
-                "none"
-            )
-        ]
-        [text "You lose! "]
+--visualizeLose : Model -> Html Msg
+--visualizeLose model =
+--    div
+--        [ style "background" "rgba(244, 244, 244, 0.85)"
+--        , style "text-align" "center"
+--        , style "height" ((String.fromFloat model.canvas.h)++"px")
+--        , style "width" ((String.fromFloat model.canvas.w)++"px")
+--        , style "position" "absolute"
+--        , style "left" "0"
+--        , style "top" "0"
+--        , style "font-family" "Helvetica, Arial, sans-serif"
+--        , style "font-size" "48px"
+--        , style "color" "#111111"
+--        , style "line-height" "500px"
+--        , style "display"
+--            (if model.gameStatus == Lose then
+--                "block"
+--             else
+--                "none"
+--            )
+--        ]
+--        [text "You lose! "]
 
 --view : Model -> Html Msg
 --view model =

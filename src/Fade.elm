@@ -22,6 +22,32 @@ fadeInAndOut model t =
     in
     { model | state = state }
 
+-- break: before fade;
+-- interval: time to fade;
+-- speedAdjust: how much to change during flow,
+--     preferably slowing down by using -0.002, etc.
+genFadeOut : Float -> Float -> Float -> (Model -> Float -> Model)
+genFadeOut break interval speedAdjust =
+    let
+        fadeOut_ model t =
+            let
+                val =
+                    if  ( t < break ) then
+                        1
+                    else if ( t >= break && t <= break+interval ) then
+                        (break + interval - t) / interval
+                    else
+                        0
+                (s_, state_) = divState model.state "fadeOut"
+                state =
+                    case t>1 of
+                        False -> { s_ | value = val, t = s_.t - speedAdjust}::state_
+                        _ -> state_
+            in
+            { model | state = state }
+    in
+    fadeOut_
+
 fadeOut : Model -> Float -> Model
 fadeOut model t =
     let

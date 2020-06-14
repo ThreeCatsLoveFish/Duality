@@ -30,6 +30,7 @@ visualize model =
                 Basics.min 1 (h / pixelHeight)
             else
                 Basics.min 1 (w / pixelWidth)
+        len = 700 -- This is the length of the logo, was 834
     in
     div
         [ style "width" "100%"
@@ -40,8 +41,8 @@ visualize model =
         , style "background-color" (colorToString backgroundColor)
         ]
         [ img [ src "icon.png"
-              , width 834
-              , height 834
+              , width len
+              , height len
               , style "position" "relative"
               , style "left" (String.fromFloat ((w - pixelHeight * r) / 2) ++ "px")
               , style "top" (String.fromFloat ((h - pixelHeight * r) / 2) ++ "px")

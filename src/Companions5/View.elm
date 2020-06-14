@@ -186,7 +186,11 @@ visualize model =
     let
         (w,h) = model.size
         alpha = case model.gameStatus of
+            Prepare ->
+                "1"
             Running _ ->
+                "1"
+            Paused ->
                 "1"
             AnimationPass ->
                 "1"
@@ -222,8 +226,7 @@ visualize model =
             , style "background-position" "center"
             ]
             [ visualizePrepare model
-            , ViewTest.visualizePause model
-            , ViewTest.visualizeLose model
+            , ViewTest.visualizeBlock model
             ]
         ]
 

@@ -185,12 +185,16 @@ visualize model =
     let
         (w,h) = model.size
         alpha = case model.gameStatus of
+            Prepare ->
+                "1"
             Running _ ->
                 "1"
-            AnimationPass ->
+            Paused ->
                 "1"
             Pass ->
                 "1"
+            AnimationPass ->
+                (String.fromFloat (getState model.state "fadeOut").value)
             _ ->
                 "0"
         r =
@@ -221,8 +225,7 @@ visualize model =
             , style "background-position" "center"
             ]
             [ visualizePrepare model
-            , ViewTest.visualizePause model
-            , ViewTest.visualizeLose model
+            , ViewTest.visualizeBlock model
             ]
         ]
 

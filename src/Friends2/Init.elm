@@ -93,7 +93,7 @@ init =
                 Friends2 Prepare
                 [ball, ball2] [paddle] bricks
                 state
-                canvas (pixelWidth, pixelHeight) 0 True False
+                canvas (0, 0) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Friends2.View.visualize model }

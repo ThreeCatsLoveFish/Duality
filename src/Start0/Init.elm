@@ -25,7 +25,7 @@ init =
                 Start0 AnimationPass
                 [] [] []
                 [state]
-                canvas (pixelWidth, pixelHeight) 0 True False
+                canvas (0, 0) 0 True False
                 (div [] [])
     in
     ( { model | visualization = Start0.View.visualize model }

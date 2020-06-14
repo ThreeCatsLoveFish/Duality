@@ -1,6 +1,6 @@
 module Lovers3.State exposing (..)
 import Bezier exposing (bezierPos)
-import Fade exposing (fadeOut)
+import Fade exposing (fadeOut, genFadeOut)
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (divState, getBall)
@@ -12,9 +12,36 @@ genBezierBrick bricks__ =
         bezierBrick model t_ =
             let
                 (s_, state_e) = divState model.state "heart"
-                s = { s_ | value = speedMap (List.length (List.filter (\b -> b.hitTime /= NoMore) model.bricks)) }
+                s__ = { s_ | value = speedMap (List.length (List.filter (\b -> b.hitTime /= NoMore) model.bricks)) }
 
-                t = timeMap t_ s.value
+                t_r = -- redundant t for heart leak with proportion to frac
+                    let
+                        timeMap : Float -> Float -> Float
+                        timeMap t__ sp =
+                            let
+                                vMax = 12
+                                frac = 1 - sp/vMax
+                            in
+                            --if t__ < frac then
+                                t__ / frac
+                            --else
+                            --    1
+                    in
+                    timeMap t_ s__.value
+
+                ( t, cut ) =
+                    let
+                        cutTime = 1.5
+                    in
+                    if t_r < cutTime then
+                        ( min t_r 1, False )
+                    else
+                        ( 0, True )
+
+                s =
+                    case cut of
+                        True -> { s__ | t = 0 }
+                        _ -> s__
 
                 center = Point (model.canvas.w/2) (model.canvas.h/2 - 50)
                 pos2curve pos_ =
@@ -80,17 +107,6 @@ posDiff ori new cur =
     in
     Point x y
 
-timeMap : Float -> Float -> Float
-timeMap t_ sp =
-    let
-        vMax = 12
-        frac = sp/12
-    in
-    if t_ < frac then
-        0
-    else
-        (t_ - frac) / (1 - frac)
-
 speedMap : Int -> Float
 speedMap brickN =
     let
@@ -148,7 +164,7 @@ getEndState model =
         s = { name = "fadeOut"
             , value = 0
             , t = 0
-            , function = Func (fadeOut)
+            , function = Func (genFadeOut 0 1 -0.001)
             , loop = False
             }
     in
