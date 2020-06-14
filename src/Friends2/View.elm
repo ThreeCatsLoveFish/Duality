@@ -1,6 +1,6 @@
 module Friends2.View exposing (..)
 
-import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Html exposing (Attribute, Html, button, div, h1, input, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -12,7 +12,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 188 122 178
+backgroundColor = rgb 226 174 227
 
 visualizeBall1 : Ball -> Svg.Svg Msg
 visualizeBall1 ball =
@@ -94,21 +94,37 @@ visualizeBall2 ball =
 
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
+    let
+        w = 2 * (paddle.r + paddle.h + 1)
+        h = 2 * paddle.r * (cos paddle.angle)
+        pos_ = { x= paddle.pos.x, y= paddle.pos.y- h }
+    in
     Svg.g []
-        [ Svg.circle
+        [ Svg.defs
+            []
+            [ Svg.mask [id "mask_"]
+                [ Svg.polygon
+                    [ SA.points (polyToString (posToPoly w h pos_))
+                    , SA.fill (colorToString paddle.color)
+                    ]
+                    []
+                ]
+            ]
+        , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
             , SA.r (String.fromFloat (paddle.r + paddle.h))
             , SA.fill (colorToString paddle.color)
+            , SA.mask "url(#mask_)"
             ]
             []
-        , Svg.polygon
-            [
-              --SA.points (polyToString paddle.collision)
-              SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-            , SA.fill (colorToString backgroundColor)
-            ]
-            []
+        --, Svg.polygon
+        --    [
+        --      --SA.points (polyToString paddle.collision)
+        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
+        --    , SA.fill (colorToString backgroundColor)
+        --    ]
+        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -255,7 +271,7 @@ visualize model =
             , style "height" (String.fromFloat model.canvas.h++"px")
             , style "position" "absolute"
             , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" "0"
+            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
             , style "background-color" (colorToString backgroundColor)
             ]
             [ visualizeGame model alpha ]
@@ -270,6 +286,13 @@ visualize model =
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
+    let
+        alpha =
+            case model.gameStatus of
+                AnimationPrepare ->
+                    (getState model.state "fadeInAndOut").value
+                _ -> 0
+    in
     div
         [ style "background" (colorToString backgroundColor)
         , style "text-align" "center"
@@ -280,15 +303,30 @@ visualizePrepare model =
         , style "top" "0"
         , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
-        , style "color" "#000000"
-        , style "line-height" "500px"
-        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
-        --, style "display"
-        --    (if model.gameStatus == Prepare then
-        --        "block"
-        --     else
-        --        "none"
-        --    )
+        , style "color" "#FFFFFF"
+        , style "opacity" (String.fromFloat alpha)
+        , style "display"
+            (if model.gameStatus == AnimationPrepare then
+                "block"
+             else
+                "none"
+            )
         ]
-        [ div [] [ text "Friends (Press space to start)" ]
+        [ p
+            [ style "position" "absolute"
+            , style "top" "55%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "24px"
+            ]
+            [ text "Press space to start" ]
+        , p
+            [ style "position" "absolute"
+            , style "top" "30%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "48px"
+            ]
+            [ text "Friends" ]
         ]
+

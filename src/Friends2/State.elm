@@ -68,8 +68,8 @@ moveBall2 model =
         stateKToP =
             let
                 p1 = {x=ball.pos.x, y=ball.pos.y}
-                p2 = {x=ball.pos.x+5, y=ball.pos.y+5}
-                p3 = {x=ball.pos.x- 10, y=ball.pos.y+2}
+                p2 = {x=ball.pos.x+20, y=ball.pos.y+5}
+                p3 = {x=ball.pos.x- 10, y=ball.pos.y+10}
                 p4 = {x=ball.pos.x, y=ball.pos.y}
             in
             { state

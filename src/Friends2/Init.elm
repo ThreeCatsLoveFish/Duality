@@ -8,9 +8,8 @@ import Model exposing (..)
 import Messages exposing (..)
 import Task
 import Tools exposing (..)
-import BasicView exposing (..)
 import Friends2.View
-import Friends2.Find exposing (find)
+import Friends2.Find exposing (getBrick)
 
 init : ( Model, Cmd Msg )
 init =
@@ -37,7 +36,8 @@ init =
         ball2 =
             let
                 pos =
-                    Tuple.first (find bricks 1)
+                    --Tuple.first (find bricks 1)
+                    (getBrick bricks 27).pos
                 v = Point 0 0
                 r = 15
             in
@@ -84,13 +84,14 @@ init =
                     , brick = bricksize
                     , breath = 10
                     , offset = Point 0 -120
-                    , color = rgb 100 100 100
+                    --, color = rgb 20 70 20
+                    , color = rgb 138 182 165
                     }
             in
             newBricks brickInfo
         model =
             Model
-                Friends2 Prepare
+                Friends2 AnimationPrepare
                 [ball, ball2] [paddle] bricks
                 state
                 canvas (0, 0) 0 True False
