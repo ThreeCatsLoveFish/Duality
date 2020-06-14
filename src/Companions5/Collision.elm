@@ -115,8 +115,6 @@ paddleCheckIndex index model =
 
         symmetric : Point -> Point -> Point
         symmetric xy mn =
-            if xy.y < 0 then xy
-            else
             { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
             , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
             }
@@ -129,6 +127,39 @@ paddleCheckIndex index model =
             True -> model
             False ->
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
+
+
+-- If we can't fix the problem, fix the guy instead.
+-- This is a bad-ass vigilante.
+paddleOutwardFix : Model -> Model
+paddleOutwardFix model =
+    let
+        distance : Point -> Point -> Float
+        distance p1 p2 =
+            sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
+        norm = distance (Point 0 0)
+
+        paddleBallFix : Paddle -> Ball -> Ball
+        paddleBallFix paddle ball =
+            let
+                enough = (ball.r + paddle.r - 1)
+                outward = enough < distance paddle.pos ball.pos
+                outDir = Point (ball.pos.x - paddle.pos.x) (ball.pos.y - paddle.pos.y)
+                out =
+                    Point
+                    (paddle.pos.x + outDir.x / (norm outDir) * (enough+2))
+                    (paddle.pos.y + outDir.y / (norm outDir) * (enough+2))
+            in
+            case outward of
+                True -> ball
+                False -> { ball | pos = out }
+
+        newBalls =
+            model.ball
+                |> List.map (\b -> paddleBallFix (getPaddle model.paddle 1) b)
+                |> List.map (\b -> paddleBallFix (getPaddle model.paddle 2) b)
+    in
+    { model | ball = newBalls }
 
 wallCheck : Model -> Model
 wallCheck model =
