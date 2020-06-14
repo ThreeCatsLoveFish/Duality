@@ -205,32 +205,9 @@ paddleCheck model =
             False ->
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
 
-type Orientation
-    = Vertical
-    | Horizontal
-    | UnChanged
-
 wallCheck : Model -> Model
 wallCheck model =
     let
-        {-
-        old = model.ball
-        hWall = model.horizontalWall
-        vWall = model.verticalWall
-        change ball_ ori =
-            case ori of
-                Vertical -> { ball_ | v = Point ball_.pos.x -ball_.pos.y}
-                Horizontal -> { ball_ | v = Point -ball_.pos.x ball_.pos.y}
-                _ -> ball_
-        detect ball_ block ori =
-            case blockCheck block ball_.collision of
-                True -> change ball_ ori
-                False -> ball_
-        newH = List.foldl (\block b -> detect b block Horizontal) old hWa
-ll
-        newV = List.foldl (\block b -> detect b block Vertical) newH vWall
-        ball = newV
-        -}
         old = (getBall model.ball 1)
         v = old.v
         pos = old.pos
