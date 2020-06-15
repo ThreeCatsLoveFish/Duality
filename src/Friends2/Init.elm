@@ -1,6 +1,7 @@
 module Friends2.Init exposing (..)
 
 import Fade exposing (fadeInAndOut)
+import Friends2.State exposing (fadeIn)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Browser.Dom exposing (getViewport)
 
@@ -50,10 +51,10 @@ init =
             }
         state : List State
         state =
-            [ { name = "fadeInAndOut"
+            [ { name = "fadeIn"
               , value = 0
               , t = 0
-              , function = Func fadeInAndOut
+              , function = Func fadeIn
               , loop = False
               }
             ]

@@ -1,8 +1,30 @@
 module Fade exposing (..)
 
-import Model exposing (Model)
+import Model exposing (..)
 import Tools exposing (divState)
 
+genFadeIn : Float -> Float -> Float -> (Model -> Float -> Model)
+genFadeIn break interval speedAdjust =
+    let
+        fadeIn_ model t_ =
+            let
+                t = 1 - t_
+                val =
+                    if  ( t < break ) then
+                        1
+                    else if ( t >= break && t <= break+interval ) then
+                        (break + interval - t) / interval
+                    else
+                        0
+                (s_, state_) = divState model.state "fadeIn"
+                state =
+                    case t>1 of
+                        False -> { s_ | value = val, t = s_.t - speedAdjust}::state_
+                        _ -> state_
+            in
+            { model | state = state }
+    in
+    fadeIn_
 
 fadeInAndOut : Model -> Float -> Model
 fadeInAndOut model t =

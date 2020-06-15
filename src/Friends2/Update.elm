@@ -40,10 +40,18 @@ update msg model =
                 Prepare ->
                     case msg of
                         KeyDown Space ->
-                            { model | gameStatus = Running Stay } |> getGameState
+                            { model | gameStatus = AnimationPreparePost } |> getPrepareState
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                AnimationPreparePost ->
+                    case msg of
+                        Tick time ->
+                            model |> stateIterate
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
                 Lose ->
                     case msg of
                         KeyDown Key_R ->
