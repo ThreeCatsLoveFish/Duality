@@ -2,6 +2,7 @@ module Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
 import Tools exposing (getBall)
 import Model exposing (Ball, Block, Brick, HitTime(..), Model, Paddle, StateFunc(..))
 import CollisionBlock exposing (Hit(..), block_black_box_hit, xyToCorner)
+
 import Strangers4.State exposing (..)
 
 
@@ -35,6 +36,7 @@ ball_direction ball box =
     in
     hit box init
 
+
 -- Direction
 ball_direction_paddle : Ball -> List Paddle -> Hit
 ball_direction_paddle ball box =
@@ -60,29 +62,16 @@ ball_direction_paddle ball box =
     hit box init
 
 
--- Black Box 1
-block_black_box_hitTime1: Ball -> Block -> HitTime
-block_black_box_hitTime1 ball block =
+-- Black Box
+block_black_box_hitTime: Ball -> Block -> Int -> HitTime
+block_black_box_hitTime ball block a =
     let
         hit =
             block_black_box_hit ball block
         hit_time =
             case hit of
-                Safe -> Hit 0
-                _ -> Hit 1
-    in
-    hit_time
-
--- Black Box 2
-block_black_box_hitTime2: Ball -> Block -> HitTime
-block_black_box_hitTime2 ball block =
-    let
-        hit =
-            block_black_box_hit ball block
-        hit_time =
-            case hit of
-                Safe -> Hit 1
-                _ -> Hit 2
+                Safe -> Hit a
+                _ -> Hit (a + 1)
     in
     hit_time
 
@@ -100,8 +89,7 @@ block_hit model =
         now_bricks
         |> List.map (\a ->
                         case a.hitTime of
-                            Hit 0 -> { a | hitTime = block_black_box_hitTime1 now_ball1 a.block }
-                            Hit 1 -> { a | hitTime = block_black_box_hitTime2 now_ball1 a.block }
+                            Hit b -> { a | hitTime = block_black_box_hitTime now_ball1 a.block b }
                             _ -> a
                         )
     , ball = [{ now_ball1
@@ -117,9 +105,9 @@ block_hit model =
         case status of
             Safe -> []
             _ -> [{ name = "Color"
-                  , value = 2
+                  , value = 0
                   , t = 0
-                  , function = Func (genBezierColor startColor endColor)
+                  , function = Func genBezierColor
                   , loop = True
                   }]
     }
@@ -143,3 +131,4 @@ paddle_hit model =
                         Corner -> { x = -now_ball1.v.x, y = -now_ball1.v.y }
              }]
     }
+

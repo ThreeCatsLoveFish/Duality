@@ -49,11 +49,11 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    Start0.Init.init
+    --Start0.Init.init
     --Strangers1.Init.init
     --Friends2.Init.init
     --Lovers3.Init.init
-    --Strangers4.Init.init
+    Strangers4.Init.init
     --Companions5.Init.init
 
 {--
@@ -68,7 +68,6 @@ reinit model =
             Friends2.Init.init
         Lovers3 ->
             Lovers3.Init.init
-        {--
         Strangers4 ->
             Strangers4.Init.init
         Companions5 ->
@@ -77,7 +76,6 @@ reinit model =
             Death6.Init.init
         End7 ->
             End7.Init.init
-        --}
         _ ->
             Start0.Init.init
 --}

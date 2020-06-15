@@ -189,7 +189,7 @@ winJudge model =
         change_brick : Brick -> Brick
         change_brick brick =
             case brick.hitTime of
-                Hit 2 -> { brick | hitTime = NoMore, color = backgroundColor}
+                Hit 5 -> { brick | hitTime = NoMore, color = backgroundColor}
                 _ -> brick
         brick_all = List.map change_brick model.bricks
         win =
@@ -198,8 +198,6 @@ winJudge model =
                     Pass
                 False ->
                     model.gameStatus
-                    --case (getBall model.ball 1).pos.y > model.canvas.h+10 of
-                    --    True -> Lose
-                    --    False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
+

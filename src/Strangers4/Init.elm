@@ -66,7 +66,7 @@ init =
                     , brick = {w=29, h=29}
                     , breath = 1
                     , offset = Point 0 -40
-                    , color = rgb 75 213 232
+                    , color = dummyColor
                     }
                 posInfo =
                     [ Point 0 0

@@ -9,18 +9,22 @@ dummyPoint : Point
 dummyPoint =
     Point 0 0
 
+
 dummyBlock : Block
 dummyBlock =
     Block dummyPoint dummyPoint
+
 
 dummyPoly : Poly
 dummyPoly =
     --List.repeat 4 dummyPoint
     []
 
+
 dummyColor : Color
 dummyColor =
     rgb 0 0 0
+
 
 dummyBall : Ball
 dummyBall =
@@ -37,6 +41,7 @@ dummyBall =
     , color = dummyColor
     }
 
+
 getBall : List Ball -> Int -> Ball
 getBall lst n =
     case n of
@@ -44,6 +49,7 @@ getBall lst n =
             List.head lst
                 |> Maybe.withDefault dummyBall
         _ -> getBall (List.drop 1 lst) (n - 1)
+
 
 getBallColl : (Point, Float, Int) -> Poly
 getBallColl (pos, r, precision) =
@@ -53,9 +59,11 @@ getBallColl (pos, r, precision) =
     in
     points
 
+
 dummyPaddle : Paddle
 dummyPaddle =
     Paddle dummyPoint dummyPoly dummyBlock dummyColor 0 0 0
+
 
 getPaddle : List Paddle -> Int -> Paddle
 getPaddle lst n =
@@ -64,6 +72,7 @@ getPaddle lst n =
             List.head lst
                 |> Maybe.withDefault dummyPaddle
         _ -> getPaddle (List.drop 1 lst) (n - 1)
+
 
 getPaddleColl : Point -> Float -> Float -> Float -> Int -> Poly
 getPaddleColl pos r h angle precision =
@@ -100,6 +109,7 @@ dummyState = { name = "dummy"
              , loop = False
              }
 
+
 getState : List State -> String -> State
 getState states name =
     let
@@ -108,6 +118,16 @@ getState states name =
     in
     state
 
+
+getStateValue : List State -> Float -> State
+getStateValue states value =
+    let
+        state_ = List.filter (\s -> s.value == value) states
+        state = Maybe.withDefault dummyState (List.head state_)
+    in
+    state
+
+
 divState : List State -> String -> (State, List State)
 divState states name =
     let
@@ -115,6 +135,7 @@ divState states name =
         state = Maybe.withDefault dummyState (List.head state_)
     in
     ( state, lst )
+
 
 dummyBrick : Brick
 dummyBrick =
@@ -130,6 +151,7 @@ type alias BrickInfo =
     , offset : Point
     , color : Color
     }
+
 
 newBricks : BrickInfo -> List Brick
 newBricks info =
@@ -154,6 +176,7 @@ newBricks info =
     List.map (\pos -> Brick pos (pos2coll pos info.brick) (pos2block pos info.brick) (Hit 0) info.color) posBricks
     -- get bricks
 
+
 pos2coll pos object =
     let
         w = object.w /2
@@ -166,6 +189,8 @@ pos2coll pos object =
     , Point (x - w) (y - h)
     , Point (x + w) (y - h)
     ]
+
+
 pos2block pos object =
     let
         w = object.w /2
@@ -183,5 +208,4 @@ dummyModel =
         []
         {w=0,h=0} (0, 0) 0 True False
         (div [] [])
-
 
