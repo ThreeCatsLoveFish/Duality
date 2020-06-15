@@ -135,9 +135,9 @@ exec model =
     in
     model
         |> movePaddle dir
-        |> moveBall
         |> block_hit
         |> paddle_hit
+        |> moveBall
         |> wallCheck
         |> winJudge
 
@@ -145,8 +145,11 @@ exec model =
 moveBall : Model -> Model -- Done
 moveBall model =
     let
-        done ball =
+        static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 232 74 120 }) model.ball
+        done: Maybe Ball -> Ball
+        done ball_maybe =
             let
+                ball = Maybe.withDefault dummyBall ball_maybe
                 pos = ball.pos
                 v = ball.v
                 newPos = Point (pos.x + v.x) (pos.y + v.y)
@@ -156,7 +159,7 @@ moveBall model =
             in
             setPos newPos coll ball
     in
-    { model | ball = List.map done model.ball }
+    { model | ball = [done (List.head model.ball)] ++ static_old }
 
 
 movePaddle : Op -> Model -> Model -- Done
