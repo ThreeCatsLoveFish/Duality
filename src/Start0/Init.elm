@@ -8,25 +8,34 @@ import Messages exposing (..)
 import BasicView exposing (..)
 import Start0.View
 import Task
+import Tools exposing (dummyModel)
 
 init : ( Model, Cmd Msg )
 init =
     let
         canvas = { w = 400, h = 600 }
         state =
-            { name = "fadeInAndOut"
+            [{ name = "fadeInAndOut"
             , value = 0
             , t = 0
             , function = Func (\m _ -> m)
             , loop = False
-            }
+            }]
         model =
-            Model
-                Start0 AnimationPass
-                [] [] []
-                [state]
-                canvas (0, 0) 0 True False
-                (div [] [])
+            { dummyModel
+            | gameLevel = Start0
+            , gameStatus = AnimationPass
+            , ball = []
+            , paddle = []
+            , bricks = []
+            , state = state
+            , canvas = canvas
+            , size = (canvas.w, canvas.h)
+            , clock = 0
+            , activeInput = True
+            , animateState = AniIn
+            }
+
     in
     ( { model | visualization = Start0.View.visualize model }
     , Task.perform GetViewport getViewport

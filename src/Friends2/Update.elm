@@ -107,7 +107,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( { model0 | visualization = Friends2.View.visualize model} , Cmd.none )
+    ( { model0 | visualization = Friends2.View.visualize model0} , Cmd.none )
 -- TODO
 
 move : Float -> Model -> Model

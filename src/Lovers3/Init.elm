@@ -113,12 +113,19 @@ init =
                         hi.color
                     )
         model =
-            Model
-                Lovers3 AnimationPrepare
-                [ball] [paddle] bricks
-                state
-                canvas (0, 0) 0 True False
-                (div [] [])
+            { dummyModel
+            | gameLevel = Lovers3
+            , gameStatus = AnimationPrepare
+            , ball = [ball]
+            , paddle = [paddle]
+            , bricks = bricks
+            , state = state
+            , canvas = canvas
+            , size = (canvas.w, canvas.h)
+            , clock = 0
+            , activeInput = True
+            , animateState = AniIn
+            }
     in
     ( { model | visualization = Lovers3.View.visualize model }
     , Task.perform GetViewport getViewport

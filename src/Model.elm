@@ -92,6 +92,16 @@ type alias State =
 
 type StateFunc = Func (Model->Float->Model)
 
+---
+
+type AniState
+    = AniIn
+    | AniStatic
+    | AniOut
+    | AniStop
+
+---
+
 type alias Model =
     { gameLevel : GameLevel
     , gameStatus : GameStatus
@@ -106,7 +116,7 @@ type alias Model =
     , size : (Float,Float)
     , clock : Float
     , activeInput : Bool
-    , activeState : Bool
+    , animateState : AniState
 
     , visualization : Html Msg
     }
