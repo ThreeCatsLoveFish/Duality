@@ -115,6 +115,10 @@ paddleCheckIndex index model =
 
         symmetric : Point -> Point -> Point
         symmetric xy mn =
+            if xy.y < 0 && index == 1
+            || xy.y > 0 && index == 2
+            then xy
+            else
             { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
             , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
             }
@@ -128,7 +132,7 @@ paddleCheckIndex index model =
             False ->
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
 
-
+{--
 -- If we can't fix the problem, fix the guy instead.
 -- This is a bad-ass vigilante.
 paddleOutwardFix : Model -> Model
@@ -142,13 +146,13 @@ paddleOutwardFix model =
         paddleBallFix : Paddle -> Ball -> Ball
         paddleBallFix paddle ball =
             let
-                enough = (ball.r + paddle.r - 1)
+                enough = (ball.r + paddle.r - 10)
                 outward = enough < distance paddle.pos ball.pos
                 outDir = Point (ball.pos.x - paddle.pos.x) (ball.pos.y - paddle.pos.y)
                 out =
                     Point
-                    (paddle.pos.x + outDir.x / (norm outDir) * (enough+2))
-                    (paddle.pos.y + outDir.y / (norm outDir) * (enough+2))
+                    (paddle.pos.x + outDir.x / (norm outDir) * (enough+1))
+                    (paddle.pos.y + outDir.y / (norm outDir) * (enough+1))
             in
             case outward of
                 True -> ball
@@ -160,6 +164,7 @@ paddleOutwardFix model =
                 |> List.map (\b -> paddleBallFix (getPaddle model.paddle 2) b)
     in
     { model | ball = newBalls }
+--}
 
 wallCheck : Model -> Model
 wallCheck model =
@@ -190,9 +195,16 @@ ll
                 True -> (\b -> { b | v = Point -v.x v.y })
                 False -> identity
         vcBall =
+            let
+                ball = getBall model.ball 1
+                paddle1 = getPaddle model.paddle 1
+                paddle2 = getPaddle model.paddle 2
+            in
             case
                 ( pos.y <= 0 && v.y < 0) -- Todo: ???
-                || pos.y >= (model.canvas.h - 10)  -- Todo: ???
+                || ( pos.y >= (model.canvas.h - 10) && v.y > 0)  -- Todo: ???
+                || ( (ball.r + paddle1.r - 1) > distance ball.pos paddle1.pos && v.y > 0)
+                || ( (ball.r + paddle2.r - 1) > distance ball.pos paddle2.pos && v.y < 0)
                 of
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity

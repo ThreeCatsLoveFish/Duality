@@ -97,7 +97,7 @@ init =
         bricks =
             let
                 brickInfo =
-                    { layout = {x=10, y=10}
+                    { layout = {x=10, y=6}
                     , canvas = canvas
                     , brick = bricksize
                     , breath = 10
