@@ -45,6 +45,13 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                Lose ->
+                    case msg of
+                        KeyDown Key_R ->
+                            { model | gameStatus = ChangeLevel }
+                        KeyDown Space ->
+                            { model | gameStatus = ChangeLevel }
+                        _ -> model
                 Pass ->
                     let
                         model1 = model |> getEndState
@@ -126,12 +133,12 @@ exec model =
                 _ -> Stay
     in
     model
-        |> movePaddle dir
         |> moveBall
         |> basic_hit
+        |> movePaddle dir
+        --|> paddleOutwardFix -- Badass
         |> paddleCheckIndex 1
         |> paddleCheckIndex 2
-        |> paddleOutwardFix -- Badass
         |> wallCheck
         |> winJudge
 
@@ -154,9 +161,21 @@ moveBall model =
 movePaddle : Op -> Model -> Model -- Done
 movePaddle op model =
     let
+        ball = getBall model.ball 1
+        paddle1 = getPaddle model.paddle 1
+        paddle2 = getPaddle model.paddle 2
+        distance : Point -> Point -> Float
+        distance p1 p2 =
+            sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
+        --norm = distance (Point 0 0)
+        vNorm =  -- the speed of paddle
+            case (ball.r + paddle1.r - 1) < distance ball.pos paddle1.pos
+            ||   (ball.r + paddle2.r - 1) < distance ball.pos paddle2.pos
+            of
+                True -> 6
+                _ -> 1
         done paddle =
             let
-                vNorm = 6 -- the speed of paddle
                 v = case op of
                     Left ->
                         case pos.x > 18 of
@@ -172,10 +191,8 @@ movePaddle op model =
                 newPos =
                     Point (pos.x + v.x) (pos.y + v.y)
                 col = List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) paddle.collision
-                setPaddle npos paddle_ =
-                    { paddle_ | pos = npos, collision = col }
             in
-            setPaddle newPos paddle
+            { paddle | pos = newPos, collision = col }
     in
     { model | paddle = List.map done model.paddle }
 

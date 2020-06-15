@@ -10,6 +10,14 @@ dummyPoint =
     Point 0 0
 
 
+distance : Point -> Point -> Float
+distance p1 p2 =
+    sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
+
+norm : Point -> Float
+norm = distance (Point 0 0)
+
+
 dummyBlock : Block
 dummyBlock =
     Block dummyPoint dummyPoint

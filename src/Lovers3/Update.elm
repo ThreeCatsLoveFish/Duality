@@ -45,6 +45,13 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                Lose ->
+                    case msg of
+                        KeyDown Key_R ->
+                            { model | gameStatus = ChangeLevel }
+                        KeyDown Space ->
+                            { model | gameStatus = ChangeLevel }
+                        _ -> model
                 Pass ->
                     let
                         model1 = model |> getEndState

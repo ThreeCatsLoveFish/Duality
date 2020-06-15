@@ -99,7 +99,7 @@ block_hit model =
                         X -> { x = -now_ball1.v.x, y = now_ball1.v.y }
                         Y -> { x = now_ball1.v.x, y = -now_ball1.v.y }
                         Corner -> { x = -now_ball1.v.x, y = -now_ball1.v.y }
-             }]
+             }] ++ model.ball
     , state =
         model.state ++
         case status of
@@ -129,6 +129,6 @@ paddle_hit model =
                         X -> { x = -now_ball1.v.x, y = now_ball1.v.y }
                         Y -> { x = now_ball1.v.x, y = -now_ball1.v.y }
                         Corner -> { x = -now_ball1.v.x, y = -now_ball1.v.y }
-             }]
+             }] ++ model.ball
     }
 

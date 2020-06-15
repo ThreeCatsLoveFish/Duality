@@ -217,11 +217,9 @@ wallCheck model =
                 False -> identity
         vcBall =
             case ( pos.y <= 0 && v.y < 0)
-                || pos.y >= (model.canvas.h - 10)  -- Todo: ???
+                || (pos.y >= (model.canvas.h - 10) && v.y > 0)  -- Todo: ??? God mode
                 of
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity
     in
     { model | ball = [old |> hcBall |> vcBall, getBall model.ball 2] }
-
-
