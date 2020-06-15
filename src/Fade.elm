@@ -18,7 +18,7 @@ genFadeIn break interval speedAdjust =
                 (s_, state_) = divState model.state "fadeIn"
                 state =
                     case t_>1 of
-                        False -> { s_ | value = val, t = s_.t - speedAdjust}::state_
+                        False -> { s_ | value = val, t = s_.t + speedAdjust}::state_
                         _ -> state_
             in
             { model | state = state }
@@ -62,7 +62,7 @@ genFadeOut break interval speedAdjust =
                 (s_, state_) = divState model.state "fadeOut"
                 state =
                     case t>1 of
-                        False -> { s_ | value = val, t = s_.t - speedAdjust}::state_
+                        False -> { s_ | value = val, t = s_.t + speedAdjust}::state_
                         _ -> state_
             in
             { model | state = state }
