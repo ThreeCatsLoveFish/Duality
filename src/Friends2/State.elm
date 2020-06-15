@@ -1,10 +1,11 @@
 module Friends2.State exposing (..)
 import Bezier exposing (..)
-import Fade exposing (fadeOut)
+import Fade exposing (fadeOut, genFadeIn)
 import Tools exposing (divState, dummyState, getBall, getState)
 import Model exposing (..)
 import Messages exposing (..)
 import Friends2.Find exposing (..)
+import Friends2.View exposing (backgroundColor)
 
 genBezierBall2 : Point -> Point -> Point -> Point -> (Model -> Float -> Model)
 genBezierBall2 p1 p2 p3 p4 =
@@ -40,7 +41,9 @@ genBezierPoints p1 p4 degree ratio =
     in
     genBezierBall2 p1 p2 p3 p4
 
-
+fadeIn : Model -> Float -> Model
+fadeIn model t=
+    genFadeIn 0 0.4 0 model t
 
 moveBall2 : Model -> Model
 moveBall2 model =
@@ -104,15 +107,6 @@ moveBall2 model =
                 model
             else
                 { model | state = [stateKToK] }
-    --case state.name of
-    --    "potential" ->
-    --        if (getBrick model.bricks (round state.value)).hitTime == NoMore then
-    --            { model | state = [{ state | name = "kinetic" }] }
-    --        else
-    --            model
-    --    "kinetic" ->
-
-
 ---
 
 stateIterate : Model -> Model
@@ -123,6 +117,13 @@ stateIterate model =
                 AnimationPrepare ->
                     { model
                     | gameStatus = Prepare
+                    }
+                AnimationPreparePost ->
+                    let
+                        model1 = model |> getGameState
+                    in
+                    { model1
+                    | gameStatus = Running Stay
                     }
                 AnimationPass ->
                     { model
@@ -144,6 +145,9 @@ stateIterate model =
 
             in
             newModel
+
+getPrepareState : Model -> Model
+getPrepareState model = getEndState model
 
 getGameState : Model -> Model
 getGameState model =

@@ -14,6 +14,7 @@ type GameLevel
 
 type GameStatus
     = AnimationPrepare
+    | AnimationPreparePost
     | AnimationPass
     | ChangeLevel
     | Prepare
