@@ -1,20 +1,16 @@
 module Strangers4.State exposing (..)
 import Bezier exposing (bezierColor)
-import Fade exposing (fadeOut)
-import Messages exposing (GameLevel(..), GameStatus(..))
+import Fade exposing (fadeOut, genFadeIn)
+import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Model exposing (Brick, Color, HitTime(..), Model, Point, State, StateFunc(..), rgb)
 import Tools exposing (dummyState)
 
 
 -- Colors of different states
---endColor0 = rgb 39 118 144
 endColor0 = rgb 0 79 102
---endColor1 = rgb 73 150 175
 endColor1 = rgb 15 112 140
---endColor2 = rgb 103 150 166
 endColor2 = rgb 37 136 164
 endColor3 = rgb 115 169 184
---endColor4 = rgb 147 175 185
 endColor4 = rgb 158 189 200
 
 genBezierColor : Model -> Float -> Model
@@ -64,6 +60,13 @@ stateIterate model =
                     { model
                     | gameStatus = Prepare
                     }
+                AnimationPreparePost ->
+                    let
+                        model1 = model |> getGameState
+                    in
+                    { model1
+                    | gameStatus = Running Stay
+                    }
                 AnimationPass ->
                     { model
                     | gameStatus = ChangeLevel
@@ -74,7 +77,7 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.filterMap (\s -> loopState s 0.01) state
+                    List.map (\s -> loopState s 0.01) state
                 getFunc (Func func) = func
                 setModel : State -> Model -> Model
                 setModel stat model_ =
@@ -84,6 +87,8 @@ stateIterate model =
             in
             newModel
 
+getPrepareState : Model -> Model
+getPrepareState model = getEndState model
 
 getGameState : Model -> Model
 getGameState model =
@@ -97,19 +102,25 @@ getEndState : Model -> Model
 getEndState model =
     let
         s1 = { name = "fadeOut"
-            , value = 0
-            , t = -1
+            , value = 1
+            , t = 0
             , function = Func (fadeOut)
             , loop = False
             }
     in
     { model | state = [s1] }
 
-
-loopState : State -> Float -> Maybe State
+loopState : State -> Float -> State
 loopState state t =
-    if state.t <= 1 then
-         Just { state | t = state.t + t}
-    else
-         Nothing
+    case state.loop of
+        True ->
+            if (state.loop == True && state.t < 1) then
+                 { state | t = state.t + t}
+            else
+                 { state | t = state.t - 1}
+        False ->
+            { state | t = state.t + t}
 
+fadeIn : Model -> Float -> Model
+fadeIn model t=
+    genFadeIn 0 0.4 0 model t

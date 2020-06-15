@@ -1,5 +1,6 @@
 module Strangers4.View exposing (..)
 
+import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, div, p, text)
 import Html.Attributes exposing (..)
 import Strangers4.State exposing (endColor0)
@@ -14,6 +15,18 @@ import BasicView
 
 backgroundColor : Color
 backgroundColor = rgb 177 177 177
+
+backgroundColor_ : Model -> Color
+backgroundColor_ model=
+    let
+        state =
+            if (List.isEmpty model.state) then
+                {dummyState | t = 1}
+            else
+                getState model.state "fadeIn"
+        color = bezierColor (rgb 0 0 0) backgroundColor state.t
+    in
+    if model.gameStatus==AnimationPrepare then color else backgroundColor
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -154,8 +167,6 @@ visualizeGame model opacity =
                 ]
                 elements
             ]
-
-
 visualize : Model -> Html Msg
 visualize model =
     let
@@ -167,10 +178,10 @@ visualize model =
                 "1"
             Paused ->
                 "1"
-            Pass ->
-                "1"
             AnimationPass ->
                 (String.fromFloat (getState model.state "fadeOut").value)
+            Pass ->
+                "1"
             _ ->
                 "0"
         r =
@@ -186,18 +197,18 @@ visualize model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "background-color" (colorToString backgroundColor)]
+        , style "background-color" (colorToString (backgroundColor_ model))]
         [ div
             [ style "width" (String.fromFloat model.canvas.w++"px")
             , style "height" (String.fromFloat model.canvas.h++"px")
             , style "position" "absolute"
             , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
             , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString backgroundColor)
+            , style "background-color" (colorToString (backgroundColor_ model))
             ]
             [ visualizeGame model alpha ]
         , div
-            [ style "background-color" (colorToString backgroundColor)
+            [ style "background-color" (colorToString (backgroundColor_ model))
             , style "background-position" "center"
             ]
             [ visualizePrepare model
@@ -205,18 +216,24 @@ visualize model =
             ]
         ]
 
-
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
     let
         alpha =
             case model.gameStatus of
                 AnimationPrepare ->
-                    (getState model.state "fadeInAndOut").value
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeIn").value
+                Prepare ->
+                    1
+                AnimationPreparePost ->
+                    (getState model.state "fadeOut").value
                 _ -> 0
     in
     div
-        [ style "background" (colorToString backgroundColor)
+        [ style "background" (colorToString (backgroundColor_ model))
         , style "text-align" "center"
         , style "height" "100%"
         , style "width" "100%"
@@ -228,7 +245,7 @@ visualizePrepare model =
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare then
+            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
                 "block"
              else
                 "none"

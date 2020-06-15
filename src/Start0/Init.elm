@@ -1,6 +1,7 @@
 module Start0.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
+import Fade exposing (genFadeIn)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
@@ -15,16 +16,23 @@ init =
     let
         canvas = { w = 400, h = 600 }
         state =
-            [{ name = "fadeInAndOut"
-            , value = 0
-            , t = 0
-            , function = Func (\m _ -> m)
-            , loop = False
-            }]
+            [ { name = "fadeInAndOut"
+              , value = 0
+              , t = 0
+              , function = Func (\m _ -> m)
+              , loop = False
+              }
+            , { name = "fadeIn"
+              , value = 0
+              , t = -1
+              , function = Func (genFadeIn 0 0.4 0)
+              , loop = False
+              }
+            ]
         model =
             { dummyModel
             | gameLevel = Start0
-            , gameStatus = AnimationPass
+            , gameStatus = AnimationPrepare
             , ball = []
             , paddle = []
             , bricks = []

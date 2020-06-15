@@ -1,5 +1,6 @@
 module Companions5.View exposing (..)
 
+import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, button, div, h1, input, p, text)
 import Html.Attributes exposing (..)
 import Svg
@@ -13,6 +14,18 @@ import BasicView as ViewTest
 
 backgroundColor : Color
 backgroundColor = rgb 138 182 165
+
+backgroundColor_ : Model -> Color
+backgroundColor_ model=
+    let
+        state =
+            if (List.isEmpty model.state) then
+                {dummyState | t = 1}
+            else
+                getState model.state "fadeIn"
+        color = bezierColor (rgb 0 0 0) backgroundColor state.t
+    in
+    if model.gameStatus==AnimationPrepare then color else backgroundColor
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -188,8 +201,6 @@ visualizeGame model opacity =
                 ]
                 elements
             ]
-
-
 visualize : Model -> Html Msg
 visualize model =
     let
@@ -202,7 +213,7 @@ visualize model =
             Paused ->
                 "1"
             AnimationPass ->
-                "1"
+                (String.fromFloat (getState model.state "fadeOut").value)
             Pass ->
                 "1"
             _ ->
@@ -220,18 +231,18 @@ visualize model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "background-color" (colorToString backgroundColor)]
+        , style "background-color" (colorToString (backgroundColor_ model))]
         [ div
             [ style "width" (String.fromFloat model.canvas.w++"px")
             , style "height" (String.fromFloat model.canvas.h++"px")
             , style "position" "absolute"
             , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
             , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString backgroundColor)
+            , style "background-color" (colorToString (backgroundColor_ model))
             ]
             [ visualizeGame model alpha ]
         , div
-            [ style "background-color" (colorToString backgroundColor)
+            [ style "background-color" (colorToString (backgroundColor_ model))
             , style "background-position" "center"
             ]
             [ visualizePrepare model
@@ -241,8 +252,22 @@ visualize model =
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
+    let
+        alpha =
+            case model.gameStatus of
+                AnimationPrepare ->
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeIn").value
+                Prepare ->
+                    1
+                AnimationPreparePost ->
+                    (getState model.state "fadeOut").value
+                _ -> 0
+    in
     div
-        [ style "background" (colorToString backgroundColor)
+        [ style "background" (colorToString (backgroundColor_ model))
         , style "text-align" "center"
         , style "height" "100%"
         , style "width" "100%"
@@ -252,38 +277,28 @@ visualizePrepare model =
         , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
-        --, style "line-height" "500px"
-        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
-        --, style "display"
-        --    (if model.gameStatus == Prepare then
-        --        "block"
-        --     else
-        --        "none"
-        --    )
+        , style "opacity" (String.fromFloat alpha)
+        , style "display"
+            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
+                "block"
+             else
+                "none"
+            )
         ]
-        [ div
-            [
-              style "text-align" "center"
-            --, style "display" "table-cell"
-            --, style "vertical" "bottom"
-            --, style "horizontal" "center"
+        [ p
+            [ style "position" "absolute"
+            , style "top" "55%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "24px"
             ]
-            [ p
-                [ style "position" "absolute"
-                , style "top" "55%"
-                , style "width" "100%"
-                , style "text-align" "center"
-                , style "font-size" "24px"
-                ]
-                [ text "Press space to start" ]
-            , p
-                [ style "position" "absolute"
-                , style "top" "30%"
-                , style "width" "100%"
-                , style "text-align" "center"
-                , style "font-size" "48px"
-                ]
-                [ text "Companions" ]
-
+            [ text "Press space to start" ]
+        , p
+            [ style "position" "absolute"
+            , style "top" "30%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "48px"
             ]
+            [ text "Companions" ]
         ]
