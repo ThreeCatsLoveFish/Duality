@@ -5,13 +5,22 @@ import Messages exposing (GameLevel(..), GameStatus(..))
 import Model exposing (Brick, Color, HitTime(..), Model, Point, State, StateFunc(..), rgb)
 import Tools exposing (dummyState)
 
-startColor = rgb 75 213 232
-endColor = rgb 208 19 72
 
-genBezierColor : Color -> Color -> (Model -> Float -> Model)
-genBezierColor p1 p2 =
+-- Colors of different states
+endColor0 = rgb  75 213 232
+endColor1 = rgb 120 213  72
+endColor2 = rgb 208 213  72
+endColor3 = rgb 208 110  72
+endColor4 = rgb 208  19  72
+
+
+genBezierColor : Model -> Float -> Model
+genBezierColor =
     let
-        bezier = bezierColor p1 p2
+        bezier0 = bezierColor endColor0 endColor1
+        bezier1 = bezierColor endColor1 endColor2
+        bezier2 = bezierColor endColor2 endColor3
+        bezier3 = bezierColor endColor3 endColor4
         bezierBrickColor : Model -> Float -> Model
         bezierBrickColor model_ t_ =
             let
@@ -20,8 +29,20 @@ genBezierColor p1 p2 =
                     |> List.map (\a ->
                                 case a.hitTime of
                                     Hit 1 ->
-                                        if a.color /= endColor
-                                        then { a | color = bezier t_ }
+                                        if a.color /= endColor1
+                                        then { a | color = bezier0 t_ }
+                                        else a
+                                    Hit 2 ->
+                                        if a.color /= endColor2
+                                        then { a | color = bezier1 t_ }
+                                        else a
+                                    Hit 3 ->
+                                        if a.color /= endColor3
+                                        then { a | color = bezier2 t_ }
+                                        else a
+                                    Hit 4 ->
+                                        if a.color /= endColor4
+                                        then { a | color = bezier3 t_ }
                                         else a
                                     _ -> a
                                 )
@@ -29,6 +50,7 @@ genBezierColor p1 p2 =
             { model_ | bricks = targetBrick}
     in
     bezierBrickColor
+
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -49,14 +71,13 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.007) state
+                    List.filterMap (\s -> loopState s 0.01) state
                 getFunc (Func func) = func
                 setModel : State -> Model -> Model
                 setModel stat model_ =
                     (getFunc stat.function) model_ stat.t
                 newModel =
                     List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
-
             in
             newModel
 
@@ -67,6 +88,7 @@ getGameState model =
         s = dummyState
     in
     { model | state = [s] }
+
 
 getEndState : Model -> Model
 getEndState model =
@@ -80,13 +102,11 @@ getEndState model =
     in
     { model | state = [s1] }
 
-loopState : State -> Float -> State
+
+loopState : State -> Float -> Maybe State
 loopState state t =
-    case state.loop of
-        True ->
-            if (state.loop == True && state.t < 1) then
-                 { state | t = state.t + t}
-            else
-                 { state | t = state.t - 1}
-        False ->
-            { state | t = state.t + t}
+    if state.t <= 1 then
+         Just { state | t = state.t + t}
+    else
+         Nothing
+
