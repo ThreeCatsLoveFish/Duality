@@ -1,8 +1,6 @@
 module Friends2.Init exposing (..)
 
-import Fade exposing (fadeInAndOut)
 import Friends2.State exposing (fadeIn)
-import Html exposing (Html, Attribute, button, div, h1, input, text)
 import Browser.Dom exposing (getViewport)
 
 import Model exposing (..)
@@ -65,7 +63,6 @@ init =
                 h = 3
                 angle = 40 * pi / 180
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
-                center = Point pos.x (pos.y + r)
             in
             { pos = pos -- may not be necessary
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck

@@ -252,7 +252,14 @@ visualizePrepare model =
         alpha =
             case model.gameStatus of
                 AnimationPrepare ->
-                    (getState model.state "fadeInAndOut").value
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeIn").value
+                Prepare ->
+                    1
+                AnimationPreparePost ->
+                    (getState model.state "fadeOut").value
                 _ -> 0
     in
     div
@@ -268,7 +275,7 @@ visualizePrepare model =
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare then
+            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
                 "block"
              else
                 "none"

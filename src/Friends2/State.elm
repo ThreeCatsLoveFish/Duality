@@ -1,11 +1,10 @@
 module Friends2.State exposing (..)
 import Bezier exposing (..)
 import Fade exposing (fadeOut, genFadeIn)
-import Tools exposing (divState, dummyState, getBall, getState)
+import Tools exposing (getBall, getState)
 import Model exposing (..)
 import Messages exposing (..)
 import Friends2.Find exposing (..)
-import Friends2.View exposing (backgroundColor)
 
 genBezierBall2 : Point -> Point -> Point -> Point -> (Model -> Float -> Model)
 genBezierBall2 p1 p2 p3 p4 =
@@ -41,14 +40,9 @@ genBezierPoints p1 p4 degree ratio =
     in
     genBezierBall2 p1 p2 p3 p4
 
-fadeIn : Model -> Float -> Model
-fadeIn model t=
-    genFadeIn 0 0.4 0 model t
-
 moveBall2 : Model -> Model
 moveBall2 model =
     let
-        --state = Maybe.withDefault dummyState (List.head model.state) --NB!
         state = getState model.state "moveBall2"
         valid = model.bricks |> List.filter (\b -> b.hitTime /= NoMore) |> List.length
         (pos_, index_) =
@@ -194,3 +188,7 @@ loopState state t =
                  { state | t = state.t - 1}
         False ->
             { state | t = state.t + t}
+
+fadeIn : Model -> Float -> Model
+fadeIn model t=
+    genFadeIn 0 0.4 0 model t
