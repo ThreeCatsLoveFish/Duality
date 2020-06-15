@@ -17,7 +17,7 @@ stateIterate model =
                 AnimationPass ->
                     { model
                     | gameStatus = ChangeLevel
-                    , gameLevel = Strangers4
+                    , gameLevel = Death6
                     }
                 _ -> model
         _ ->
