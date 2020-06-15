@@ -1,16 +1,12 @@
 module Strangers1.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (fadeInAndOut)
-import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Strangers1.State exposing (fadeIn)
 
 import Model exposing (..)
 import Messages exposing (..)
 import Task
 import Tools exposing (..)
-import BasicView exposing (..)
-import Bezier exposing (..)
-import Strangers1.State exposing (genBezierBall2, genChangeBallColor)
 import Strangers1.View
 
 init : ( Model, Cmd Msg )
@@ -53,13 +49,12 @@ init =
             , collision = dummyPoly
             , color = rgb 244 244 244
             }
-        --TODO: paddle fix
         state : List State
         state =
-            [ { name = "fadeInAndOut"
+            [ { name = "fadeIn"
               , value = 0
               , t = 0
-              , function = Func fadeInAndOut
+              , function = Func fadeIn
               , loop = False
               }
             ]
@@ -84,13 +79,12 @@ init =
         bricks =
             let
                 brickInfo =
-                    { layout = {x=10, y=2}
+                    { layout = {x=8, y=3}
                     , canvas = canvas
                     , brick = {w=39, h=39}
-                    , breath = 1
-                    , offset = Point 0 -30
+                    , breath = 5
+                    , offset = Point 0 -10
                     , color = rgb 100 100 100
-                    --, color = rgb 233 233 233
                     }
             in
             newBricks brickInfo

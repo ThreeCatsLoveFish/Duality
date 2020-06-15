@@ -310,10 +310,7 @@ visualizePrepare model =
                 Prepare ->
                     1
                 AnimationPreparePost ->
-                    if List.isEmpty model.state then
-                        1
-                    else
-                        (getState model.state "fadeOut").value
+                    (getState model.state "fadeOut").value
                 _ -> 0
     in
     div

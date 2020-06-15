@@ -1,6 +1,6 @@
 module Strangers1.State exposing (..)
 import Bezier exposing (bezierPos, bezierColor)
-import Fade exposing (fadeOut)
+import Fade exposing (fadeOut, genFadeIn)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Tools exposing (divState, getBall, getState)
 import Model exposing (..)
@@ -65,6 +65,13 @@ stateIterate model =
                     { model
                     | gameStatus = Prepare
                     }
+                AnimationPreparePost ->
+                    let
+                        model1 = model |> getGameState
+                    in
+                    { model1
+                    | gameStatus = Running Stay
+                    }
                 AnimationPass ->
                     { model
                     | gameStatus = ChangeLevel
@@ -98,6 +105,18 @@ bezierBall model state =
             (getfunc state.function model state.t).ball
     in
     { model | ball = newBalls }
+
+getPrepareState : Model -> Model
+getPrepareState model =
+    let
+        s3 = { name = "fadeOut"
+            , value = 1
+            , t = 0
+            , function = Func (fadeOut)
+            , loop = False
+            }
+    in
+    { model | state = [s3] }
 
 getGameState : Model -> Model
 getGameState model =
@@ -152,3 +171,7 @@ loopState state t =
                  { state | t = state.t - 1}
         False ->
             { state | t = state.t + t}
+
+fadeIn : Model -> Float -> Model
+fadeIn model t=
+    genFadeIn 0 0.4 0.03 model t
