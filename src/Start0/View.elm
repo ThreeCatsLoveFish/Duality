@@ -71,11 +71,11 @@ visualizeMenu model =
                     if List.isEmpty model.state then
                         1
                     else
-                        (getState model.state "fadeIn").value
+                        (getState model.state "fadeIn").t
                 Prepare ->
                     1
                 AnimationPreparePost ->
-                    (getState model.state "fadeOut").value
+                    (1 - (getState model.state "fadeOut").t)
                 _ -> 0
     in
     div
