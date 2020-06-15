@@ -190,7 +190,10 @@ paddleCheck model =
 
         symmetric : Point -> Point -> Point
         symmetric xy mn =
-            if xy.y < 0 then xy
+            let
+                lineH = 2
+            in
+            if xy.y < -lineH then xy
             else
             { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
             , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
