@@ -28,7 +28,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( { model0 | visualization = Start0.View.visualize model} , Cmd.none )
+    ( { model0 | visualization = Start0.View.visualize model0} , Cmd.none )
 
 exec : Model -> Model
 exec model =
