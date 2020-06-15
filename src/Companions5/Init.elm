@@ -97,7 +97,7 @@ init =
         bricks =
             let
                 brickInfo =
-                    { layout = {x=10, y=6}
+                    { layout = {x=10, y=7}
                     , canvas = canvas
                     , brick = bricksize
                     , breath = 10
@@ -138,7 +138,7 @@ init =
             | gameLevel = Companions5
             , gameStatus = AnimationPrepare
             , ball = [ball]
-            , paddle = [paddle,paddle2]
+            , paddle = [paddle, paddle2]
             , bricks = bricks
             , state = state
             , canvas = canvas

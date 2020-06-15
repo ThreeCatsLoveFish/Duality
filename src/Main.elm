@@ -54,8 +54,8 @@ init =
     --Friends2.Init.init
     --Lovers3.Init.init
     --Strangers4.Init.init
-    Companions5.Init.init
-    --Death6.Init.init
+    --Companions5.Init.init
+    Death6.Init.init
 
 {--
 reinit : Model -> ( Model, Cmd Msg )
@@ -98,9 +98,9 @@ update msg model =
                      Strangers4.Init.init
                  Companions5 ->
                      Companions5.Init.init
-                 {--
                  Death6 ->
                      Death6.Init.init
+                 {--
                  End7 ->
                      End7.Init.init
                  --}
@@ -120,9 +120,9 @@ update msg model =
                      Strangers4.Update.update msg model
                  Companions5 ->
                      Companions5.Update.update msg model
-                 {--
                  Death6 ->
                      Death6.Update.update msg model
+                 {--
                  End7 ->
                      End7.Update.update msg model
                  --}

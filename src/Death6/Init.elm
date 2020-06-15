@@ -67,7 +67,12 @@ init =
         bricks =
             let
                 posInfo =
-                    [ ( Point 0 -1 , { w = 10, h = 10 } )
+                    [ ( Point 97 287 , { w = 43, h = 25 } )
+                    , ( Point 146 287 , { w = 50, h = 25 } )
+                    , ( Point 195 287 , { w = 43, h = 25 } )
+                    , ( Point 240 287 , { w = 43, h = 25 } )
+                    , ( Point 280 287 , { w = 28, h = 25 } )
+                    , ( Point 344 287 , { w = 96, h = 25 } )
                     ]
 
             in
@@ -84,6 +89,7 @@ init =
             { dummyModel
             | gameLevel = Death6
             , gameStatus = AnimationPrepare
+            --, gameStatus = Running Stay --Todo: for brick test
             , ball = [ball]
             , paddle = [paddle]
             , bricks = bricks
