@@ -14,7 +14,7 @@ import Strangers4.View
 init : ( Model, Cmd Msg )
 init =
     let
-        canvas = { w = 600, h = 468.5 }
+        canvas = { w = 600, h = 510 }
         ball : Ball
         ball =
             let
@@ -63,9 +63,9 @@ init =
             let
                 hi = --heartInfo
                     { canvas = canvas
-                    , brick = {w=29, h=29}
+                    , brick = {w=50, h=50}
                     , breath = 1
-                    , offset = Point 0 -40
+                    , offset = Point 0 -70
                     , color = dummyColor
                     }
                 posInfo =
