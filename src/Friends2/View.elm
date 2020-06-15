@@ -20,7 +20,7 @@ backgroundColor_ model=
     let
         state =
             if (List.isEmpty model.state) then
-                {dummyState | value = 1}
+                {dummyState | t = 1}
             else
                 getState model.state "fadeIn"
         color = bezierColor (rgb 0 0 0) backgroundColor state.t
