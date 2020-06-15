@@ -45,6 +45,13 @@ update msg model =
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ -> model
+                Lose ->
+                    case msg of
+                        KeyDown Key_R ->
+                            { model | gameStatus = ChangeLevel }
+                        KeyDown Space ->
+                            { model | gameStatus = ChangeLevel }
+                        _ -> model
                 Pass ->
                     let
                         model1 = model |> getEndState
@@ -156,7 +163,15 @@ movePaddle op model =
     let
         done paddle =
             let
-                vNorm = 6 -- the speed of paddle
+                ball = getBall model.ball 1
+                distance : Point -> Point -> Float
+                distance p1 p2 =
+                    sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
+                norm = distance (Point 0 0)
+                vNorm =  -- the speed of paddle
+                    case (ball.r + paddle.r - 10) < distance ball.pos paddle.pos of
+                        True -> 6
+                        _ -> 1
                 v = case op of
                     Left ->
                         case pos.x > 18 of
