@@ -115,8 +115,11 @@ paddleCheckIndex index model =
 
         symmetric : Point -> Point -> Point
         symmetric xy mn =
-            if xy.y < 0 && index == 1
-            || xy.y > 0 && index == 2
+            let
+                lineH = 2
+            in
+            if xy.y < -lineH && index == 1
+            || xy.y > lineH && index == 2
             then xy
             else
             { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
