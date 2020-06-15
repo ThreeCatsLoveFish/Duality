@@ -79,7 +79,6 @@ init =
                     , Point 1 0
                     , Point -1 0
                     ]
-
             in
             posInfo
                 |> List.map
