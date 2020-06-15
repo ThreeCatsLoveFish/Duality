@@ -4,6 +4,7 @@ import Html exposing (Attribute, Html, button, div, h1, input, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
+import Markdown
 
 import Model exposing (..)
 import Messages exposing (..)
@@ -12,7 +13,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 72 45 21
+backgroundColor = rgb 72 72 72
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -283,7 +284,7 @@ visualizePrepare model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-family" "High Tower Text, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
         --, style "line-height" "500px"
@@ -344,35 +345,56 @@ visualizeEpitaph model =
         , style "height" "100%"
         , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
-        , style "background" (colorToString backgroundColor)
-        , style "color" "#FFFFFF"
+        , style "background-color" "transparent"
         --, style "line-height" "500px"
         , style "opacity" "1"
         , style "display"
             displaying
         ]
         [ div
-            [ style "background-color" "transparent"
+            [ style "color" "#FFFFFF"
+            , style "font-size" "22px"
+            , style "text-align" "left"
+            , style "left" "62px"
+            , style "top" "50px"
+            , style "position" "absolute"
+            , style "letter-spacing" "7px"
+            , style "line-height" "1.5"
+            , style "font-family" "High Tower Text, sans-serif"
             ]
-            [ p
-                [ style "position" "absolute"
-                , style "top" "37%"
-                , style "left" "10%"
-                , style "width" "80%"
-                , style "text-align" "center"
-                , style "font-size" "22px"
-                , style "background-color" "transparent"
-                ]
-                [ text "Nay, if you read this line, remember not" ]
-            , p
-                [ style "position" "absolute"
-                , style "top" "42%"
-                , style "left" "10%"
-                , style "width" "80%"
-                , style "text-align" "center"
-                , style "font-size" "22px"
-                , style "background-color" "transparent"
-                ]
-                [ text "The hand that writ; for I love you so" ]
+            --[ p
+            --    [ style "position" "absolute"
+            --    , style "top" "37%"
+            --    , style "left" "10%"
+            --    , style "width" "80%"
+            --    , style "text-align" "center"
+            --    , style "font-size" "22px"
+            --    , style "background-color" "transparent"
+            --    ]
+            --    [ text "Nay, if you read this line, remember not" ]
+            --, p
+            --    [ style "position" "absolute"
+            --    , style "top" "42%"
+            --    , style "left" "10%"
+            --    , style "width" "80%"
+            --    , style "text-align" "center"
+            --    , style "font-size" "22px"
+            --    , style "background-color" "transparent"
+            --    ]
+            --    [ text "The hand that writ; for I love you so" ]
+            [ Markdown.toHtml [] """
+Nay,
+
+if you read this line,
+
+remember not
+
+The hand that writ;
+
+for I
+
+
+               love you so.
+"""
             ]
         ]

@@ -67,7 +67,7 @@ init =
         bricks =
             let
                 posInfo =
-                    [ ( Point 97 287 , { w = 43, h = 25 } )
+                    [ ( Point 97 92 , { w = 43, h = 25 } )
                     , ( Point 146 287 , { w = 50, h = 25 } )
                     , ( Point 195 287 , { w = 43, h = 25 } )
                     , ( Point 240 287 , { w = 43, h = 25 } )
