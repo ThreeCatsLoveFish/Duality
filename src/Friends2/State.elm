@@ -176,7 +176,7 @@ getEndState : Model -> Model
 getEndState model =
     let
         s1 = { name = "fadeOut"
-            , value = 0
+            , value = 1
             , t = 0
             , function = Func (fadeOut)
             , loop = False
