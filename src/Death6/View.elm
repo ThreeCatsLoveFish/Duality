@@ -103,9 +103,11 @@ visualizeBrick brick=
         alpha =
             case brick.hitTime of
                 Hit 0 ->
-                    "1"
-                _ ->
+                    --"1"
                     "0.3"
+                _ ->
+                    --"0.3"
+                    "0"
     in
     Svg.polygon
         [ SA.points (polyToString brick.collision)
@@ -118,7 +120,8 @@ changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
-            rgb 150 0 13
+            --rgb 150 0 13
+            rgb 150 150 150
         _ ->
             rgb 150 150 150
 
@@ -174,6 +177,24 @@ visualizeCanvas model =
             []
         ]
 
+visualizeCanvasDone : Model -> String -> Html Msg
+visualizeCanvasDone model opacity =
+    div
+            [ style "opacity" opacity
+            , style "position" "absolute"
+            , style "top" "0"
+            , style "left" "0"
+            , style "width" "100%"
+            , style "height" "100%"
+            ]
+            [ Svg.svg
+                [ SA.version "1.1"
+                , SA.x "0"
+                , SA.y "0"
+                , SA.viewBox ("0 0 " ++ (String.fromFloat model.canvas.w) ++ " " ++ (String.fromFloat model.canvas.h))
+                ]
+                [visualizeCanvas model]
+            ]
 
 visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
@@ -181,10 +202,14 @@ visualizeGame model opacity =
         elements =
             (List.map visualizeBrick model.bricks) ++ List.map visualizeBall model.ball ++ (List.map visualizeBall (Maybe.withDefault [dummyBall] (List.tail model.ball)))
               |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
-              |> (::) (visualizeCanvas model)
     in
         div
             [ style "opacity" opacity
+            , style "position" "absolute"
+            , style "top" "0"
+            , style "left" "0"
+            , style "width" "100%"
+            , style "height" "100%"
             ]
             [ Svg.svg
                 [ SA.version "1.1"
@@ -235,7 +260,10 @@ visualize model =
             , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
             , style "background-color" (colorToString backgroundColor)
             ]
-            [ visualizeGame model alpha ]
+            [ visualizeCanvasDone model alpha
+            , visualizeEpitaph model
+            , visualizeGame model alpha
+            ]
         , div
             [ style "background-color" (colorToString backgroundColor)
             , style "background-position" "center"
@@ -289,7 +317,62 @@ visualizePrepare model =
                 , style "text-align" "center"
                 , style "font-size" "48px"
                 ]
-                [ text "Lovers" ]
+                [ text "Death" ]
 
+            ]
+        ]
+
+
+visualizeEpitaph : Model -> Html Msg
+visualizeEpitaph model =
+    let
+        displaying =
+            case model.gameStatus of
+                Running _ ->
+                   "inline"
+                Paused ->
+                   "inline"
+                _ ->
+                   "none"
+    in
+    div
+        [ style "text-align" "center"
+        , style "position" "absolute"
+        , style "top" "0"
+        , style "left" "0"
+        , style "width" "100%"
+        , style "height" "100%"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "background" (colorToString backgroundColor)
+        , style "color" "#FFFFFF"
+        --, style "line-height" "500px"
+        , style "opacity" "1"
+        , style "display"
+            displaying
+        ]
+        [ div
+            [ style "background-color" "transparent"
+            ]
+            [ p
+                [ style "position" "absolute"
+                , style "top" "37%"
+                , style "left" "10%"
+                , style "width" "80%"
+                , style "text-align" "center"
+                , style "font-size" "22px"
+                , style "background-color" "transparent"
+                ]
+                [ text "Nay, if you read this line, remember not" ]
+            , p
+                [ style "position" "absolute"
+                , style "top" "42%"
+                , style "left" "10%"
+                , style "width" "80%"
+                , style "text-align" "center"
+                , style "font-size" "22px"
+                , style "background-color" "transparent"
+                ]
+                [ text "The hand that writ; for I love you so" ]
             ]
         ]
