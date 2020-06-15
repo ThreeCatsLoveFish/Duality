@@ -8,17 +8,16 @@ genFadeIn break interval speedAdjust =
     let
         fadeIn_ model t_ =
             let
-                t = 1 - t_
                 val =
-                    if  ( t < break ) then
-                        1
-                    else if ( t >= break && t <= break+interval ) then
-                        (break + interval - t) / interval
-                    else
+                    if  ( t_ < break ) then
                         0
+                    else if ( t_ >= break && t_ <= break+interval ) then
+                        ( t_ - break) / interval
+                    else
+                        1
                 (s_, state_) = divState model.state "fadeIn"
                 state =
-                    case t>1 of
+                    case t_>1 of
                         False -> { s_ | value = val, t = s_.t - speedAdjust}::state_
                         _ -> state_
             in

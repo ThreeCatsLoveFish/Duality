@@ -18,7 +18,11 @@ backgroundColor = rgb 226 174 227
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
     let
-        state = getState model.state "fadeIn"
+        state =
+            if (List.isEmpty model.state) then
+                {dummyState | value = 1}
+            else
+                getState model.state "fadeIn"
         color = bezierColor (rgb 0 0 0) backgroundColor state.t
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
@@ -299,9 +303,17 @@ visualizePrepare model =
         alpha =
             case model.gameStatus of
                 AnimationPrepare ->
-                    (getState model.state "fadeIn").value
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeIn").value
+                Prepare ->
+                    1
                 AnimationPreparePost ->
-                    (getState model.state "fadeOut").value
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeOut").value
                 _ -> 0
     in
     div
@@ -317,7 +329,7 @@ visualizePrepare model =
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare || model.gameStatus == AnimationPreparePost then
+            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
                 "block"
              else
                 "none"

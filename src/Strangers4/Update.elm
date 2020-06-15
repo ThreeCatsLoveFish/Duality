@@ -108,7 +108,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( { model4 | visualization = Strangers4.View.visualize model} , Cmd.none )
+    ( { model4 | visualization = Strangers4.View.visualize model4} , Cmd.none )
 
 
 move : Float -> Model -> Model

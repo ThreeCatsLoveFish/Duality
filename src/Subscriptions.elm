@@ -12,11 +12,13 @@ subscriptions model =
         [ case model.gameStatus of
             Running _ ->
                 onAnimationFrameDelta Tick
-            --Prepare ->
+            --Prepare -> -- todo: see if needs
             --    onAnimationFrameDelta Tick
             ChangeLevel ->
                 onAnimationFrameDelta Tick
             AnimationPrepare ->
+                onAnimationFrameDelta Tick
+            AnimationPreparePost ->
                 onAnimationFrameDelta Tick
             AnimationPass ->
                 onAnimationFrameDelta Tick

@@ -108,7 +108,7 @@ update msg model =
                 _ ->
                     model
     in
-    ( { model0 | visualization = Strangers1.View.visualize model} , Cmd.none )
+    ( { model0 | visualization = Strangers1.View.visualize model0} , Cmd.none )
 
 move : Float -> Model -> Model
 move elapsed model =

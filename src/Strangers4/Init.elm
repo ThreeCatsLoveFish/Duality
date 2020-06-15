@@ -95,12 +95,19 @@ init =
                         hi.color
                     )
         model =
-            Model
-                Strangers4 AnimationPrepare
-                [ball] [paddle] bricks
-                state
-                canvas (canvas.w, canvas.h) 0 True False
-                (div [] [])
+            { dummyModel
+            | gameLevel = Strangers4
+            , gameStatus = AnimationPrepare
+            , ball = [ball]
+            , paddle = [paddle]
+            , bricks = bricks
+            , state = state
+            , canvas = canvas
+            , size = (canvas.w, canvas.h)
+            , clock = 0
+            , activeInput = True
+            , animateState = AniIn
+            }
     in
     ( { model | visualization = Strangers4.View.visualize model }
     , Task.perform GetViewport getViewport

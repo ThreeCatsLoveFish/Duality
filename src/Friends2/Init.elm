@@ -91,12 +91,19 @@ init =
             in
             newBricks brickInfo
         model =
-            Model
-                Friends2 AnimationPrepare
-                [ball, ball2] [paddle] bricks
-                state
-                canvas (0, 0) 0 True False
-                (div [] [])
+            { dummyModel
+            | gameLevel = Friends2
+            , gameStatus = AnimationPrepare
+            , ball = [ball, ball2]
+            , paddle = [paddle]
+            , bricks = bricks
+            , state = state
+            , canvas = canvas
+            , size = (canvas.w, canvas.h)
+            , clock = 0
+            , activeInput = True
+            , animateState = AniIn
+            }
     in
     ( { model | visualization = Friends2.View.visualize model }
     , Task.perform GetViewport getViewport
