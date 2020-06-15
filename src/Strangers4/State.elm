@@ -7,12 +7,15 @@ import Tools exposing (dummyState)
 
 
 -- Colors of different states
-endColor0 = rgb  75 213 232
-endColor1 = rgb 120 213  72
-endColor2 = rgb 208 213  72
-endColor3 = rgb 208 110  72
-endColor4 = rgb 208  19  72
-
+--endColor0 = rgb 39 118 144
+endColor0 = rgb 0 79 102
+--endColor1 = rgb 73 150 175
+endColor1 = rgb 15 112 140
+--endColor2 = rgb 103 150 166
+endColor2 = rgb 37 136 164
+endColor3 = rgb 115 169 184
+--endColor4 = rgb 147 175 185
+endColor4 = rgb 158 189 200
 
 genBezierColor : Model -> Float -> Model
 genBezierColor =
