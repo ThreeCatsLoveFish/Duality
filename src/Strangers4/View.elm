@@ -2,7 +2,7 @@ module Strangers4.View exposing (..)
 
 import Html exposing (Attribute, Html, div, p, text)
 import Html.Attributes exposing (..)
-import Strangers4.State exposing (startColor)
+import Strangers4.State exposing (endColor0)
 import Svg
 import Svg.Attributes as SA
 
@@ -79,11 +79,12 @@ changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
-            startColor
-        Hit 1 ->
+            endColor0
+        Hit _ ->
             brick.color
-        _ ->
+        NoMore ->
             backgroundColor
+
 
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
@@ -94,10 +95,6 @@ visualizeCanvas model =
                 Basics.min 1 (h / model.canvas.h)
             else
                 Basics.min 1 (w / model.canvas.w)
-        --lt = Point ((w - model.canvas.w * r) / 2) 0
-        --lb = Point ((w - model.canvas.w * r) / 2) model.canvas.h
-        --rb = Point ((w - model.canvas.w * (r - 2)) / 2) model.canvas.h
-        --rt = Point ((w - model.canvas.w * (r - 2)) / 2) 0
         lt = Point 0 0
         lb = Point 0 model.canvas.h
         rb = Point model.canvas.w model.canvas.h
@@ -137,6 +134,7 @@ visualizeCanvas model =
             []
         ]
 
+
 visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
     let
@@ -156,6 +154,7 @@ visualizeGame model opacity =
                 ]
                 elements
             ]
+
 
 visualize : Model -> Html Msg
 visualize model =
@@ -205,6 +204,7 @@ visualize model =
             , BasicView.visualizeBlock model
             ]
         ]
+
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
