@@ -1,6 +1,6 @@
 module Strangers1.State exposing (..)
 import Bezier exposing (bezierPos, bezierColor)
-import Fade exposing (fadeOut, genFadeIn)
+import Fade exposing (fadeOut, genFadeIn, genFadeOut)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Tools exposing (divState, getBall, getState)
 import Model exposing (..)
@@ -112,7 +112,7 @@ getPrepareState model =
         s3 = { name = "fadeOut"
             , value = 1
             , t = 0
-            , function = Func (fadeOut)
+            , function = Func (genFadeOut 0 0.4 0.01)
             , loop = False
             }
     in
@@ -174,4 +174,4 @@ loopState state t =
 
 fadeIn : Model -> Float -> Model
 fadeIn model t=
-    genFadeIn 0 0.4 0.03 model t
+    genFadeIn 0 0.4 0 model t

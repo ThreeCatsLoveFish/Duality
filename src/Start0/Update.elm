@@ -9,7 +9,7 @@ update msg model =
     let
         model0 =
             case model.gameStatus of
-                AnimationPass ->
+                AnimationPrepare ->
                     case msg of
                         Tick time ->
                             model
@@ -32,12 +32,6 @@ update msg model =
 
 exec : Model -> Model
 exec model =
-    let
-        dir =
-            case model.gameStatus of
-                Running dr -> dr
-                _ -> Stay
-    in
     model
         |> winJudge
 
@@ -75,9 +69,8 @@ stateIterate model =
 
 winJudge : Model -> Model
 winJudge model =
-    if ((getState model.state "fadeInAndOut").t > 1) then
-        { model | gameStatus = ChangeLevel
-                , gameLevel = Strangers1 }
+    if ((getState model.state "fadeInAndOut").t > 2) then
+        { model | gameStatus = Prepare }
     else
         model
 

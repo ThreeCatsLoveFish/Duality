@@ -1,6 +1,6 @@
 module Lovers3.State exposing (..)
 import Bezier exposing (bezierPos)
-import Fade exposing (fadeOut, genFadeOut)
+import Fade exposing (genFadeOut, genFadeIn)
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (divState, getBall)
@@ -125,6 +125,13 @@ stateIterate model =
                     { model
                     | gameStatus = Prepare
                     }
+                AnimationPreparePost ->
+                    let
+                        model1 = model |> getGameState
+                    in
+                    { model1
+                    | gameStatus = Running Stay
+                    }
                 AnimationPass ->
                     { model
                     | gameStatus = ChangeLevel
@@ -146,6 +153,9 @@ stateIterate model =
             in
             newModel
 
+getPrepareState : Model -> Model
+getPrepareState model = getEndState model
+
 getGameState : Model -> Model
 getGameState model =
     let
@@ -162,9 +172,9 @@ getEndState : Model -> Model
 getEndState model =
     let
         s = { name = "fadeOut"
-            , value = 0
+            , value = 1
             , t = 0
-            , function = Func (genFadeOut 0 1 -0.001)
+            , function = Func (genFadeOut 0 1 0.01)
             , loop = False
             }
     in
@@ -180,3 +190,7 @@ loopState state t =
                  { state | t = state.t - 1}
         False ->
             { state | t = state.t + t}
+
+fadeIn : Model -> Float -> Model
+fadeIn model t=
+    genFadeIn 0 0.4 0 model t

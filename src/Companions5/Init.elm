@@ -1,7 +1,7 @@
 module Companions5.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (fadeInAndOut)
+import Companions5.State exposing (fadeIn)
 import Html exposing (Html, Attribute, button, div)
 
 import Model exposing (..)
@@ -37,10 +37,10 @@ init =
         state : List State
         state =
             [
-                { name = "fadeInAndOut"
+                { name = "fadeIn"
                 , value = 0
                 , t = 0
-                , function = Func fadeInAndOut
+                , function = Func fadeIn
                 , loop = False
                 }
             ]
@@ -138,7 +138,7 @@ init =
             | gameLevel = Companions5
             , gameStatus = AnimationPrepare
             , ball = [ball]
-            , paddle = [paddle]
+            , paddle = [paddle,paddle2]
             , bricks = bricks
             , state = state
             , canvas = canvas
