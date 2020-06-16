@@ -186,7 +186,9 @@ visualizeGame model opacity =
         elements =
             ( List.map visualizeBrick model.bricks)
                 ++ [visualizeBall (getBall model.ball 1)]
-                ++ (List.map visualizeStaticBall (List.drop 20 model.ball)
+                ++ ( List.map visualizeStaticBall
+                    <| List.drop 7
+                    <| model.ball
             )
               |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
               |> (::) (visualizeCanvas model)
