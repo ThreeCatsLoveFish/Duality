@@ -204,8 +204,8 @@ ll
                 paddle2 = getPaddle model.paddle 2
             in
             case
-                ( pos.y <= 0 && v.y < 0) -- Todo: ???
-                || ( pos.y >= (model.canvas.h - 10) && v.y > 0)  -- Todo: ???
+                ( pos.y <= 0 && v.y < 0 && model.god == True) -- Todo: √
+                || ( pos.y >= (model.canvas.h - 10) && v.y > 0 && model.god == True)  -- Todo: √
                 || ( (ball.r + paddle1.r - 1) > distance ball.pos paddle1.pos && v.y > 0)
                 || ( (ball.r + paddle2.r - 1) > distance ball.pos paddle2.pos && v.y < 0)
                 of

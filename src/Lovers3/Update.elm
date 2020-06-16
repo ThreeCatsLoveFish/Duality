@@ -9,7 +9,6 @@ import Lovers3.State exposing (..)
 import Lovers3.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
--- Todo: Resize
 update msg model =
     let
         model0 =
@@ -59,6 +58,8 @@ update msg model =
                             { model | gameStatus = ChangeLevel }
                         KeyDown Space ->
                             { model | gameStatus = ChangeLevel }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Pass ->
                     let

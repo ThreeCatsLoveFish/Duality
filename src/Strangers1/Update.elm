@@ -58,6 +58,8 @@ update msg model =
                             { model | gameStatus = ChangeLevel }
                         KeyDown Space ->
                             { model | gameStatus = ChangeLevel }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Pass ->
                     let

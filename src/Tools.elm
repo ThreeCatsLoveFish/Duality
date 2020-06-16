@@ -189,7 +189,7 @@ newBricks info =
         posBrickY =
             positionConvert info.layout.y (info.brick.h + info.breath)
             |> List.map (\y -> y + info.canvas.h/2 + info.offset.y)
-            -- get y by proportion TODO: beautify
+            -- get y by proportion
         posBricks =
             List.concatMap (\x -> List.map (Point x) posBrickY) posBrickX -- get pos
         --newBrick pos =
@@ -237,7 +237,7 @@ dummyModel =
     Model Start0 AnimationPass
         [] [] []
         []
-        {w=0,h=0} (0, 0) 0 True AniStop True
+        {w=0,h=0} (0, 0) 0 True AniStop False
         (div [] [])
 
 nextLevel model =

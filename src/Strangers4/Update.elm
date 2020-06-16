@@ -58,6 +58,8 @@ update msg model =
                             { model | gameStatus = ChangeLevel }
                         KeyDown Space ->
                             { model | gameStatus = ChangeLevel }
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
                         _ -> model
                 Pass ->
                     let
@@ -217,7 +219,10 @@ movePaddle op model =
                     Stay -> Point 0 0
                 pos = paddle.pos
                 newPos =
-                    Point (pos.x + v.x) (pos.y + v.y)
+                    case model.god of -- God
+                        True -> Point (getBall model.ball 1).pos.x (pos.y + v.y)
+                        _ ->
+                            Point (pos.x + v.x) (pos.y + v.y)
                 block = paddle.block
                 newBlock =
                     Block (Point (block.lt.x + v.x) (block.lt.y + v.y)) (Point (block.rb.x + v.x) (block.rb.y + v.y))
