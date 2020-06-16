@@ -170,10 +170,10 @@ moveBall flow model =
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
 griddle : Float -> Ball -> List Ball -> List Ball
-griddle _ cur ball =
+griddle flow cur ball =
     let
-        cutting = 80
-        grid = [ 3, 7, 8 ,10 ]
+        cutting = round (max (120 - flow) 60)
+        grid = [ 3, 7, 8 ,10, 11 ]
         --top = round (max (250 - flow) 100)
         top = 220
 

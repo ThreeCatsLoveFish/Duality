@@ -237,6 +237,23 @@ dummyModel =
     Model Start0 AnimationPass
         [] [] []
         []
-        {w=0,h=0} (0, 0) 0 True AniStop
+        {w=0,h=0} (0, 0) 0 True AniStop True
         (div [] [])
 
+nextLevel model =
+    let
+        next =
+            case model.gameLevel of
+                Start0 -> Strangers1
+                Strangers1 -> Friends2
+                Friends2 -> Lovers3
+                Lovers3 -> Strangers4
+                Strangers4 -> Companions5
+                Companions5 -> Death6
+                Death6 -> End7
+                _ -> Start0
+    in
+    { model
+    | gameStatus = ChangeLevel
+    , gameLevel = next
+    }

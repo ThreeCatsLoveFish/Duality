@@ -117,6 +117,7 @@ type alias Model =
     , clock : Float
     , activeInput : Bool
     , animateState : AniState
+    , god : Bool
 
     , visualization : Html Msg
     }
