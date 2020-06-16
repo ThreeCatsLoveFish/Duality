@@ -2,12 +2,9 @@ module End7.Init exposing (..)
 
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (genFadeIn)
-import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
 import Messages exposing (..)
-import BasicView exposing (..)
 import End7.View
 import Task
 import Tools exposing (dummyModel, dummyStateManagement)

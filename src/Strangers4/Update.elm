@@ -46,7 +46,7 @@ update msg model =
                         _ -> model
                 AnimationPreparePost ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}

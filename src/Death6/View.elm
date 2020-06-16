@@ -1,6 +1,6 @@
 module Death6.View exposing (..)
 
-import Html exposing (Attribute, Html, button, div, h1, input, p, text)
+import Html exposing (Attribute, Html, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -129,16 +129,6 @@ changeBrickColor brick =
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
     let
-        (w,h)=model.size
-        r =
-            if w / h > model.canvas.w / model.canvas.h then
-                Basics.min 1 (h / model.canvas.h)
-            else
-                Basics.min 1 (w / model.canvas.w)
-        --lt = Point ((w - model.canvas.w * r) / 2) 0
-        --lb = Point ((w - model.canvas.w * r) / 2) model.canvas.h
-        --rb = Point ((w - model.canvas.w * (r - 2)) / 2) model.canvas.h
-        --rt = Point ((w - model.canvas.w * (r - 2)) / 2) 0
         lt = Point 0 0
         lb = Point 0 model.canvas.h
         rb = Point model.canvas.w model.canvas.h

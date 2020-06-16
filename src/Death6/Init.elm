@@ -1,15 +1,12 @@
 module Death6.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (fadeInAndOut, genFadeIn, genFadeInSub)
-import Html exposing (Html, Attribute, button, div, h1, input, text)
+import Fade exposing (genFadeIn, genFadeInSub)
 
 import Model exposing (..)
 import Messages exposing (..)
 import Task
 import Tools exposing (..)
-import BasicView exposing (..)
---import Death6.State exposing (genBezierBrick, getSpeed)
 import Death6.View
 
 init : ( Model, Cmd Msg )

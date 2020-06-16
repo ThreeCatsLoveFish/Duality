@@ -1,6 +1,6 @@
 module Start0.View exposing (..)
 
-import Html exposing (Attribute, Html, button, div, h1, img, input, p, text)
+import Html exposing (Attribute, Html, div, img, p, text)
 import Html.Attributes exposing (..)
 
 import Model exposing (..)

@@ -25,7 +25,7 @@ update msg model =
                         _ -> model
                 AnimationPrepare ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         GetViewport { viewport } ->
                             { model
@@ -47,7 +47,7 @@ update msg model =
                         _ -> model
                 AnimationPreparePost ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
@@ -67,7 +67,7 @@ update msg model =
                     { model1 | gameStatus = AnimationPass }
                 AnimationPass ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}

@@ -1,9 +1,8 @@
 module Companions5.State exposing (..)
-import Bezier exposing (bezierPos)
-import Fade exposing (fadeOut, genFadeIn)
+import Fade exposing (fadeOut)
 import Model exposing (..)
 import Messages exposing (..)
-import Tools exposing (divState, dummyState, getBall)
+import Tools exposing (dummyState)
 
 stateIterate : Model -> Model
 stateIterate model =

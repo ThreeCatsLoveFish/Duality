@@ -1,7 +1,7 @@
 module Companions5.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, button, div, h1, input, p, text)
+import Html exposing (Attribute, Html, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -68,11 +68,11 @@ visualizeBall ball =
 
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
-    let
-        w = 2 * (paddle.r + paddle.h + 1)
-        h = 2 * paddle.r * (cos paddle.angle)
-        pos_ = { x= paddle.pos.x, y= paddle.pos.y- h }
-    in
+    --let
+        --w = 2 * (paddle.r + paddle.h + 1)
+        --h = 2 * paddle.r * (cos paddle.angle)
+        --pos_ = { x= paddle.pos.x, y= paddle.pos.y- h }
+    --in
     Svg.g []
          --[ Svg.defs
         --    []
@@ -131,12 +131,12 @@ changeBrickColor brick =
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
     let
-        (w,h)=model.size
-        r =
-            if w / h > model.canvas.w / model.canvas.h then
-                Basics.min 1 (h / model.canvas.h)
-            else
-                Basics.min 1 (w / model.canvas.w)
+        --(w,h)=model.size
+        --r =
+        --    if w / h > model.canvas.w / model.canvas.h then
+        --        Basics.min 1 (h / model.canvas.h)
+        --    else
+        --        Basics.min 1 (w / model.canvas.w)
         --lt = Point ((w - model.canvas.w * r) / 2) 0
         --lb = Point ((w - model.canvas.w * r) / 2) model.canvas.h
         --rb = Point ((w - model.canvas.w * (r - 2)) / 2) model.canvas.h

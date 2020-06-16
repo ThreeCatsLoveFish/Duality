@@ -102,12 +102,6 @@ changeBrickColor brick =
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
     let
-        (w,h)=model.size
-        r =
-            if w / h > model.canvas.w / model.canvas.h then
-                Basics.min 1 (h / model.canvas.h)
-            else
-                Basics.min 1 (w / model.canvas.w)
         lt = Point 0 0
         lb = Point 0 model.canvas.h
         rb = Point model.canvas.w model.canvas.h

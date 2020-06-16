@@ -2,7 +2,7 @@ module CollisionPoly exposing (..)
 import Tools exposing (..)
 import Model exposing (..)
 
-
+{--
 -- Check if is in block
 blockPoint : Block -> Point -> Bool
 blockPoint block point =
@@ -16,6 +16,8 @@ blockPoint block point =
 blockCheck : Block -> Poly -> Bool
 blockCheck block coll =
     List.foldl (\p hit -> (blockPoint block p) || hit) False coll
+--}
+
 
 type Hit
     = Danger ( List ( Point, Point ) )
@@ -105,7 +107,7 @@ hitCheck ball brick =
         True -> Safe
         False -> Danger final
 
-
+{--
 collisionCheck : Model -> Model
 collisionCheck model =
     let
@@ -166,6 +168,7 @@ collisionCheck model =
                                 a
                     )
             }
+--}
 
 paddleCheck : Model -> Model
 paddleCheck model =

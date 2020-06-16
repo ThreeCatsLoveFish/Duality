@@ -1,7 +1,6 @@
 module End7.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
-import Tools exposing (..)
 import End7.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -11,7 +10,7 @@ update msg model =
             case model.gameStatus of
                 AnimationPrepare ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model
                                 |> stateIterate
                         GetViewport { viewport } ->
