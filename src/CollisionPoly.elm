@@ -228,4 +228,4 @@ wallCheck model =
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity
     in
-    { model | ball = [old |> hcBall |> vcBall, getBall model.ball 2] }
+    { model | ball = [old |> hcBall |> vcBall] ++ List.drop 1 model.ball }
