@@ -223,7 +223,7 @@ wallCheck model =
                 False -> identity
         vcBall =
             case ( pos.y <= 10 && v.y < 0)
-                || (pos.y >= (model.canvas.h - 10) && v.y > 0)  -- Todo: ??? God mode
+                || (pos.y >= (model.canvas.h - 10) && v.y > 0 && model.god == True)  -- Todo: God mode √
                 of
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity

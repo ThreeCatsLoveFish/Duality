@@ -91,7 +91,7 @@ init =
             { dummyModel
             | gameLevel = Death6
             , gameStatus = AnimationPrepare
-            --, gameStatus = Running Stay --Todo: for brick test
+            --, gameStatus = Running Stay -- for brick test
             , ball = [ball]
             , paddle = [paddle]
             , bricks = bricks

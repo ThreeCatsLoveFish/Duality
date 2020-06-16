@@ -108,7 +108,6 @@ update msg model =
                     model
     in
     ( { model0 | visualization = Friends2.View.visualize model0} , Cmd.none )
--- TODO
 
 move : Float -> Model -> Model
 move elapsed model =
