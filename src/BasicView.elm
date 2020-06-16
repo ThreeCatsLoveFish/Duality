@@ -1,5 +1,6 @@
 module BasicView exposing (..)
 
+import Html.Events exposing (onClick)
 import Model exposing (..)
 import Tools exposing (..)
 
@@ -70,6 +71,7 @@ visualizePrepare model bColor =
             ]
         ]
 
+
 visualizeBlock : Model -> Html Msg
 visualizeBlock model =
     let
@@ -126,6 +128,116 @@ visualizeBlock model =
             [text status]
         ]
 
+
+visualizeMenu : Model -> Html Msg
+visualizeMenu model =
+    let
+        back_color = rgb 0 0 0
+        button_color = rgb 213 210 23
+        level =
+            case model.gameLevel of
+                Start0 -> 0
+                Strangers1 -> 1
+                Friends2 -> 2
+                Lovers3 -> 3
+                Strangers4 -> 4
+                Companions5 -> 5
+                Death6 -> 6
+                _ -> 7
+    in
+    div
+        [ style "background" (colorToString back_color)
+        , style "text-align" "center"
+        , style "height" "100%"
+        , style "width" "100%"
+        , style "position" "absolute"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#FFFFFF"
+        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
+        ]
+        [ div
+            [
+              style "text-align" "center"
+            ]
+            [ p
+                [ style "position" "absolute"
+                , style "top" "25%"
+                , style "width" "100%"
+                , style "text-align" "center"
+                , style "font-size" "48px"
+                ]
+                [ text "Stranger" ]
+            , button
+                [ style "top" "35%"
+                , style "left" "40%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick Start0
+                , disabled (level < 1) ]
+                [ text "Start" ]
+            , button
+                [ style "top" "35%"
+                , style "left" "60%"
+                , style "font-size" "28px"
+                , style "color" (colorToString button_color)
+                , onClick Strangers1
+                , disabled (level < 1) ]
+                [ text "Strangers" ]
+            , button
+                [ style "top" "45%"
+                , style "left" "40%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick Friends2
+                , disabled (level < 2) ]
+                [ text "Friends" ]
+            , button
+                [ style "top" "45%"
+                , style "left" "60%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick Lovers3
+                , disabled (level < 3) ]
+                [ text "Lovers" ]
+            , button
+                [ style "top" "55%"
+                , style "left" "40%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick Strangers4
+                , disabled (level < 4) ]
+                [ text "Strangers II" ]
+            , button
+                [ style "top" "55%"
+                , style "left" "60%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick Companions5
+                , disabled (level < 5) ]
+                [ text "Companions" ]
+            , button
+                [ style "top" "65%"
+                , style "left" "40%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick Death6
+                , disabled (level < 6) ]
+                [ text "Death" ]
+            , button
+                [ style "top" "65%"
+                , style "left" "60%"
+                , style "color" (colorToString button_color)
+                , style "font-size" "28px"
+                , onClick End7
+                , disabled (level < 6) ]
+                [ text "Ending" ]
+            ]
+        ]
+
+
 --visualizePass : Model -> Html Msg
 --visualizePass model =
 --    div
@@ -171,6 +283,7 @@ visualizeBlock model =
 --            )
 --        ]
 --        [text "You lose! "]
+
 
 --view : Model -> Html Msg
 --view model =
