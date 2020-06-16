@@ -154,7 +154,7 @@ moveBall : Model -> Model -- Done
 moveBall model =
     let
         static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 5, color = rgb 232 74 120 }) model.ball
-        static_old = griddle static_old_
+        static_old = griddle (getBall model.ball 1) static_old_
         --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
         done: Maybe Ball -> Ball
         done ball_maybe =
@@ -169,24 +169,40 @@ moveBall model =
     in
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
-griddle : List Ball -> List Ball
-griddle ball =
+griddle : Ball -> List Ball -> List Ball
+griddle cur ball =
     let
-        number = 40
+        cutting = 80
         grid = 3
+        grid_ = 7
+        grid__ = 8
+        grid___ = 10
+        top = 220
+
+        len = List.length ball
         ball_ =
-            if List.length ball > number then
-            ball
-                |> List.indexedMap (\i a -> if modBy grid i == 0 then Nothing else Just a )
+            if len > cutting then
+            ( List.take cutting ball
+                |> List.indexedMap (\i a ->
+                    if (modBy grid i == 0
+                    || modBy grid_ i == 0
+                    || modBy grid__ i == 0
+                    || modBy grid___ i == 0
+                    )
+                    && ((distance cur.pos a.pos) < 1.4 * cur.r)
+                    then Nothing else Just a )
                 |> List.filter (\a ->
                     case a of
                         Just _ -> True
                         _-> False
                     )
                 |> List.map (\a -> Maybe.withDefault dummyBall a)
+            )
+            ++ List.drop cutting ball
             else ball
     in
     ball_
+        |> List.take top
 
 movePaddle : Op -> Model -> Model -- Done
 movePaddle op model =
