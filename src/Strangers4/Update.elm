@@ -170,25 +170,19 @@ moveBall flow model =
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
 griddle : Float -> Ball -> List Ball -> List Ball
-griddle flow cur ball =
+griddle _ cur ball =
     let
         cutting = 80
-        grid = 3
-        grid_ = 7
-        grid__ = 8
-        grid___ = 10
-        top = round (max (250 - flow) 100)
-        --top = 220
+        grid = [ 3, 7, 8 ,10 ]
+        --top = round (max (250 - flow) 100)
+        top = 220
 
         len = List.length ball
         ball_ =
             if len > cutting then
             ( List.take cutting ball
                 |> List.indexedMap (\i a ->
-                    if (modBy grid i == 0
-                    || modBy grid_ i == 0
-                    || modBy grid__ i == 0
-                    || modBy grid___ i == 0
+                    if ( List.foldr (\d is -> modBy d i  == 0 || is) False grid
                     )
                     && ((distance cur.pos a.pos) < 1.4 * cur.r)
                     then Nothing else Just a )
