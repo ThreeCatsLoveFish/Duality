@@ -66,6 +66,44 @@ visualizeBall ball =
             ]
             []
         ]
+visualizeStaticBall : Ball -> Svg.Svg Msg
+visualizeStaticBall ball =
+    Svg.g []
+        [ Svg.defs
+            []
+            [
+              --Svg.filter [id "Gaussian_Blur_in"]
+              --  [ Svg.feGaussianBlur
+              --      [ SA.in_ "SourceGraphic"
+              --      , SA.stdDeviation "3"
+              --      ]
+              --      []
+              --  ]
+            --, Svg.filter [id "Gaussian_Blur"]
+            --    [ Svg.feGaussianBlur
+            --    [ SA.in_ "SourceGraphic"
+            --    , SA.stdDeviation "4"
+            --    ]
+            --    []
+            ]
+        --, Svg.circle
+        --    [ SA.cx (String.fromFloat ball.pos.x)
+        --    , SA.cy (String.fromFloat ball.pos.y)
+        --    , SA.r (String.fromFloat (ball.r * 2.5))
+        --    , SA.fill (colorToString (rgb 200 200 200))
+        --    , SA.filter "url(#Gaussian_Blur)"
+        --    , SA.opacity "0.5"
+        --    ]
+        --    []
+        , Svg.circle
+            [ SA.cx (String.fromFloat ball.pos.x)
+            , SA.cy (String.fromFloat ball.pos.y)
+            , SA.r (String.fromFloat ball.r)
+            , SA.fill (colorToString ball.color)
+            --, SA.filter "url(#Gaussian_Blur_in)"
+            ]
+            []
+        ]
 
 
 visualizePaddle : Paddle -> Html Msg
@@ -146,7 +184,10 @@ visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
     let
         elements =
-            (List.map visualizeBrick model.bricks) ++ List.map visualizeBall model.ball ++ (List.map visualizeBall (Maybe.withDefault [dummyBall] (List.tail model.ball)))
+            ( List.map visualizeBrick model.bricks)
+                ++ [visualizeBall (getBall model.ball 1)]
+                ++ (List.map visualizeStaticBall (List.drop 20 model.ball)
+            )
               |> (::) (visualizePaddle (Maybe.withDefault dummyPaddle (List.head model.paddle)))
               |> (::) (visualizeCanvas model)
     in

@@ -153,8 +153,9 @@ exec model =
 moveBall : Model -> Model -- Done
 moveBall model =
     let
-        --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 232 74 120 }) model.ball
-        static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
+        static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 5, color = rgb 232 74 120 }) model.ball
+        static_old = griddle static_old_
+        --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
         done: Maybe Ball -> Ball
         done ball_maybe =
             let
@@ -163,13 +164,29 @@ moveBall model =
                 v = ball.v
                 newPos = Point (pos.x + v.x) (pos.y + v.y)
                 coll = List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) ball.collision
-                setPos npos ncoll ball_ =
-                    { ball_ | pos = npos, collision = ncoll }
             in
-            setPos newPos coll ball
+            { ball | pos = newPos, collision = coll }
     in
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
+griddle : List Ball -> List Ball
+griddle ball =
+    let
+        number = 40
+        grid = 3
+        ball_ =
+            if List.length ball > number then
+            ball
+                |> List.indexedMap (\i a -> if modBy grid i == 0 then Nothing else Just a )
+                |> List.filter (\a ->
+                    case a of
+                        Just _ -> True
+                        _-> False
+                    )
+                |> List.map (\a -> Maybe.withDefault dummyBall a)
+            else ball
+    in
+    ball_
 
 movePaddle : Op -> Model -> Model -- Done
 movePaddle op model =
