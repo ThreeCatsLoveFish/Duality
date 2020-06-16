@@ -197,6 +197,8 @@ winJudge model =
                 True ->
                     Pass
                 False ->
-                    model.gameStatus
+                    case (getBall model.ball 1).pos.y > model.canvas.h+20 of
+                        True -> Lose
+                        False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
