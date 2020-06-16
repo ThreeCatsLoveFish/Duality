@@ -13,8 +13,8 @@ import Lovers3.Init
 import Strangers4.Init
 import Companions5.Init
 import Death6.Init
-{--
 import End7.Init
+{--
 --}
 
 import Start0.Update
@@ -24,8 +24,8 @@ import Lovers3.Update
 import Strangers4.Update
 import Companions5.Update
 import Death6.Update
-{--
 import End7.Update
+{--
 --}
 
 import Subscriptions exposing (subscriptions)
@@ -49,13 +49,14 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    Start0.Init.init
+    --Start0.Init.init
     --Strangers1.Init.init
     --Friends2.Init.init
     --Lovers3.Init.init
     --Strangers4.Init.init
     --Companions5.Init.init
     --Death6.Init.init
+    End7.Init.init
 
 {--
 reinit : Model -> ( Model, Cmd Msg )
@@ -86,8 +87,10 @@ update msg model =
     case model.gameStatus of
         ChangeLevel ->
             case model.gameLevel of
+                 {--
                  Start0 ->
                      Start0.Init.init
+                 --}
                  Strangers1 ->
                      Strangers1.Init.init
                  Friends2 ->
@@ -100,16 +103,16 @@ update msg model =
                      Companions5.Init.init
                  Death6 ->
                      Death6.Init.init
-                 {--
                  End7 ->
                      End7.Init.init
-                 --}
                  _ ->
                      Start0.Init.init
         _ ->
              case model.gameLevel of
+                 {--
                  Start0 ->
                      Start0.Update.update msg model
+                 --}
                  Strangers1 ->
                      Strangers1.Update.update msg model
                  Friends2 ->
@@ -122,10 +125,8 @@ update msg model =
                      Companions5.Update.update msg model
                  Death6 ->
                      Death6.Update.update msg model
-                 {--
                  End7 ->
                      End7.Update.update msg model
-                 --}
                  _ ->
                      Start0.Update.update msg model
 
