@@ -69,7 +69,7 @@ init =
                     { canvas = canvas
                     , brick = {w=50, h=50}
                     , breath = 1
-                    , offset = Point 0 -70
+                    , offset = Point 0 -51
                     , color = dummyColor
                     }
                 posInfo =

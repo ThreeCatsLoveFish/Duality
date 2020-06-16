@@ -1,7 +1,7 @@
 module Strangers4.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, div, p, text)
+import Html exposing (Attribute, Html, audio, div, p, text)
 import Html.Attributes exposing (..)
 import Strangers4.State exposing (endColor0)
 import Svg
@@ -192,6 +192,7 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString (backgroundColor_ model))]
+
         [ div
             [ style "width" (String.fromFloat model.canvas.w++"px")
             , style "height" (String.fromFloat model.canvas.h++"px")
@@ -208,6 +209,13 @@ visualize model =
             [ visualizePrepare model
             , BasicView.visualizeBlock model
             ]
+        ,
+        audio
+            [ src "Damien Rice - The Blower's Daughter.mp3"
+            , autoplay True
+            , loop False
+            ]
+            []
         ]
 
 visualizePrepare : Model -> Html Msg
