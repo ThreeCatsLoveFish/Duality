@@ -1,15 +1,12 @@
 module Companions5.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Companions5.State exposing (fadeIn)
-import Html exposing (Html, Attribute, button, div)
+import Fade exposing (genFadeIn, genFadeInSub)
 
 import Model exposing (..)
 import Messages exposing (..)
 import Task
 import Tools exposing (..)
-import BasicView exposing (..)
---import Companions5.State exposing (genBezierBrick, getSpeed)
 import Companions5.View
 
 init : ( Model, Cmd Msg )
@@ -36,13 +33,18 @@ init =
 
         state : List State
         state =
-            [
-                { name = "fadeIn"
-                , value = 0
-                , t = 0
-                , function = Func fadeIn
-                , loop = False
-                }
+            [ { name = "fadeIn"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeIn 0 0.4 0)
+              , loop = False
+              }
+            , { name = "fadeInSub"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeInSub 0.5 0.5 0)
+              , loop = False
+              }
             ]
 
         paddle : Paddle

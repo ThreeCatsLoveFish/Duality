@@ -312,6 +312,18 @@ visualizePrepare model =
                 AnimationPreparePost ->
                     (getState model.state "fadeOut").value
                 _ -> 0
+        alphaSub =
+            case model.gameStatus of
+                AnimationPrepare ->
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeInSub").value
+                Prepare ->
+                    1
+                AnimationPreparePost ->
+                    (getState model.state "fadeOut").value
+                _ -> 0
     in
     div
         [ style "background" (colorToString (backgroundColor_ model))
@@ -338,6 +350,7 @@ visualizePrepare model =
             , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "24px"
+            , style "opacity" (String.fromFloat alphaSub)
             ]
             [ text "Press space to start" ]
         , p
@@ -346,6 +359,7 @@ visualizePrepare model =
             , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "48px"
+            , style "opacity" (String.fromFloat alpha)
             ]
             [ text "Friends" ]
         ]

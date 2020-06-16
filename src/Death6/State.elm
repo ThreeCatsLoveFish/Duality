@@ -15,6 +15,10 @@ stateIterate model =
                     { model
                     | gameStatus = Prepare
                     }
+                AnimationPreparePost ->
+                    { model
+                    | gameStatus = Running Stay
+                    } |> getGameState
                 AnimationPass ->
                     { model
                     | gameStatus = ChangeLevel
@@ -36,11 +40,12 @@ stateIterate model =
             in
             newModel
 
+getPrepareState : Model -> Model
+getPrepareState model =
+    getEndState model
+
 getGameState : Model -> Model
 getGameState model =
-    let
-        s = dummyState
-    in
     { model | state = [] }
 
 getEndState : Model -> Model

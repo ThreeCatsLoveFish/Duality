@@ -222,6 +222,15 @@ pos2block pos object =
     in
     Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
 
+pos2blockL pos object =
+    let
+        w = object.w /2 + 3.51
+        h = object.h /2 + 3.51
+        x = pos.x
+        y = pos.y
+    in
+    Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
+
 
 dummyModel : Model
 dummyModel =

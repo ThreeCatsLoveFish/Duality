@@ -108,7 +108,7 @@ block_hit model =
                   , value = 0
                   , t = 0
                   , function = Func genBezierColor
-                  , loop = True
+                  , loop = False
                   }]
     }
 

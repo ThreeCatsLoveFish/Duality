@@ -24,6 +24,27 @@ genFadeIn break interval speedAdjust =
             { model | state = state }
     in
     fadeIn_
+genFadeInSub : Float -> Float -> Float -> (Model -> Float -> Model)
+genFadeInSub break interval speedAdjust =
+    let
+        fadeIn_ model t_ =
+            let
+                val =
+                    if  ( t_ < break ) then
+                        0
+                    else if ( t_ >= break && t_ <= break+interval ) then
+                        ( t_ - break) / interval
+                    else
+                        1
+                (s_, state_) = divState model.state "fadeInSub"
+                state =
+                    case t_>1 of
+                        False -> { s_ | value = val, t = s_.t + speedAdjust}::state_
+                        _ -> state_
+            in
+            { model | state = state }
+    in
+    fadeIn_
 
 fadeInAndOut : Model -> Float -> Model
 fadeInAndOut model t =

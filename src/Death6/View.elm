@@ -276,6 +276,33 @@ visualize model =
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
+    let
+
+        alpha =
+            case model.gameStatus of
+                AnimationPrepare ->
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeIn").value
+                Prepare ->
+                    1
+                AnimationPreparePost ->
+                    (getState model.state "fadeOut").value
+                _ -> 0
+        alphaSub =
+            case model.gameStatus of
+                AnimationPrepare ->
+                    if List.isEmpty model.state then
+                        1
+                    else
+                        (getState model.state "fadeInSub").value
+                Prepare ->
+                    1
+                AnimationPreparePost ->
+                    (getState model.state "fadeOut").value
+                _ -> 0
+    in
     div
         [ style "background" (colorToString backgroundColor)
         , style "text-align" "center"
@@ -287,8 +314,9 @@ visualizePrepare model =
         , style "font-family" "High Tower Text, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
+        , style "opacity" (String.fromFloat alpha)
         --, style "line-height" "500px"
-        , style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
+        --, style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
         --, style "display"
         --    (if model.gameStatus == Prepare then
         --        "block"
@@ -309,6 +337,7 @@ visualizePrepare model =
                 , style "width" "100%"
                 , style "text-align" "center"
                 , style "font-size" "24px"
+                , style "opacity" (String.fromFloat alphaSub)
                 ]
                 [ text "Press space to start" ]
             , p
