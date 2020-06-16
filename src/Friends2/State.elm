@@ -1,6 +1,6 @@
 module Friends2.State exposing (..)
 import Bezier exposing (..)
-import Fade exposing (fadeOut, genFadeIn)
+import Fade exposing (fadeOut)
 import Tools exposing (getBall, getState)
 import Model exposing (..)
 import Messages exposing (..)
@@ -189,6 +189,3 @@ loopState state t =
         False ->
             { state | t = state.t + t}
 
-fadeIn : Model -> Float -> Model
-fadeIn model t=
-    genFadeIn 0 0.4 0 model t

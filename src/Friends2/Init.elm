@@ -1,6 +1,6 @@
 module Friends2.Init exposing (..)
 
-import Friends2.State exposing (fadeIn)
+import Fade exposing (genFadeIn, genFadeInSub)
 import Browser.Dom exposing (getViewport)
 
 import Model exposing (..)
@@ -52,7 +52,13 @@ init =
             [ { name = "fadeIn"
               , value = 0
               , t = 0
-              , function = Func fadeIn
+              , function = Func (genFadeIn 0 0.4 -0.003)
+              , loop = False
+              }
+            , { name = "fadeInSub"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeInSub 0.5 0.5 -0.003)
               , loop = False
               }
             ]

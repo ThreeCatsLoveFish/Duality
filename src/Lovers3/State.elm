@@ -1,6 +1,6 @@
 module Lovers3.State exposing (..)
 import Bezier exposing (bezierPos)
-import Fade exposing (genFadeOut, genFadeIn)
+import Fade exposing (genFadeOut)
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (divState, getBall)
@@ -191,6 +191,3 @@ loopState state t =
         False ->
             { state | t = state.t + t}
 
-fadeIn : Model -> Float -> Model
-fadeIn model t=
-    genFadeIn 0 0.4 0 model t

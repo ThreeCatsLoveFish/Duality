@@ -53,10 +53,10 @@ init =
     --Strangers1.Init.init
     --Friends2.Init.init
     --Lovers3.Init.init
-    --Strangers4.Init.init
+    Strangers4.Init.init
     --Companions5.Init.init
     --Death6.Init.init
-    End7.Init.init
+    --End7.Init.init
 
 {--
 reinit : Model -> ( Model, Cmd Msg )
@@ -84,13 +84,9 @@ reinit model =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    case model.gameStatus of
-        ChangeLevel ->
-            case model.gameLevel of
-                 {--
-                 Start0 ->
-                     Start0.Init.init
-                 --}
+    case msg of
+        ChooseLevel level ->
+            case level of
                  Strangers1 ->
                      Strangers1.Init.init
                  Friends2 ->
@@ -108,27 +104,51 @@ update msg model =
                  _ ->
                      Start0.Init.init
         _ ->
-             case model.gameLevel of
-                 {--
-                 Start0 ->
-                     Start0.Update.update msg model
-                 --}
-                 Strangers1 ->
-                     Strangers1.Update.update msg model
-                 Friends2 ->
-                     Friends2.Update.update msg model
-                 Lovers3 ->
-                     Lovers3.Update.update msg model
-                 Strangers4 ->
-                     Strangers4.Update.update msg model
-                 Companions5 ->
-                     Companions5.Update.update msg model
-                 Death6 ->
-                     Death6.Update.update msg model
-                 End7 ->
-                     End7.Update.update msg model
-                 _ ->
-                     Start0.Update.update msg model
+            case model.gameStatus of
+                ChangeLevel ->
+                    case model.gameLevel of
+                         {--
+                         Start0 ->
+                             Start0.Init.init
+                         --}
+                         Strangers1 ->
+                             Strangers1.Init.init
+                         Friends2 ->
+                             Friends2.Init.init
+                         Lovers3 ->
+                             Lovers3.Init.init
+                         Strangers4 ->
+                             Strangers4.Init.init
+                         Companions5 ->
+                             Companions5.Init.init
+                         Death6 ->
+                             Death6.Init.init
+                         End7 ->
+                             End7.Init.init
+                         _ ->
+                             Start0.Init.init
+                _ ->
+                     case model.gameLevel of
+                         {--
+                         Start0 ->
+                             Start0.Update.update msg model
+                         --}
+                         Strangers1 ->
+                             Strangers1.Update.update msg model
+                         Friends2 ->
+                             Friends2.Update.update msg model
+                         Lovers3 ->
+                             Lovers3.Update.update msg model
+                         Strangers4 ->
+                             Strangers4.Update.update msg model
+                         Companions5 ->
+                             Companions5.Update.update msg model
+                         Death6 ->
+                             Death6.Update.update msg model
+                         End7 ->
+                             End7.Update.update msg model
+                         _ ->
+                             Start0.Update.update msg model
 
 
 view : Model -> Html Msg

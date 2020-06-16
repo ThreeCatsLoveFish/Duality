@@ -1,8 +1,7 @@
 module Strangers4.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Strangers4.State exposing (fadeIn)
-import Html exposing (Html, Attribute, div)
+import Fade exposing (genFadeIn, genFadeInSub)
 import Model exposing (..)
 import Messages exposing (..)
 import Task
@@ -22,7 +21,7 @@ init =
                     Point
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
-                v = Point 3.0 -3.0
+                v = Point 3.5 -3.5
                 r = 10
             in
             { active = True
@@ -50,13 +49,18 @@ init =
 
         state : List State
         state =
-            [
-                { name = "fadeIn"
-                , value = 0
-                , t = 0
-                , function = Func fadeIn
-                , loop = False
-                }
+            [ { name = "fadeIn"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeIn 0 0.4 0)
+              , loop = False
+              }
+            , { name = "fadeInSub"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeInSub 0.5 0.5 0)
+              , loop = False
+              }
             ]
         bricks : List Brick
         bricks =
@@ -90,7 +94,7 @@ init =
                     (\p -> Brick
                         p
                         (pos2coll p hi.brick)
-                        (pos2block p hi.brick)
+                        (pos2blockL p hi.brick)
                         (Hit 0)
                         hi.color
                     )

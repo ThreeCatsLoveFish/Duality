@@ -1,6 +1,6 @@
 module Strangers4.State exposing (..)
 import Bezier exposing (bezierColor)
-import Fade exposing (fadeOut, genFadeIn)
+import Fade exposing (fadeOut)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Model exposing (Brick, Color, HitTime(..), Model, Point, State, StateFunc(..), rgb)
 import Tools exposing (dummyState)
@@ -46,7 +46,7 @@ genBezierColor =
                                     _ -> a
                                 )
             in
-            { model_ | bricks = targetBrick}
+            { model_ | bricks = targetBrick, state = List.filter (\s -> s.t <= 1) model_.state}
     in
     bezierBrickColor
 
@@ -77,7 +77,7 @@ stateIterate model =
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.01) state
+                    List.map (\s -> loopState s 0.007) state
                 getFunc (Func func) = func
                 setModel : State -> Model -> Model
                 setModel stat model_ =
@@ -121,6 +121,3 @@ loopState state t =
         False ->
             { state | t = state.t + t}
 
-fadeIn : Model -> Float -> Model
-fadeIn model t=
-    genFadeIn 0 0.4 0 model t

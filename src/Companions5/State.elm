@@ -72,6 +72,3 @@ loopState state t =
         False ->
             { state | t = state.t + t}
 
-fadeIn : Model -> Float -> Model
-fadeIn model t=
-    genFadeIn 0 0.4 0 model t

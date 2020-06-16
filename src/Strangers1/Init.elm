@@ -1,7 +1,8 @@
 module Strangers1.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Strangers1.State exposing (fadeIn)
+import Fade exposing (genFadeIn, genFadeInSub)
+--import Strangers1.State exposing (fadeIn)
 
 import Model exposing (..)
 import Messages exposing (..)
@@ -54,7 +55,13 @@ init =
             [ { name = "fadeIn"
               , value = 0
               , t = 0
-              , function = Func fadeIn
+              , function = Func (genFadeIn 0 0.4 0)
+              , loop = False
+              }
+            , { name = "fadeInSub"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeInSub 0.5 0.5 0)
               , loop = False
               }
             ]

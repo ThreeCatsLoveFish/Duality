@@ -1,7 +1,7 @@
 module Death6.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (fadeInAndOut)
+import Fade exposing (fadeInAndOut, genFadeIn, genFadeInSub)
 import Html exposing (Html, Attribute, button, div, h1, input, text)
 
 import Model exposing (..)
@@ -36,13 +36,18 @@ init =
 
         state : List State
         state =
-            [
-                { name = "fadeInAndOut"
-                , value = 0
-                , t = 0
-                , function = Func fadeInAndOut
-                , loop = False
-                }
+            [ { name = "fadeIn"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeIn 0 0.4 0)
+              , loop = False
+              }
+            , { name = "fadeInSub"
+              , value = 0
+              , t = 0
+              , function = Func (genFadeInSub 0.5 0.5 0)
+              , loop = False
+              }
             ]
 
         paddle : Paddle
