@@ -29,6 +29,7 @@ import End7.Update
 --}
 
 import Subscriptions exposing (subscriptions)
+import Tools exposing (nextLevel)
 
 {--
 import Test
@@ -103,6 +104,14 @@ update msg model =
                      End7.Init.init
                  _ ->
                      Start0.Init.init
+        KeyDown Key_G ->
+            ( { model | god = not model.god }
+            , Cmd.none
+            )
+        KeyDown Key_S ->
+            ( model |> nextLevel
+            , Cmd.none
+            )
         _ ->
             case model.gameStatus of
                 ChangeLevel ->

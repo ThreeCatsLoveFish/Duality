@@ -39,8 +39,6 @@ keyUp keycode =
             KeyUp Key_Left
         39 ->
             KeyUp Key_Right
-        32 ->
-            NoOp
         _ ->
             NoOp
 
@@ -53,7 +51,11 @@ keyDown keycode =
             KeyDown Key_Right
         32 ->
             KeyDown Space
+        71 ->
+            KeyDown Key_G -- god
         82 ->
-            KeyDown Key_R
+            KeyDown Key_R -- restart
+        83 ->
+            KeyDown Key_S -- skip
         _ ->
             NoOp

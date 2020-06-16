@@ -35,6 +35,8 @@ type KeyType
     | Key_Left
     | Key_Right
     | Key_R
+    | Key_S
+    | Key_G
 
 type Msg
     = RunGame Op -- abandoned
