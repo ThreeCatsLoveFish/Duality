@@ -221,7 +221,7 @@ winJudge model =
                 True ->
                     Pass
                 False ->
-                    case (ball.pos.y > model.canvas.h+10) || (ball.pos.y < -10) of
+                    case (ball.pos.y > model.canvas.h+20) || (ball.pos.y < -20) of
                         True -> Lose
                         False -> model.gameStatus
     in

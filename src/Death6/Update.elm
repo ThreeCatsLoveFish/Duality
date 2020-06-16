@@ -205,13 +205,9 @@ winJudge model =
         brick_all = List.map change_brick model.bricks
         ball = getBall model.ball 1
         win =
-            case ball.pos.y > model.canvas.h+10 of
+            case ball.pos.y > model.canvas.h+20 of
                 True ->
-                    case ( ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.length ) <= 4 ) of
-                        True ->
-                            Pass
-                        False ->
-                            Lose
+                    Lose
                 False ->
                     case ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                         True ->
