@@ -2,13 +2,10 @@ module BasicView exposing (..)
 
 import Html.Events exposing (onClick)
 import Model exposing (..)
-import Tools exposing (..)
 
 import Html exposing (Attribute, Html, button, div, h1, input, p, text)
 import Html.Attributes exposing (..)
 import Messages exposing (..)
-import Svg
-import Svg.Attributes as SA
 
 
 

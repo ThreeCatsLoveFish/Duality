@@ -24,7 +24,7 @@ update msg model =
                         _ -> model
                 AnimationPrepare ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         GetViewport { viewport } ->
                             { model
@@ -46,7 +46,7 @@ update msg model =
                         _ -> model
                 AnimationPreparePost ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
@@ -66,7 +66,7 @@ update msg model =
                     { model1 | gameStatus = AnimationPass }
                 AnimationPass ->
                     case msg of
-                        Tick time ->
+                        Tick _ ->
                             model |> stateIterate
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
@@ -193,8 +193,6 @@ winJudge model =
                 Hit 1 -> { brick | hitTime = NoMore, color = backgroundColor}
                 _ -> brick
         brick_all = List.map change_brick model.bricks
-        ball = getBall model.ball 1
-        ball2 = getBall model.ball 2
         win =
             case ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->

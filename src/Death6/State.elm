@@ -1,9 +1,7 @@
 module Death6.State exposing (..)
-import Bezier exposing (bezierPos)
-import Fade exposing (fadeOut, genFadeOut)
+import Fade exposing (genFadeOut)
 import Model exposing (..)
 import Messages exposing (..)
-import Tools exposing (divState, dummyState, getBall)
 
 
 stateIterate : Model -> Model
