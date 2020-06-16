@@ -144,6 +144,20 @@ divState states name =
     in
     ( state, lst )
 
+dummyStateManagement : String -> Float -> (Model -> Float -> Model)
+dummyStateManagement name end =
+    let
+        dummy_ model _ =
+            let
+                (s_, state_) = divState model.state name
+            in
+            case s_.t > end of
+                True ->
+                    { model | state = state_ }
+                _ ->
+                    { model | state = s_ :: state_ }
+    in
+    dummy_
 
 dummyBrick : Brick
 dummyBrick =

@@ -1,8 +1,8 @@
-module Start0.Update exposing (..)
+module End7.Update exposing (..)
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
-import Start0.View exposing (..)
+import End7.View exposing (..)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -13,7 +13,6 @@ update msg model =
                     case msg of
                         Tick time ->
                             model
-                                |> move (min time 25)
                                 |> stateIterate
                         GetViewport { viewport } ->
                             { model
@@ -30,57 +29,41 @@ update msg model =
                         KeyDown Space ->
                             { model
                             | gameStatus = ChangeLevel
-                            , gameLevel = Strangers1
+                            , gameLevel = Start0
                             }
                         _ -> model
                 _ ->
                     model
     in
-    ( { model0 | visualization = Start0.View.visualize model0} , Cmd.none )
+    ( { model0 | visualization = End7.View.visualize model0} , Cmd.none )
 
-exec : Model -> Model
-exec model =
-    model
-        |> winJudge
-
-move : Float -> Model -> Model
-move elapsed model =
-    let
-        elapsed_ =
-            model.clock + elapsed
-        interval = 15
-    in
-    if elapsed_ > interval then
-        { model | clock = elapsed_ - interval } |> exec
-
-    else
-        { model | clock = elapsed_ }
 
 stateIterate : Model -> Model
 stateIterate model =
     case List.isEmpty model.state of
         True ->
-            { model
-            | gameStatus = ChangeLevel
-            , gameLevel = Strangers1
-            }
+            case model.gameStatus of
+                AnimationPrepare ->
+                    { model | gameStatus = Prepare }
+                _ ->
+                    { model
+                    | gameStatus = ChangeLevel
+                    , gameLevel = Start0
+                    }
         _ ->
             let
                 state = model.state
                 newState =
-                    List.map (\s -> loopState s 0.005) state
+                    List.map (\s -> loopState s 0.0012) state
+                getFunc (Func func) = func
+                setModel : State -> Model -> Model
+                setModel stat model_ =
+                    (getFunc stat.function) model_ stat.t
                 newModel =
-                    { model | state = newState }
+                    List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
 
             in
             newModel
-
-winJudge : Model -> Model
-winJudge model =
-    if ((getState model.state "fadeInAndOut").t > 2) then
-        { model | gameStatus = Prepare }
-    else
-        model
 
 getEndState : Model -> Model
 getEndState model =
