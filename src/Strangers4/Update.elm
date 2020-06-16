@@ -127,14 +127,14 @@ move elapsed model =
         interval = 15
     in
     if elapsed_ > interval then
-        { model | clock = elapsed_ - interval } |> exec
+        { model | clock = elapsed_ - interval } |> exec elapsed
 
     else
         { model | clock = elapsed_ }
 
 
-exec : Model -> Model
-exec model =
+exec : Float -> Model -> Model
+exec flow model =
     let
         dir =
             case model.gameStatus of
@@ -145,16 +145,16 @@ exec model =
         |> movePaddle dir
         |> block_hit
         |> paddle_hit
-        |> moveBall
+        |> moveBall flow
         |> wallCheck
         |> winJudge
 
 
-moveBall : Model -> Model -- Done
-moveBall model =
+moveBall : Float -> Model -> Model -- Done
+moveBall flow model =
     let
         static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 5, color = rgb 232 74 120 }) model.ball
-        static_old = griddle (getBall model.ball 1) static_old_
+        static_old = griddle flow (getBall model.ball 1) static_old_
         --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
         done: Maybe Ball -> Ball
         done ball_maybe =
@@ -169,15 +169,16 @@ moveBall model =
     in
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
-griddle : Ball -> List Ball -> List Ball
-griddle cur ball =
+griddle : Float -> Ball -> List Ball -> List Ball
+griddle flow cur ball =
     let
         cutting = 80
         grid = 3
         grid_ = 7
         grid__ = 8
         grid___ = 10
-        top = 220
+        top = round (max (250 - flow) 100)
+        --top = 220
 
         len = List.length ball
         ball_ =
