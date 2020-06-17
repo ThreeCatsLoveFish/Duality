@@ -155,7 +155,7 @@ exec flow model =
 moveBall : Float -> Model -> Model -- Done
 moveBall flow model =
     let
-        static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 5, color = rgb 232 74 120 }) model.ball
+        static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 1, color = rgb 244 244 244 }) model.ball
         static_old = griddle flow (getBall model.ball 1) static_old_
         --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
         done: Maybe Ball -> Ball
