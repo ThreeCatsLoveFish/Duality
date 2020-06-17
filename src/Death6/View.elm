@@ -1,5 +1,6 @@
 module Death6.View exposing (..)
 
+import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
@@ -14,6 +15,18 @@ import BasicView as ViewTest
 
 backgroundColor : Color
 backgroundColor = rgb 72 65 60
+
+backgroundColor_ : Model -> Color
+backgroundColor_ model=
+    let
+        state =
+            if (List.isEmpty model.state) then
+                {dummyState | t = 1}
+            else
+                getState model.state "fadeIn"
+        color = bezierColor (rgb 138 182 165) backgroundColor state.t
+    in
+    if model.gameStatus==AnimationPrepare then color else backgroundColor
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -241,21 +254,21 @@ visualize model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "background-color" (colorToString backgroundColor)]
+        , style "background-color" (colorToString (backgroundColor_ model))]
         [ div
             [ style "width" (String.fromFloat model.canvas.w++"px")
             , style "height" (String.fromFloat model.canvas.h++"px")
             , style "position" "absolute"
             , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
             , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString backgroundColor)
+            , style "background-color" (colorToString (backgroundColor_ model))
             ]
             [ visualizeCanvasDone model alpha
             , visualizeEpitaph model
             , visualizeGame model alpha
             ]
         , div
-            [ style "background-color" (colorToString backgroundColor)
+            [ style "background-color" (colorToString (backgroundColor_ model))
             , style "background-position" "center"
             ]
             [ visualizePrepare model
@@ -299,7 +312,7 @@ visualizePrepare model =
                 _ -> 0
     in
     div
-        [ style "background" (colorToString backgroundColor)
+        [ style "background" (colorToString (backgroundColor_ model))
         , style "text-align" "center"
         , style "height" "100%"
         , style "width" "100%"
