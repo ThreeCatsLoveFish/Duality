@@ -70,8 +70,6 @@ visualizeBlock model =
 visualizeMenu : Model -> Html Msg
 visualizeMenu model =
     let
-        --back_color = rgb 0 0 0
-        button_color = rgb 213 210 23
         level =
             case model.gameLevel of
                 Start0 -> 0
@@ -108,11 +106,10 @@ visualizeMenu model =
         , style "display" "inline"
         ]
         [ div
-            [
-              style "text-align" "center"
+            [ style "text-align" "center"
             ]
             [ button
-                [ style "color" (colorToString button_color)
+                [ id "toStart0"
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Start0)
                 , style "opacity" (hiding (level < 0))
@@ -121,8 +118,8 @@ visualizeMenu model =
                 ]
                 [ text "Start" ]
             , button
-                [ style "font-size" "28px"
-                , style "color" (colorToString button_color)
+                [ id "toStranger1"
+                , style "font-size" "28px"
                 , onClick (ChooseLevel Strangers1)
                 , style "opacity" (hiding (level < 1))
                 , style "font-family" "High Tower Text, sans-serif"
@@ -130,7 +127,7 @@ visualizeMenu model =
                 ]
                 [ text "Strangers" ]
             , button
-                [ style "color" (colorToString button_color)
+                [ id "toFriends2"
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Friends2)
                 , style "opacity" (hiding (level < 2))
@@ -139,7 +136,7 @@ visualizeMenu model =
                 ]
                 [ text "Friends" ]
             , button
-                [ style "color" (colorToString button_color)
+                [ id "toLovers3"
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Lovers3)
                 , style "opacity" (hiding (level < 3))
@@ -148,7 +145,7 @@ visualizeMenu model =
                 ]
                 [ text "Lovers" ]
             , button
-                [ style "color" (colorToString button_color)
+                [ id "Strangers4"
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Strangers4)
                 , style "opacity" (hiding (level < 4))
@@ -157,7 +154,7 @@ visualizeMenu model =
                 ]
                 [ text "Strangers II" ]
             , button
-                [ style "color" (colorToString button_color)
+                [ id "toCompanions5"
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Companions5)
                 , style "opacity" (hiding (level < 5))
@@ -166,7 +163,7 @@ visualizeMenu model =
                 ]
                 [ text "Companions" ]
             , button
-                [ style "color" (colorToString button_color)
+                [ id "toDeath6"
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Death6)
                 , style "opacity" (hiding (level < 6))
@@ -184,8 +181,7 @@ visualizeMenu model =
             --    ]
             --    [ text "Ending" ]
             , button
-                [ style "color" (colorToString button_color)
-                , style "font-size" "28px"
+                [ style "font-size" "28px"
                 , onClick (ChooseLevel nextLevel)
                 , style "opacity" (hiding False)
                 , style "font-family" "High Tower Text, sans-serif"
