@@ -124,15 +124,10 @@ update msg model =
 move : Float -> Model -> Model
 move elapsed model =
     let
-        elapsed_ =
-            model.clock + elapsed
-        interval = 15
+        average =
+            model.clock * 0.6 + elapsed * 0.4
     in
-    if elapsed_ > interval then
-        { model | clock = elapsed_ - interval } |> exec elapsed
-
-    else
-        { model | clock = elapsed_ }
+    { model | clock = average} |> exec elapsed
 
 
 exec : Float -> Model -> Model
@@ -156,7 +151,7 @@ moveBall : Float -> Model -> Model -- Done
 moveBall flow model =
     let
         static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 2, color = rgb 255 200 200 }) model.ball
-        static_old = griddle flow (getBall model.ball 1) static_old_
+        static_old = griddle model.clock flow (getBall model.ball 1) static_old_
         --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
         done: Maybe Ball -> Ball
         done ball_maybe =
@@ -171,13 +166,13 @@ moveBall flow model =
     in
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
-griddle : Float -> Ball -> List Ball -> List Ball
-griddle flow cur ball =
+griddle : Float -> Float -> Ball -> List Ball -> List Ball
+griddle clock flow cur ball =
     let
         cutting = round (max (120 - flow) 60)
         grid = [ 3, 7, 8 ,10, 11 ]
         --top = round (max (250 - flow) 100)
-        top = 220
+        top = round ( max 100 (225 - 1.2 * 1.1 ^ ( 15 + clock ) ) )
 
         len = List.length ball
         ball_ =
