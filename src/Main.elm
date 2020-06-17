@@ -14,8 +14,6 @@ import Strangers4.Init
 import Companions5.Init
 import Death6.Init
 import End7.Init
-{--
---}
 
 import Start0.Update
 import Strangers1.Update
@@ -25,15 +23,10 @@ import Strangers4.Update
 import Companions5.Update
 import Death6.Update
 import End7.Update
-{--
---}
 
 import Subscriptions exposing (subscriptions)
 import Tools exposing (nextLevel)
 
-{--
-import Test
---}
 
 ---- PROGRAM ----
 
@@ -50,11 +43,11 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    --Start0.Init.init
+    Start0.Init.init
     --Strangers1.Init.init
     --Friends2.Init.init
     --Lovers3.Init.init
-    Strangers4.Init.init
+    --Strangers4.Init.init
     --Companions5.Init.init
     --Death6.Init.init
     --End7.Init.init
