@@ -3,7 +3,7 @@ module BasicView exposing (..)
 import Html.Events exposing (onClick)
 import Model exposing (..)
 
-import Html exposing (Attribute, Html, button, div, h1, input, p, text)
+import Html exposing (Attribute, Html, button, div, p, text)
 import Html.Attributes exposing (..)
 import Messages exposing (..)
 
@@ -102,7 +102,6 @@ visualizeMenu model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
         , style "opacity" "1"
@@ -117,6 +116,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Start0)
                 , style "opacity" (hiding (level < 0))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 0)
                 ]
                 [ text "Start" ]
@@ -125,6 +125,7 @@ visualizeMenu model =
                 , style "color" (colorToString button_color)
                 , onClick (ChooseLevel Strangers1)
                 , style "opacity" (hiding (level < 1))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 1)
                 ]
                 [ text "Strangers" ]
@@ -133,6 +134,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Friends2)
                 , style "opacity" (hiding (level < 2))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 2)
                 ]
                 [ text "Friends" ]
@@ -141,6 +143,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Lovers3)
                 , style "opacity" (hiding (level < 3))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 3)
                 ]
                 [ text "Lovers" ]
@@ -149,6 +152,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Strangers4)
                 , style "opacity" (hiding (level < 4))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 4)
                 ]
                 [ text "Strangers II" ]
@@ -157,6 +161,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Companions5)
                 , style "opacity" (hiding (level < 5))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 5)
                 ]
                 [ text "Companions" ]
@@ -165,6 +170,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Death6)
                 , style "opacity" (hiding (level < 6))
+                , style "font-family" "High Tower Text, sans-serif"
                 --, disabled (level < 6)
                 ]
                 [ text "Death" ]
@@ -182,6 +188,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel nextLevel)
                 , style "opacity" (hiding False)
+                , style "font-family" "High Tower Text, sans-serif"
                 , disabled False
                 ]
                 [ text "Skip" ]

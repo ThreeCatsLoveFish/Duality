@@ -27,6 +27,17 @@ update msg model =
                         _ -> model
                 Prepare ->
                     case msg of
+                        ShowStatus Paused ->
+                            { model
+                            | gameStatus = Paused
+                            }
+                        KeyDown Space ->
+                            { model
+                            | gameStatus = Paused
+                            }
+                        _ -> model
+                Paused ->
+                    case msg of
                         KeyDown Space ->
                             { model
                             | gameStatus = ChangeLevel
