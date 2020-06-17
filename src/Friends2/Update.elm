@@ -63,7 +63,7 @@ update msg model =
                     let
                         model1 = model |> getEndState
                     in
-                    { model1 | gameStatus = AnimationPass }
+                    { model1 | gameStatus = AnimationPass, finished = model.finished + 1 }
                 AnimationPass ->
                     case msg of
                         Tick _ ->

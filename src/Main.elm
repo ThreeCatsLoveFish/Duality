@@ -50,38 +50,40 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    --Start0.Init.init
+    Start0.Init.init
     --Strangers1.Init.init
     --Friends2.Init.init
     --Lovers3.Init.init
-    Strangers4.Init.init
+    --Strangers4.Init.init
     --Companions5.Init.init
     --Death6.Init.init
     --End7.Init.init
 
-{--
-reinit : Model -> ( Model, Cmd Msg )
-reinit model =
-    case model.gameLevel of
-        Start0 ->
-            Start0.Init.init
-        Strangers1 ->
-            Strangers1.Init.init
-        Friends2 ->
-            Friends2.Init.init
-        Lovers3 ->
-            Lovers3.Init.init
-        Strangers4 ->
-            Strangers4.Init.init
-        Companions5 ->
-            Companions5.Init.init
-        Death6 ->
-            Death6.Init.init
-        End7 ->
-            End7.Init.init
-        _ ->
-            Start0.Init.init
---}
+reInit : Model -> ( Model, Cmd Msg )
+reInit model =
+    let
+        ( model_, task ) =
+            case model.gameLevel of
+                Strangers1 ->
+                    Strangers1.Init.init
+                Friends2 ->
+                    Friends2.Init.init
+                Lovers3 ->
+                    Lovers3.Init.init
+                Strangers4 ->
+                    Strangers4.Init.init
+                Companions5 ->
+                    Companions5.Init.init
+                Death6 ->
+                    Death6.Init.init
+                End7 ->
+                    End7.Init.init
+                _ ->
+                    Start0.Init.init
+    in
+    ( { model_ | finished = model.finished, god = model.god }
+    , task
+    )
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -89,21 +91,21 @@ update msg model =
         ChooseLevel level ->
             case level of
                  Strangers1 ->
-                     Strangers1.Init.init
+                     reInit { model | gameLevel = Strangers1 }
                  Friends2 ->
-                     Friends2.Init.init
+                     reInit { model | gameLevel = Friends2 }
                  Lovers3 ->
-                     Lovers3.Init.init
+                     reInit { model | gameLevel = Lovers3 }
                  Strangers4 ->
-                     Strangers4.Init.init
+                     reInit { model | gameLevel = Strangers4 }
                  Companions5 ->
-                     Companions5.Init.init
+                     reInit { model | gameLevel = Companions5 }
                  Death6 ->
-                     Death6.Init.init
+                     reInit { model | gameLevel = Death6 }
                  End7 ->
-                     End7.Init.init
+                     reInit { model | gameLevel = End7 }
                  _ ->
-                     Start0.Init.init
+                     reInit { model | gameLevel = Start0 }
         KeyDown Key_G ->
             ( { model | god = not model.god }
             , Cmd.none
@@ -116,32 +118,24 @@ update msg model =
             case model.gameStatus of
                 ChangeLevel ->
                     case model.gameLevel of
-                         {--
-                         Start0 ->
-                             Start0.Init.init
-                         --}
-                         Strangers1 ->
-                             Strangers1.Init.init
-                         Friends2 ->
-                             Friends2.Init.init
-                         Lovers3 ->
-                             Lovers3.Init.init
-                         Strangers4 ->
-                             Strangers4.Init.init
-                         Companions5 ->
-                             Companions5.Init.init
-                         Death6 ->
-                             Death6.Init.init
-                         End7 ->
-                             End7.Init.init
-                         _ ->
-                             Start0.Init.init
+                        Strangers1 ->
+                            reInit { model | gameLevel = Strangers1 }
+                        Friends2 ->
+                            reInit { model | gameLevel = Friends2 }
+                        Lovers3 ->
+                            reInit { model | gameLevel = Lovers3 }
+                        Strangers4 ->
+                            reInit { model | gameLevel = Strangers4 }
+                        Companions5 ->
+                            reInit { model | gameLevel = Companions5 }
+                        Death6 ->
+                            reInit { model | gameLevel = Death6 }
+                        End7 ->
+                            reInit { model | gameLevel = End7 }
+                        _ ->
+                            reInit { model | gameLevel = Start0 }
                 _ ->
                      case model.gameLevel of
-                         {--
-                         Start0 ->
-                             Start0.Update.update msg model
-                         --}
                          Strangers1 ->
                              Strangers1.Update.update msg model
                          Friends2 ->
