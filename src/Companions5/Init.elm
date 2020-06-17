@@ -28,7 +28,7 @@ init =
             , v = v
             , r = r
             , collision = getBallColl (pos, r, 32)
-            , color = rgb 244 244 244
+            , color = rgb 244 241 187
             }
 
         state : List State
@@ -104,7 +104,6 @@ init =
                     , brick = bricksize
                     , breath = 10
                     , offset = Point 0 0
-                    --, color = rgb 20 70 20
                     , color = rgb 255 255 255
                     }
                 valid a = (abs a) > 2

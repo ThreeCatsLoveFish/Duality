@@ -88,8 +88,8 @@ init =
                     , brick = bricksize
                     , breath = 10
                     , offset = Point 0 -120
-                    --, color = rgb 20 70 20
-                    , color = rgb 138 182 165
+                    , color = rgb 109 181 161
+                    --, color = rgb 138 182 165
                     }
             in
             newBricks brickInfo

@@ -13,7 +13,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 226 174 227
+backgroundColor = rgb 242 176 173
 
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
