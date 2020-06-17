@@ -51,7 +51,7 @@ visualize model =
                 , height len
                 , style "position" "fixed"
                 , style "left" (String.fromFloat ((w - len * r) / 2) ++ "px")
-                , style "top" (String.fromFloat (tMapTop t 50)  ++ "%")
+                , style "top" (String.fromFloat (tMapTop t 51)  ++ "%")
                 --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , alt "Network Failure"
                 ]
@@ -123,13 +123,13 @@ subtitle model =
         , style "font-family" "High Tower Text, sans-serif" -- todo: Change font
         , style "color" "#FFFFFF"
         ]
-        [ text "Staff" ]
+        [ text "Staff - Alphabetically" ]
     , div
         [ style "width" "100%"
         , style "Height" "40%"
         , style "position" "fixed"
         , style "left" "0"
-        , style "top" (String.fromFloat (tMapTop t 30)  ++ "%")
+        , style "top" (String.fromFloat (tMapTop t 32)  ++ "%")
         --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "line-height" "6px" -- todo: change
@@ -137,9 +137,9 @@ subtitle model =
         , style "font-family" "High Tower Text, sans-serif" -- todo: Change font
         , style "color" "#FFFFFF"
         ]
-        [ p [] [text "Rundong Tang"]
-        , p [] [text "Yuchen Jiang"]
-        , p [] [text "Yuchen Zhou"]
-        , p [] [text "Zhimin Sun"]
+        [ p [] [text "Jiang Yuchen"]
+        , p [] [text "Tang Rundong"]
+        , p [] [text "Sun Zhimin"]
+        , p [] [text "Zhou Yuchen"]
         ]
     ]

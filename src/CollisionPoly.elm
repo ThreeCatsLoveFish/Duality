@@ -218,12 +218,12 @@ paddleCheck model =
 ballCheck : Paddle -> Ball -> Ball
 ballCheck paddle ball =
     let
-        blood = 4
+        blood = -projection -- used in printing industry, same as margin
         tar = vector paddle.pos ball.pos
         dir = ball.v
         projection = (dot dir tar) / (norm tar)
         dir_ =
-            if projection >= 0 || norm tar > ( paddle.r + paddle.h + ball.r +blood ) then dir
+            if projection >= 0 || norm tar > ( paddle.r + paddle.h + ball.r + blood ) then dir
             else
                 let
                     t = -2 * projection
