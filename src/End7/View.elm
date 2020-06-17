@@ -41,7 +41,7 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString backgroundColor)
-        , style "font-family" "Helvetica, Arial, sans-serif" -- todo: Change font
+        , style "font-family" "High Tower Text, sans-serif"
         ]
         (
             (subtitle model) ++
@@ -65,7 +65,7 @@ visualize model =
                 --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , style "text-align" "center"
                 , style "font-size" "36px"
-                , style "font-family" "High Tower Text, sans-serif" -- todo: Change font
+                , style "font-family" "High Tower Text, sans-serif"
                 , style "color" "#FFFFFF"
                 , style "opacity" (String.fromFloat (tMapFade t_) )
                 ]
@@ -107,7 +107,7 @@ subtitle model =
         --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "64px"
-        , style "font-family" "High Tower Text, sans-serif" -- todo: Change font
+        , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
         ]
         [ text "Duality" ]
@@ -120,7 +120,7 @@ subtitle model =
         --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "36px"
-        , style "font-family" "High Tower Text, sans-serif" -- todo: Change font
+        , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
         ]
         [ text "Staff - Alphabetically" ]
@@ -134,7 +134,7 @@ subtitle model =
         , style "text-align" "center"
         , style "line-height" "6px" -- todo: change
         , style "font-size" "28px"
-        , style "font-family" "High Tower Text, sans-serif" -- todo: Change font
+        , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
         ]
         [ p [] [text "Jiang Yuchen"]

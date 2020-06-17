@@ -35,7 +35,7 @@ visualizeBlock model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-family" "High Tower Text, sans-serif"
         --, style "line-height" "500px"
         , style "opacity" alpha
         , style "display"

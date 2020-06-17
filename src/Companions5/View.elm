@@ -23,7 +23,7 @@ backgroundColor_ model=
                 {dummyState | t = 1}
             else
                 getState model.state "fadeIn"
-        color = bezierColor (rgb 0 0 0) backgroundColor state.t
+        color = bezierColor (rgb 177 177 177) backgroundColor state.t
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
 
@@ -286,7 +286,7 @@ visualizePrepare model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-family" "High Tower Text, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)

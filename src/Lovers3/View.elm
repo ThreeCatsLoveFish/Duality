@@ -23,7 +23,7 @@ backgroundColor_ model=
                 {dummyState | t = 1}
             else
                 getState model.state "fadeIn"
-        color = bezierColor (rgb 0 0 0) backgroundColor state.t
+        color = bezierColor (rgb 242 176 173) backgroundColor state.t
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
 
