@@ -107,6 +107,43 @@ hitCheck ball brick =
         True -> Safe
         False -> Danger final
 
+
+-- Check if is hit
+ballCheck : Paddle -> Ball -> Ball
+ballCheck paddle ball =
+    let
+        vector : Point -> Point -> Point
+        vector a b =
+            { x = b.x - a.x, y = b.y - a.y }
+
+        distance : Float
+        distance =
+            sqrt( (ball.pos.x - paddle.pos.x)^2 + (ball.pos.y - paddle.pos.y)^2 )
+
+        axis : Point
+        axis =
+            vector ball.pos paddle.pos
+
+        symmetric : Point -> Point -> Point
+        symmetric xy mn =
+            let
+                lineH = 2
+            in
+            if xy.y < -lineH then xy
+            else
+            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
+            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
+            }
+
+        new_dir = symmetric ball.v axis
+    in
+    case distance < ball.r + paddle.r of
+        True ->
+            { ball | v = new_dir }
+        False ->
+            ball
+
+
 {--
 collisionCheck : Model -> Model
 collisionCheck model =
@@ -170,6 +207,7 @@ collisionCheck model =
             }
 --}
 
+
 paddleCheck : Model -> Model
 paddleCheck model =
     let
@@ -210,6 +248,16 @@ paddleCheck model =
             True -> model
             False ->
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
+
+
+paddleball : Model -> Model
+paddleball model =
+    let
+        ball = getBall model.ball 1
+        new_ball = List.foldl ballCheck ball model.paddle
+    in
+    { model | ball = [ new_ball ] ++ List.drop 1 model.ball }
+
 
 wallCheck : Model -> Model
 wallCheck model =
