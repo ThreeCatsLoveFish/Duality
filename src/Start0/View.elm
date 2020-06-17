@@ -43,7 +43,7 @@ visualize model =
               , alt "Network Failure"
               ]
               []
-        , if model.gameStatus == Paused || model.gameStatus == AnimationPreparePost
+        , if List.member model.gameStatus [ Paused, AnimationPreparePost ]
             then visualizeHelp model
             else visualizeMenu model
         ]
@@ -86,7 +86,7 @@ visualizeMenu model =
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
+            (if List.member model.gameStatus [ AnimationPrepare, Prepare, AnimationPreparePost ] then
                 "block"
              else
                 "none"

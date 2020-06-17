@@ -17,7 +17,7 @@ visualizeBlock model =
                 Paused ->
                     ( "Paused", "Press Space to continue" )
                 Lose ->
-                    ( "...The orb of life was smashed...", "Press R to revisit" )
+                    ( "... The orb of life was smashed ...", "Press R to revisit" )
                 _ -> ("","")
         alpha =
             case model.gameStatus of
@@ -39,7 +39,7 @@ visualizeBlock model =
         --, style "line-height" "500px"
         , style "opacity" alpha
         , style "display"
-            (   if model.gameStatus == Paused || model.gameStatus == Lose then
+            (   if List.member model.gameStatus [ Paused, Lose ] then
                     "inline"
                 else
                     "none"

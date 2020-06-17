@@ -278,7 +278,7 @@ visualizePrepare model =
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
+            (if List.member model.gameStatus [ AnimationPrepare, Prepare, AnimationPreparePost ] then
                 "block"
              else
                 "none"

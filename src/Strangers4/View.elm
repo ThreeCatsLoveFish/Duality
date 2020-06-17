@@ -252,11 +252,12 @@ visualize model =
                 , BasicView.visualizeBlock model
                 ]
             ] ++
-            if model.gameStatus /= Lose then
+            if not (List.member model.gameStatus [ Lose, AnimationPrepare, Prepare ]) then
             [ audio
                 [ src "Damien Rice - The Blower's Daughter.mp3"
                 , autoplay True
-                , loop False
+                , loop True
+                --, loop False
                 ]
                 []
             ]
@@ -304,7 +305,7 @@ visualizePrepare model =
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
+            (if List.member model.gameStatus [ AnimationPrepare, Prepare, AnimationPreparePost ] then
                 "block"
              else
                 "none"

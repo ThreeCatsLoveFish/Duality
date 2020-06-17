@@ -127,8 +127,8 @@ getGameState model =
             , function = Func
                 ( genBezierBall2
                   (Point ((getBall model.ball 2).pos.x) ((getBall model.ball 2).pos.y))
-                  (Point ((getBall model.ball 2).pos.x - 40) ((getBall model.ball 2).pos.y + 40))
-                  (Point ((getBall model.ball 2).pos.x + 40) ((getBall model.ball 2).pos.y + 40))
+                  (Point ((getBall model.ball 2).pos.x - 20) ((getBall model.ball 2).pos.y - 5))
+                  (Point ((getBall model.ball 2).pos.x + 20) ((getBall model.ball 2).pos.y + 10))
                   (Point ((getBall model.ball 2).pos.x) ((getBall model.ball 2).pos.y))
                 )
             , loop = True

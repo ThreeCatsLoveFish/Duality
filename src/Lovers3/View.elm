@@ -1,7 +1,7 @@
 module Lovers3.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, div, p, text)
+import Html exposing (Attribute, Html, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -286,10 +286,10 @@ visualizePrepare model =
         , style "top" "0"
         , style "font-family" "High Tower Text, sans-serif"
         , style "font-size" "48px"
-        , style "color" "#FFFFFF"
+        , style "color" "#791A1A"
         , style "opacity" (String.fromFloat alpha)
         , style "display"
-            (if model.gameStatus == AnimationPrepare || model.gameStatus == Prepare || model.gameStatus == AnimationPreparePost then
+            (if List.member model.gameStatus [ AnimationPrepare, Prepare, AnimationPreparePost ] then
                 "block"
              else
                 "none"
@@ -303,7 +303,7 @@ visualizePrepare model =
             , style "font-size" "24px"
             , style "opacity" (String.fromFloat alphaSub)
             ]
-            [ text "Press space to start" ]
+            [ text "Deeply united, they got closer. The boundary became vague.", br [] [] , text "They were tangled.  " ]
         , p
             [ style "position" "absolute"
             , style "top" "30%"
