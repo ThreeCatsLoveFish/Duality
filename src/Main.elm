@@ -14,8 +14,6 @@ import Strangers4.Init
 import Companions5.Init
 import Death6.Init
 import End7.Init
-{--
---}
 
 import Start0.Update
 import Strangers1.Update
@@ -25,15 +23,10 @@ import Strangers4.Update
 import Companions5.Update
 import Death6.Update
 import End7.Update
-{--
---}
 
 import Subscriptions exposing (subscriptions)
 import Tools exposing (nextLevel)
 
-{--
-import Test
---}
 
 ---- PROGRAM ----
 
