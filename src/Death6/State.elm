@@ -19,6 +19,11 @@ stateIterate model =
                     } |> getGameState
                 AnimationPass ->
                     { model
+                    | gameStatus = End
+                    --, gameLevel = End7
+                    }
+                AnimationEnd ->
+                    { model
                     | gameStatus = ChangeLevel
                     , gameLevel = End7
                     }
@@ -45,6 +50,10 @@ getPrepareState model =
 getGameState : Model -> Model
 getGameState model =
     { model | state = [] }
+
+getPassState : Model -> Model
+getPassState model =
+    getEndState model
 
 getEndState : Model -> Model
 getEndState model =

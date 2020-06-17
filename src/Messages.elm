@@ -19,9 +19,10 @@ type GameStatus
     | ChangeLevel
     | Prepare
     | Paused  -- stop updating game model, still updating the menu, show Paused
+    | Lose -- stop game model and frame, still menu, show Lose
     | Pass -- stop game model and frame, still menu, show Win
     | End -- after animationPass
-    | Lose -- stop game model and frame, still menu, show Win
+    | AnimationEnd
     | Running Op -- the game is on
     | NoMenu -- just in case...
 
