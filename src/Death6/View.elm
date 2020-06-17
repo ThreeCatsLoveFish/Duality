@@ -13,7 +13,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 72 72 72
+backgroundColor = rgb 72 65 60
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -121,7 +121,7 @@ changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
             --rgb 150 0 13
-            rgb 150 150 150
+            rgb 110 106 100
         _ ->
             rgb 150 150 150
 
