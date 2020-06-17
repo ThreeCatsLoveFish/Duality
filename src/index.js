@@ -1,4 +1,4 @@
-import './main.css';
+import '../public/main.css';
 import { Elm } from './Main.elm';
 import * as serviceWorker from './serviceWorker';
 
