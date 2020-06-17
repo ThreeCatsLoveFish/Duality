@@ -1,8 +1,9 @@
 module Start0.View exposing (..)
 
-import Html exposing (Attribute, Html, div, img, p, text)
+import Html exposing (Attribute, Html, button, div, img, p, text)
 import Html.Attributes exposing (..)
 
+import Html.Events exposing (onClick)
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
@@ -42,8 +43,11 @@ visualize model =
               , alt "Network Failure"
               ]
               []
-        , visualizeMenu model
+        , if model.gameStatus == Paused || model.gameStatus == AnimationPreparePost
+            then visualizeHelp model
+            else visualizeMenu model
         ]
+
 
 genFadeInAndOut : Float -> Float
 genFadeInAndOut t =
@@ -53,6 +57,7 @@ genFadeInAndOut t =
             1
         else
             ( 1.0 - t ) / 0.3
+
 
 visualizeMenu : Model -> Html Msg
 visualizeMenu model =
@@ -66,8 +71,6 @@ visualizeMenu model =
                         (getState model.state "fadeIn").t
                 Prepare ->
                     1
-                AnimationPreparePost ->
-                    (1 - (getState model.state "fadeOut").t)
                 _ -> 0
     in
     div
@@ -95,14 +98,21 @@ visualizeMenu model =
             , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "24px"
+            , style "color" "#FFFFFF"
+            , align "center"
             ]
             [ text "Menu" ]
-        , p
+        , button
             [ style "position" "absolute"
+            , style "outline" "none"
+            , style "left" "48.2%"
             , style "top" "75%"
-            , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "24px"
+            , style "border" "1px solid #000000"
+            , style "color" "#b7e5d9"
+            , style "background" (colorToString backgroundColor)
+            , onClick (ShowStatus Paused)
             ]
             [ text "Help" ]
         , p
@@ -112,14 +122,85 @@ visualizeMenu model =
             , style "text-align" "center"
             , style "font-size" "18px"
             , style "color" "#b7e5d9"
+            , align "center"
             ]
             [ text "Cattubene" ]
-        , p
+        , button
             [ style "position" "absolute"
+            , style "left" "45.6%"
+            , style "outline" "none"
             , style "top" "30%"
-            , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "48px"
+            , style "background" (colorToString backgroundColor)
+            , style "border" "1px solid #000000"
+            , style "color" "#b7e5d9"
+            , onClick (ChooseLevel Strangers1)
+            ]
+            [ text "Duality" ]
+        ]
+
+
+visualizeHelp : Model -> Html Msg
+visualizeHelp model =
+    let
+        alpha =
+            case model.gameStatus of
+                Paused ->
+                    1
+                AnimationPreparePost ->
+                    (1 - (getState model.state "fadeOut").t)
+                _ -> 0
+    in
+    div
+        [ style "background" (colorToString backgroundColor)
+        , style "text-align" "center"
+        , style "height" "100%"
+        , style "width" "100%"
+        , style "position" "absolute"
+        , style "left" "0"
+        , style "top" "0"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "font-size" "48px"
+        , style "color" "#FFFFFF"
+        , style "opacity" (String.fromFloat alpha)
+        , style "display"
+            (if model.gameStatus == Paused then
+                "block"
+             else
+                "none"
+            )
+        ]
+        [ p
+            [ style "position" "absolute"
+            , style "top" "55%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "24px"
+            , style "color" "#FFFFFF"
+            , align "center"
+            ] -- TODO: Text of document
+            [ text "Menu" ]
+        , p
+            [ style "position" "absolute"
+            , style "top" "90%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "18px"
+            , style "color" "#b7e5d9"
+            , align "center"
+            ]
+            [ text "Cattubene" ]
+        , button
+            [ style "position" "absolute"
+            , style "left" "45.6%"
+            , style "outline" "none"
+            , style "top" "30%"
+            , style "text-align" "center"
+            , style "font-size" "48px"
+            , style "background" (colorToString backgroundColor)
+            , style "border" "1px solid #000000"
+            , style "color" "#b7e5d9"
             ]
             [ text "Duality" ]
         ]

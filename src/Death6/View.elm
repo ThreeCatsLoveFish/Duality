@@ -13,7 +13,7 @@ import BasicView as ViewTest
 
 
 backgroundColor : Color
-backgroundColor = rgb 72 65 60
+backgroundColor = rgb 72 72 72
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -121,7 +121,7 @@ changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
             --rgb 150 0 13
-            rgb 110 106 100
+            rgb 150 150 150
         _ ->
             rgb 150 150 150
 
@@ -381,89 +381,64 @@ visualizeEpitaph model =
                     "1"
     in
     div
-        [ style "text-align" "left"
+        [ style "text-align" "center"
         , style "position" "absolute"
         , style "top" "0"
         , style "left" "0"
         , style "width" "100%"
         , style "height" "100%"
-        , style "font-family" "High Tower Text, sans-serif"
-        , style "font-size" "20px"
+        , style "font-family" "Helvetica, Arial, sans-serif"
+        , style "font-size" "48px"
         , style "background-color" "transparent"
+        --, style "line-height" "500px"
         , style "opacity" alpha
         , style "display"
             displaying
-        , style "color" "#FFFFFF"
-        , style "letter-spacing" "9px"
-        --, style "line-height" "1.5px"
         ]
-        [ p
-            [ style "position" "absolute"
-            , style "top" "10%"
-            , style "left" "10%"
-            , style "width" "80%"
-            , style "height" "20%"
-            , style "background-color" "transparent"
+        [ div
+            [ style "color" "#FFFFFF"
+            , style "font-size" "22px"
+            , style "text-align" "left"
+            , style "left" "62px"
+            , style "top" "50px"
+            , style "position" "absolute"
+            , style "letter-spacing" "7px"
+            , style "line-height" "1.5"
+            , style "font-family" "High Tower Text, sans-serif"
             ]
-            [ text "Nay, " ]
-        , p
-            [ style "position" "absolute"
-            , style "top" "19%"
-            , style "left" "10%"
-            , style "width" "80%"
-            , style "height" "20%"
-            , style "background-color" "transparent"
+            --[ p
+            --    [ style "position" "absolute"
+            --    , style "top" "37%"
+            --    , style "left" "10%"
+            --    , style "width" "80%"
+            --    , style "text-align" "center"
+            --    , style "font-size" "22px"
+            --    , style "background-color" "transparent"
+            --    ]
+            --    [ text "Nay, if you read this line, remember not" ]
+            --, p
+            --    [ style "position" "absolute"
+            --    , style "top" "42%"
+            --    , style "left" "10%"
+            --    , style "width" "80%"
+            --    , style "text-align" "center"
+            --    , style "font-size" "22px"
+            --    , style "background-color" "transparent"
+            --    ]
+            --    [ text "The hand that writ; for I love you so" ]
+            [ Markdown.toHtml [] """
+Nay,
+
+if you read this line,
+
+remember not
+
+The hand that writ;
+
+for I
+
+
+               love you so.
+"""
             ]
-            [ text "if you read this line, " ]
-        , p
-            [ style "position" "absolute"
-            , style "top" "28%"
-            , style "left" "10%"
-            , style "width" "80%"
-            , style "height" "20%"
-            , style "background-color" "transparent"
-            ]
-            [ text " remember not" ]
-        , p
-            [ style "position" "absolute"
-            , style "top" "37%"
-            , style "left" "10%"
-            , style "width" "80%"
-            , style "height" "20%"
-            , style "background-color" "transparent"
-            ]
-            [ text "The hand that writ;" ]
-        , p
-            [ style "position" "absolute"
-            , style "top" "46%"
-            , style "left" "10%"
-            , style "width" "80%"
-            , style "height" "20%"
-            , style "background-color" "transparent"
-            ]
-            [ text "for I " ]
-        , p
-            [ style "position" "absolute"
-            , style "top" "55%"
-            , style "left" "56.5%"
-            , style "width" "80%"
-            , style "height" "20%"
-            , style "background-color" "transparent"
-            ]
-            [ text "love you so" ]
         ]
-        --[ Markdown.toHtml [] """
---Nay,
---
---if you read this line,
---
---remember not
---
---The hand that writ;
---
---for I
---
---
---               love you so.
---"""
---        ]
