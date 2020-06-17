@@ -1,5 +1,9 @@
 # ChangeLog
 
+### Version 0.3.0
+All special functions completed!
+Detail changes can be found on [Github](https://github.com/ThreeCatsLoveFish/Duality).
+
 ### Version 0.2.1
 ##### 2020.6.6 VG-100 Group-18
 #### Milestone 2
