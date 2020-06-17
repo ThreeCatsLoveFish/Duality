@@ -145,7 +145,8 @@ exec model =
         |> movePaddle dir
         |> moveBall
         |> basic_hit
-        |> paddleCheck
+        --|> paddleCheck
+        |> paddleBall
         |> wallCheck
         |> winJudge
 

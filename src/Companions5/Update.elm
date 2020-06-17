@@ -1,4 +1,5 @@
 module Companions5.Update exposing (..)
+import CollisionPoly exposing (paddleBall)
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
@@ -146,8 +147,9 @@ exec model =
         |> basic_hit
         |> movePaddle dir
         --|> paddleOutwardFix -- Badass
-        |> paddleCheckIndex 1
-        |> paddleCheckIndex 2
+        --|> paddleCheckIndex 1
+        --|> paddleCheckIndex 2
+        |> paddleBall
         |> wallCheck
         |> winJudge
 
