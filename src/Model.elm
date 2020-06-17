@@ -115,9 +115,10 @@ type alias Model =
     , canvas : {w:Float,h:Float}
     , size : (Float,Float)
     , clock : Float
-    , activeInput : Bool
-    , animateState : AniState
+    , activeInput : Bool -- deprecated
+    , animateState : AniState -- deprecated
     , god : Bool
+    , finished : Int -- Test if finished >= 6 for second loop
 
     , visualization : Html Msg
     }

@@ -237,7 +237,8 @@ dummyModel =
     Model Start0 AnimationPass
         [] [] []
         []
-        {w=0,h=0} (0, 0) 0 True AniStop False
+        {w=0,h=0} (0, 0) 0 True AniStop
+        False 0
         (div [] [])
 
 nextLevel model =
