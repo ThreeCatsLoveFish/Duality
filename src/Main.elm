@@ -47,9 +47,9 @@ init =
     --Strangers1.Init.init
     --Friends2.Init.init
     --Lovers3.Init.init
-    Strangers4.Init.init
+    --Strangers4.Init.init
     --Companions5.Init.init
-    --Death6.Init.init
+    Death6.Init.init
     --End7.Init.init
 
 reInit : Model -> ( Model, Cmd Msg )

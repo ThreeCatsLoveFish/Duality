@@ -63,7 +63,7 @@ update msg model =
                         _ -> model
                 Pass ->
                     let
-                        model1 = model |> getEndState
+                        model1 = model |> getPassState
                     in
                     { model1 | gameStatus = AnimationPass, finished = model.finished + 1 }
                 AnimationPass ->
@@ -77,9 +77,15 @@ update msg model =
                 End ->
                     case msg of
                         KeyDown _ ->
-                            {model | gameStatus = AnimationPrepare
-                                   , gameLevel = Strangers4
-                            }
+                            { model | gameStatus = AnimationEnd } |> getEndState
+                        Resize w h ->
+                            { model | size = (toFloat w,toFloat h)}
+                        _ ->
+                            model
+                AnimationEnd ->
+                    case msg of
+                        Tick _ ->
+                            model |> stateIterate
                         Resize w h ->
                             { model | size = (toFloat w,toFloat h)}
                         _ ->

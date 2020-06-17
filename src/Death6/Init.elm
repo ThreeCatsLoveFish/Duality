@@ -20,7 +20,7 @@ init =
                     Point
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
-                v = Point 3.0 -3.0
+                v = Point -3.0 -3.0
                 r = 10
             in
             { active = True
@@ -73,7 +73,7 @@ init =
                     , ( Point 70 145 , { w = 44, h = 25 } )
                     , ( Point 125 145 , { w = 55, h = 25 } )
                     , ( Point 201 145 , { w = 77, h = 25 } )
-                    , ( Point 282 145 , { w = 61, h = 25 } )
+                    , ( Point 281 145 , { w = 61, h = 25 } )
                     , ( Point 366 145 , { w = 80, h = 25 } )
                     , ( Point 138 198 , { w = 155, h = 25 } )
                     , ( Point 256 198 , { w = 66, h = 25 } )
@@ -101,6 +101,7 @@ init =
             { dummyModel
             | gameLevel = Death6
             , gameStatus = AnimationPrepare
+            --, gameStatus = Pass -- for AnimationEnd test
             --, gameStatus = Running Stay -- for brick test
             , ball = [ball]
             , paddle = [paddle]

@@ -277,7 +277,10 @@ visualizePrepare model =
                 Prepare ->
                     1
                 AnimationPreparePost ->
-                    (getState model.state "fadeOut").value
+                    if (getState model.state "fadeOut").t == 0 && not (List.isEmpty model.state) then
+                        1
+                    else
+                        (getState model.state "fadeOut").value
                 _ -> 0
         alphaSub =
             case model.gameStatus of
@@ -289,7 +292,10 @@ visualizePrepare model =
                 Prepare ->
                     1
                 AnimationPreparePost ->
-                    (getState model.state "fadeOut").value
+                    if (getState model.state "fadeOut").t == 0 then
+                        1
+                    else
+                        (getState model.state "fadeOut").value
                 _ -> 0
     in
     div
@@ -351,8 +357,28 @@ visualizeEpitaph model =
                    "inline"
                 Paused ->
                    "inline"
+                Pass ->
+                    "block"
+                AnimationPass ->
+                    "block"
+                End ->
+                    "block"
+                AnimationEnd ->
+                    "block"
                 _ ->
                    "none"
+        alpha =
+            case model.gameStatus of
+                AnimationEnd ->
+                    if (List.isEmpty model.state) then "0"
+                    else if (getState model.state "fadeOut").t == 0 then
+                        "1"
+                    else
+                        (String.fromFloat (getState model.state "fadeOut").value)
+                AnimationPrepare ->
+                    "0" -- for next level
+                _ ->
+                    "1"
     in
     div
         [ style "text-align" "center"
@@ -365,7 +391,7 @@ visualizeEpitaph model =
         , style "font-size" "48px"
         , style "background-color" "transparent"
         --, style "line-height" "500px"
-        , style "opacity" "1"
+        , style "opacity" alpha
         , style "display"
             displaying
         ]

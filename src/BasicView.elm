@@ -117,7 +117,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Start0)
                 , style "opacity" (hiding (level < 0))
-                , disabled (level < 0)
+                --, disabled (level < 0)
                 ]
                 [ text "Start" ]
             , button
@@ -125,7 +125,7 @@ visualizeMenu model =
                 , style "color" (colorToString button_color)
                 , onClick (ChooseLevel Strangers1)
                 , style "opacity" (hiding (level < 1))
-                , disabled (level < 1)
+                --, disabled (level < 1)
                 ]
                 [ text "Strangers" ]
             , button
@@ -133,7 +133,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Friends2)
                 , style "opacity" (hiding (level < 2))
-                , disabled (level < 2)
+                --, disabled (level < 2)
                 ]
                 [ text "Friends" ]
             , button
@@ -141,7 +141,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Lovers3)
                 , style "opacity" (hiding (level < 3))
-                , disabled (level < 3)
+                --, disabled (level < 3)
                 ]
                 [ text "Lovers" ]
             , button
@@ -149,7 +149,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Strangers4)
                 , style "opacity" (hiding (level < 4))
-                , disabled (level < 4)
+                --, disabled (level < 4)
                 ]
                 [ text "Strangers II" ]
             , button
@@ -157,7 +157,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Companions5)
                 , style "opacity" (hiding (level < 5))
-                , disabled (level < 5)
+                --, disabled (level < 5)
                 ]
                 [ text "Companions" ]
             , button
@@ -165,7 +165,7 @@ visualizeMenu model =
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Death6)
                 , style "opacity" (hiding (level < 6))
-                , disabled (level < 6)
+                --, disabled (level < 6)
                 ]
                 [ text "Death" ]
             --, button

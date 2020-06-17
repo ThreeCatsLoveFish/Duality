@@ -24,6 +24,8 @@ subscriptions model =
                 onAnimationFrameDelta Tick
             Pass ->
                 onAnimationFrameDelta Tick
+            AnimationEnd ->
+                onAnimationFrameDelta Tick
             _ ->
                 Sub.none
         , onKeyUp (Decode.map keyUp keyCode)
