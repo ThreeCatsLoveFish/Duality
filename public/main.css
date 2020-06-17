@@ -1,20 +1,13 @@
-#toStart0 { background-color: #392679; }
-#toStart0:hover { background-color: #000000; }
+#toStart0:hover { background-color: #000000; color: antiquewhite }
 
-#toStranger1 { background-color: #392679; }
-#toStranger1:hover { background-color: #000000; }
+#toStranger1:hover { background-color: #000000; color: antiquewhite }
 
-#toFriends2 { background-color: #392679; }
 #toFriends2:hover { background-color: #f2b0ad; }
 
-#toLovers3 { background-color: #392679; }
 #toLovers3:hover { background-color: #c6b9a9 }
 
-#Strangers4 { background-color: #392679; }
 #Strangers4:hover { background-color: #b1b1b1 }
 
-#toCompanions5 { background-color: #392679; }
 #toCompanions5:hover { background-color: #8ab6a5 }
 
-#toDeath6 { background-color: #392679; }
-#toDeath6:hover { background-color: #484848; }
+#toDeath6:hover { background-color: #484848; color: aliceblue }
