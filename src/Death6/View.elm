@@ -104,8 +104,7 @@ visualizeBrick brick=
         alpha =
             case brick.hitTime of
                 Hit 0 ->
-                    --"1"
-                    "0.3"
+                    "1"
                 _ ->
                     --"0.3"
                     "0"
