@@ -25,7 +25,8 @@ visualize model =
         len = 700 -- This is the length of the logo, was 834
     in
     div
-        [ style "width" "100%"
+        [ align "center"
+        , style "width" "100%"
         , style "height" "100%"
         , style "position" "fixed"
         , style "left" "0"
@@ -35,11 +36,8 @@ visualize model =
         [ img [ src "icon.png"
               , width len
               , height len
-              , style "position" "absolute"
-              , style "left" (String.fromFloat ((w - len * r) / 2 ) ++ "px")
-              , style "top" (String.fromFloat ((h - len * r) / 2 ) ++ "px")
-              --, style "left" (String.fromFloat ((w - pixelHeight * r) / 2 + 42) ++ "px")
-              --, style "top" (String.fromFloat ((h - pixelHeight * r) / 2 + 25) ++ "px")
+              , style "position" "relative"
+              , style "top" (String.fromFloat ((h - pixelHeight * r) / 2 + 25) ++ "px")
               , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
               , alt "Network Failure"
               ]

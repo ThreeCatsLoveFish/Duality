@@ -113,73 +113,59 @@ visualizeMenu model =
               style "text-align" "center"
             ]
             [ button
-                [ style "top" "35%"
-                , style "left" "40%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Start0)
                 , style "opacity" (hiding (level < 0))
-                --, disabled (level < 0)
+                , disabled (level < 0)
                 ]
                 [ text "Start" ]
             , button
-                [ style "top" "35%"
-                , style "left" "60%"
-                , style "font-size" "28px"
+                [ style "font-size" "28px"
                 , style "color" (colorToString button_color)
                 , onClick (ChooseLevel Strangers1)
                 , style "opacity" (hiding (level < 1))
-                --, disabled (level < 1)
+                , disabled (level < 1)
                 ]
                 [ text "Strangers" ]
             , button
-                [ style "top" "45%"
-                , style "left" "40%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Friends2)
                 , style "opacity" (hiding (level < 2))
-                --, disabled (level < 2)
+                , disabled (level < 2)
                 ]
                 [ text "Friends" ]
             , button
-                [ style "top" "45%"
-                , style "left" "60%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Lovers3)
                 , style "opacity" (hiding (level < 3))
-                --, disabled (level < 3)
+                , disabled (level < 3)
                 ]
                 [ text "Lovers" ]
             , button
-                [ style "top" "55%"
-                , style "left" "40%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Strangers4)
                 , style "opacity" (hiding (level < 4))
-                --, disabled (level < 4)
+                , disabled (level < 4)
                 ]
                 [ text "Strangers II" ]
             , button
-                [ style "top" "55%"
-                , style "left" "60%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Companions5)
                 , style "opacity" (hiding (level < 5))
-                --, disabled (level < 5)
+                , disabled (level < 5)
                 ]
                 [ text "Companions" ]
             , button
-                [ style "top" "65%"
-                , style "left" "40%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel Death6)
                 , style "opacity" (hiding (level < 6))
-                --, disabled (level < 6)
+                , disabled (level < 6)
                 ]
                 [ text "Death" ]
             --, button
@@ -192,9 +178,7 @@ visualizeMenu model =
             --    ]
             --    [ text "Ending" ]
             , button
-                [ style "top" "65%"
-                , style "left" "60%"
-                , style "color" (colorToString button_color)
+                [ style "color" (colorToString button_color)
                 , style "font-size" "28px"
                 , onClick (ChooseLevel nextLevel)
                 , style "opacity" (hiding False)
@@ -211,6 +195,4 @@ visualizeMenu model =
             --    [ text "Duality" ]
             ]
         ]
-
-
 
