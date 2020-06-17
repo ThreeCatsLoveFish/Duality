@@ -21,7 +21,7 @@ init =
                     Point
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
-                v = Point 3.0 -3.0
+                v = Point 0.2 -4.0
                 r = 10
             in
             { dummyBall

@@ -69,23 +69,23 @@ init =
         bricks =
             let
                 posInfo =
-                    [ ( Point 90 90 , { w = 88, h = 25 } )
-                    , ( Point 70 145 , { w = 44, h = 25 } )
-                    , ( Point 125 145 , { w = 55, h = 25 } )
-                    , ( Point 201 145 , { w = 77, h = 25 } )
-                    , ( Point 281 145 , { w = 61, h = 25 } )
-                    , ( Point 366 145 , { w = 80, h = 25 } )
-                    , ( Point 138 198 , { w = 155, h = 25 } )
-                    , ( Point 256 198 , { w = 66, h = 25 } )
-                    , ( Point 88 253 , { w = 59, h = 25 } )
-                    , ( Point 170 253 , { w = 81, h = 25 } )
-                    , ( Point 254 253 , { w = 70, h = 25 } )
-                    , ( Point 338 253 , { w = 87, h = 25 } )
-                    , ( Point 81 307 , { w = 50, h = 25 } )
-                    , ( Point 124 307 , { w = 15, h = 25 } )
-                    , ( Point 307 364 , { w = 72, h = 25 } )
-                    , ( Point 390 364 , { w = 70, h = 25 } )
-                    , ( Point 469 364, { w = 55, h = 25 } )
+                    [ ( Point 82 91 , { w = 74, h = 25 } )
+                    , ( Point 60 148 , { w = 30, h = 25 } ) -- if
+                    , ( Point 117 148 , { w = 60, h = 25 } )
+                    , ( Point 198 148 , { w = 77, h = 25 } )
+                    , ( Point 281 148 , { w = 61, h = 25 } )
+                    , ( Point 365 148 , { w = 82, h = 25 } )
+                    , ( Point 122 199 , { w = 154, h = 25 } ) -- remember
+                    , ( Point 248 199 , { w = 66, h = 25 } )
+                    , ( Point 75 253 , { w = 60, h = 25 } ) --- The
+                    , ( Point 159 253 , { w = 80, h = 25 } )
+                    , ( Point 248 253 , { w = 70, h = 25 } )
+                    , ( Point 339 253 , { w = 84, h = 25 } )
+                    , ( Point 70 307 , { w = 50, h = 25 } ) -- for
+                    , ( Point 122 307 , { w = 24, h = 25 } )
+                    , ( Point 302 364 , { w = 74, h = 25 } ) -- love
+                    , ( Point 381.5 364 , { w = 51, h = 25 } )
+                    , ( Point 448 364, { w = 50, h = 25 } )
                     ]
             in
             posInfo
@@ -100,8 +100,8 @@ init =
         model =
             { dummyModel
             | gameLevel = Death6
-            --, gameStatus = AnimationPrepare
-            , gameStatus = Paused -- for brick test
+            , gameStatus = AnimationPrepare
+            --, gameStatus = Paused -- for brick test
             --, gameStatus = Pass -- for AnimationEnd test
             , ball = [ball]
             , paddle = [paddle]
