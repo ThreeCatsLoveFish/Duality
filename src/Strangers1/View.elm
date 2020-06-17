@@ -273,7 +273,7 @@ visualizePrepare model =
         , style "left" "0"
         , style "top" "0"
         --, style "font-family" "Helvetica, Arial, sans-serif" -- Courier New --
-        , style "font-family" "Copperplate Gothic Light, sans-serif"
+        , style "font-family" "High Tower Text, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
