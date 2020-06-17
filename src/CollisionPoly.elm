@@ -171,7 +171,7 @@ collisionCheck model =
             }
 --}
 
-
+{--
 paddleCheck : Model -> Model
 paddleCheck model =
     let
@@ -212,26 +212,34 @@ paddleCheck model =
             True -> model
             False ->
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
-
+--}
 
 -- Check if is hit - in a style of ball
 ballCheck : Paddle -> Ball -> Ball
 ballCheck paddle ball =
     let
-        blood = -projection -- used in printing industry, same as margin
+        blood = -projection*3/4 -- used in printing industry, same as margin
+        breath = 4 -- reset margin
         tar = vector paddle.pos ball.pos
         dir = ball.v
         projection = (dot dir tar) / (norm tar)
         dir_ =
-            if projection >= 0 || norm tar > ( paddle.r + paddle.h + ball.r + blood ) then dir
+            if norm tar > ( paddle.r + paddle.h + ball.r + blood ) then dir
+            else if norm tar <= ( paddle.r + ball.r - breath ) then scale (norm dir) (normalize tar)
             else
-                let
-                    t = -2 * projection
-                    offset = scale t (normalize tar)
-                in
-                combine dir offset
+                if projection < 0 then
+                    let
+                        t = -2 * projection
+                        offset = scale t (normalize tar)
+                    in
+                    combine dir offset
+                else dir
+        pos_ =
+            if norm tar <= ( paddle.r + ball.r - breath )
+            then combine  paddle.pos <| scale (paddle.r + paddle.h + ball.r + blood + breath ) (normalize tar)
+            else ball.pos
     in
-    { ball | v = dir_ }
+    { ball | v = dir_, pos = pos_ }
 
 {--
 ballCheck paddle ball =
