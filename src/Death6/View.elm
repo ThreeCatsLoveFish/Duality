@@ -1,7 +1,7 @@
 module Death6.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, div, p, text)
+import Html exposing (Attribute, Html, audio, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -255,26 +255,40 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString (backgroundColor_ model))]
-        [ div
-            [ style "width" (String.fromFloat model.canvas.w++"px")
-            , style "height" (String.fromFloat model.canvas.h++"px")
-            , style "position" "absolute"
-            , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString (backgroundColor_ model))
+        (
+            [ div
+                [ style "width" (String.fromFloat model.canvas.w++"px")
+                , style "height" (String.fromFloat model.canvas.h++"px")
+                , style "position" "absolute"
+                , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
+                , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
+                , style "background-color" (colorToString (backgroundColor_ model))
+                ]
+                [ visualizeCanvasDone model alpha
+                , visualizeEpitaph model
+                , visualizeGame model alpha
+                ]
+            , div
+                [ style "background-color" (colorToString (backgroundColor_ model))
+                , style "background-position" "center"
+                ]
+                [ visualizePrepare model
+                , ViewTest.visualizeBlock model
+                ]
+            ] ++
+            if not (List.member model.gameStatus [ Lose ]) then
+            [ audio
+                [ src "Death - November.mp3"
+                , id "audio6"
+                , autoplay True
+                , preload "True"
+                --, loop True
+                , loop True
+                ]
+                []
             ]
-            [ visualizeCanvasDone model alpha
-            , visualizeEpitaph model
-            , visualizeGame model alpha
-            ]
-        , div
-            [ style "background-color" (colorToString (backgroundColor_ model))
-            , style "background-position" "center"
-            ]
-            [ visualizePrepare model
-            , ViewTest.visualizeBlock model
-            ]
-        ]
+            else []
+        )
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
@@ -346,8 +360,12 @@ visualizePrepare model =
                 , style "text-align" "center"
                 , style "font-size" "24px"
                 , style "opacity" (String.fromFloat alphaSub)
+                , style "line-height" "40px"
                 ]
-                [ text "Press space to start" ]
+                [ text "Let all bell toll! "
+                , br [][]
+                , text "Let no bell toll."
+                ]
             , p
                 [ style "position" "absolute"
                 , style "top" "30%"

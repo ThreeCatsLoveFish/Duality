@@ -3,7 +3,7 @@ module BasicView exposing (..)
 import Html.Events exposing (onClick)
 import Model exposing (..)
 
-import Html exposing (Attribute, Html, button, div, p, text)
+import Html exposing (Attribute, Html, audio, button, div, p, text)
 import Html.Attributes exposing (..)
 import Messages exposing (..)
 
@@ -45,27 +45,38 @@ visualizeBlock model =
                     "none"
             )
         ]
-        [ p -- Description / Instruction
-            [ style "width" "100%"
-            , style "position" "absolute"
-            , style "left" "0"
-            , style "top" "55%"
-            , style "font-size" "20px"
-            , style "color" "#AAAAAA"
-            ]
-            [text description]
-        , p -- Title
-            [ style "width" "100%"
-            , style "position" "absolute"
-            , style "left" "0"
-            , style "top" "30%"
-            , style "font-size" "40px"
-            , style "color" "#FFFFFF"
-            ]
-            [text status]
-        , (visualizeMenu model)
-        ]
-
+        (
+            [ p -- Description / Instruction
+                [ style "width" "100%"
+                , style "position" "absolute"
+                , style "left" "0"
+                , style "top" "55%"
+                , style "font-size" "20px"
+                , style "color" "#AAAAAA"
+                ]
+                [text description]
+            , p -- Title
+                [ style "width" "100%"
+                , style "position" "absolute"
+                , style "left" "0"
+                , style "top" "30%"
+                , style "font-size" "40px"
+                , style "color" "#FFFFFF"
+                ]
+                [text status]
+            , (visualizeMenu model)
+            ] ++
+            if model.gameStatus == Lose then
+                [ audio
+                    [ src "Lose - Too Bad So Sad.mp3"
+                    , id "audioLose"
+                    , loop False
+                    , autoplay True
+                    ]
+                    []
+                ]
+            else []
+        )
 
 visualizeMenu : Model -> Html Msg
 visualizeMenu model =
