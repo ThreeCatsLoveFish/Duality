@@ -218,6 +218,7 @@ movePaddle op model =
                             _ -> dummyPoint
                     Stay -> Point 0 0
                 pos = paddle.pos
+                wh = { w = 100.0, h = 20.0 }
                 newPos =
                     case model.god of -- God
                         True -> Point (getBall model.ball 1).pos.x (pos.y + v.y)
@@ -225,8 +226,13 @@ movePaddle op model =
                             Point (pos.x + v.x) (pos.y + v.y)
                 block = paddle.block
                 newBlock =
-                    Block (Point (block.lt.x + v.x) (block.lt.y + v.y)) (Point (block.rb.x + v.x) (block.rb.y + v.y))
-                col = List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) paddle.collision
+                    case model.god of -- God
+                    True -> pos2block newPos wh
+                    _ -> Block (Point (block.lt.x + v.x) (block.lt.y + v.y)) (Point (block.rb.x + v.x) (block.rb.y + v.y))
+                col =
+                    case model.god of -- God
+                        True -> pos2coll newPos wh
+                        _ -> List.map (\pt -> Point (pt.x+v.x) (pt.y+v.y) ) paddle.collision
                 setPaddle npos paddle_ =
                     { paddle_ | pos = npos, block = newBlock, collision = col }
             in

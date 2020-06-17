@@ -235,31 +235,33 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString (backgroundColor_ model))]
-
-        [ div
-            [ style "width" (String.fromFloat model.canvas.w++"px")
-            , style "height" (String.fromFloat model.canvas.h++"px")
-            , style "position" "absolute"
-            , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString (backgroundColor_ model))
+        (   [ div
+                [ style "width" (String.fromFloat model.canvas.w++"px")
+                , style "height" (String.fromFloat model.canvas.h++"px")
+                , style "position" "absolute"
+                , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
+                , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
+                , style "background-color" (colorToString (backgroundColor_ model))
+                ]
+                [ visualizeGame model alpha ]
+            , div
+                [ style "background-color" (colorToString (backgroundColor_ model))
+                , style "background-position" "center"
+                ]
+                [ visualizePrepare model
+                , BasicView.visualizeBlock model
+                ]
+            ] ++
+            if model.gameStatus /= Lose then
+            [ audio
+                [ src "Damien Rice - The Blower's Daughter.mp3"
+                , autoplay True
+                , loop False
+                ]
+                []
             ]
-            [ visualizeGame model alpha ]
-        , div
-            [ style "background-color" (colorToString (backgroundColor_ model))
-            , style "background-position" "center"
-            ]
-            [ visualizePrepare model
-            , BasicView.visualizeBlock model
-            ]
-        ,
-        audio
-            [ src "Damien Rice - The Blower's Daughter.mp3"
-            , autoplay True
-            , loop False
-            ]
-            []
-        ]
+            else []
+        )
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
