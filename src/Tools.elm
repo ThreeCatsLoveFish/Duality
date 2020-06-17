@@ -14,9 +14,29 @@ distance : Point -> Point -> Float
 distance p1 p2 =
     sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
 
---norm : Point -> Float
---norm = distance (Point 0 0)
+norm : Point -> Float
+norm = distance (Point 0 0)
 
+-- vector from a to b
+vector : Point -> Point -> Point
+vector a b =
+    { x = b.x - a.x, y = b.y - a.y }
+
+combine : Point -> Point -> Point
+combine a b =
+    { x = b.x + a.x, y = b.y + a.y }
+
+dot : Point -> Point -> Float
+dot v1 v2 =
+    v1.x * v2.x + v1.y * v2.y
+
+scale : Float -> Point -> Point
+scale t v =
+    Point (t*v.x) (t*v.y)
+
+normalize : Point -> Point
+normalize p =
+    scale (1 / (norm p)) p
 
 dummyBlock : Block
 dummyBlock =

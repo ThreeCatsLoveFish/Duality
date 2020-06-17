@@ -108,42 +108,6 @@ hitCheck ball brick =
         False -> Danger final
 
 
--- Check if is hit
-ballCheck : Paddle -> Ball -> Ball
-ballCheck paddle ball =
-    let
-        vector : Point -> Point -> Point
-        vector a b =
-            { x = b.x - a.x, y = b.y - a.y }
-
-        distance : Float
-        distance =
-            sqrt( (ball.pos.x - paddle.pos.x)^2 + (ball.pos.y - paddle.pos.y)^2 )
-
-        axis : Point
-        axis =
-            vector ball.pos paddle.pos
-
-        symmetric : Point -> Point -> Point
-        symmetric xy mn =
-            let
-                lineH = 2
-            in
-            if xy.y < -lineH then xy
-            else
-            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
-            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
-            }
-
-        new_dir = symmetric ball.v axis
-    in
-    case distance < ball.r + paddle.r of
-        True ->
-            { ball | v = new_dir }
-        False ->
-            ball
-
-
 {--
 collisionCheck : Model -> Model
 collisionCheck model =
@@ -250,8 +214,62 @@ paddleCheck model =
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
 
 
-paddleball : Model -> Model
-paddleball model =
+-- Check if is hit - in a style of ball
+ballCheck : Paddle -> Ball -> Ball
+ballCheck paddle ball =
+    let
+        blood = 4
+        tar = vector paddle.pos ball.pos
+        dir = ball.v
+        projection = (dot dir tar) / (norm tar)
+        dir_ =
+            if projection >= 0 || norm tar > ( paddle.r + paddle.h + ball.r +blood ) then dir
+            else
+                let
+                    t = -2 * projection
+                    offset = scale t (normalize tar)
+                in
+                combine dir offset
+    in
+    { ball | v = dir_ }
+
+{--
+ballCheck paddle ball =
+    let
+        vector : Point -> Point -> Point
+        vector a b =
+            { x = b.x - a.x, y = b.y - a.y }
+
+        distance : Float
+        distance =
+            sqrt( (ball.pos.x - paddle.pos.x)^2 + (ball.pos.y - paddle.pos.y)^2 )
+
+        axis : Point
+        axis =
+            vector ball.pos paddle.pos
+
+        symmetric : Point -> Point -> Point
+        symmetric xy mn =
+            let
+                lineH = 2
+            in
+            if xy.y < -lineH then xy
+            else
+            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
+            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
+            }
+
+        new_dir = symmetric ball.v axis
+    in
+    case distance < ball.r + paddle.r of
+        True ->
+            { ball | v = new_dir }
+        False ->
+            ball
+--}
+
+paddleBall : Model -> Model
+paddleBall model =
     let
         ball = getBall model.ball 1
         new_ball = List.foldl ballCheck ball model.paddle
