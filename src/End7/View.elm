@@ -30,7 +30,7 @@ visualize model =
                 Basics.min 1 (h / len)
             else
                 Basics.min 1 (w / len)
-        len = 700 -- This is the length of the logo, was 834
+        len = 500 -- This is the length of the logo, was 834
         t = if List.isEmpty model.state then 1 else (getState model.state "tMapTop").t
         t_ = if List.isEmpty model.state then 1 else (getState model.state "fade").t
     in
@@ -51,7 +51,7 @@ visualize model =
                 , height len
                 , style "position" "fixed"
                 , style "left" (String.fromFloat ((w - len * r) / 2) ++ "px")
-                , style "top" (String.fromFloat (tMapTop t 51)  ++ "%")
+                , style "top" (String.fromFloat (tMapTop t 53)  ++ "%")
                 --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , alt "Network Failure"
                 ]

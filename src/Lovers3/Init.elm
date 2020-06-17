@@ -28,7 +28,7 @@ init =
             , v = v
             , r = r
             , collision = getBallColl (pos, r, 16)
-            , color = rgb 250 200 50
+            , color = rgb 252 226 149
             }
 
         state : List State
