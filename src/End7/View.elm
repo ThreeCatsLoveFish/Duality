@@ -1,6 +1,6 @@
 module End7.View exposing (..)
 
-import Html exposing (Attribute, Html, div, img, p, text)
+import Html exposing (Attribute, Html, audio, div, img, p, text)
 import Html.Attributes exposing (..)
 
 import Model exposing (..)
@@ -75,7 +75,19 @@ visualize model =
                     ]
                     [text "Press Space to restart."]
                 ]
+            ] ++
+            if not (List.member model.gameStatus [ Lose ]) then
+            [ audio
+                [ src "Death - November.mp3"
+                , id "audio6"
+                , autoplay True
+                , preload "True"
+                --, loop True
+                , loop True
+                ]
+                []
             ]
+            else []
         )
 
 tMapTop : Float -> Float -> Float

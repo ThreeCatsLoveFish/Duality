@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Browser.Dom exposing (getViewport)
 import Html exposing (Html)
 import Browser
 
@@ -25,6 +26,7 @@ import Death6.Update
 import End7.Update
 
 import Subscriptions exposing (subscriptions)
+import Task
 import Tools exposing (nextLevel)
 
 
@@ -70,7 +72,9 @@ reInit model =
                 Death6 ->
                     Death6.Init.init
                 End7 ->
-                    End7.Init.init
+                    ( Tuple.first End7.Init.init |> (\m -> { m | visualization = model.visualization } )
+                    , Task.perform GetViewport getViewport
+                    )
                 _ ->
                     Start0.Init.init
     in

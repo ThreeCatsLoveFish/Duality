@@ -1,7 +1,7 @@
 module Strangers4.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, audio, div, p, text)
+import Html exposing (Attribute, Html, audio, br, div, i, p, text)
 import Html.Attributes exposing (..)
 import Strangers4.State exposing (endColor0)
 import Svg
@@ -252,12 +252,14 @@ visualize model =
                 , BasicView.visualizeBlock model
                 ]
             ] ++
-            if not (List.member model.gameStatus [ Lose, AnimationPrepare, Prepare ]) then
+            if not (List.member model.gameStatus [ AnimationPrepare, Prepare, Lose ]) then
             [ audio
-                [ src "Damien Rice - The Blower's Daughter.mp3"
+                [ src "StrangersII - The Blower's Daughter.mp3"
+                , id "audio4"
                 , autoplay True
-                , loop True
-                --, loop False
+                , preload "True"
+                --, loop True
+                , loop False
                 ]
                 []
             ]
@@ -319,7 +321,18 @@ visualizePrepare model =
             , style "font-size" "24px"
             , style "opacity" (String.fromFloat alphaSub)
             ]
-            [ text "Press space to start" ]
+            (
+                [ text "Mending hearts is a difficult job, especially those frozen hearts. "
+                , br [][]
+                , text "Patience and companionship. That's all you need. "
+                ] ++
+                if model.finished >= 6 then
+                [ br [][]
+                , br [][]
+                , i [ style "font-size" "18px" ] [ text "[G] od mode recommended. " ]
+                ]
+                else []
+            )
         , p
             [ style "position" "absolute"
             , style "top" "30%"

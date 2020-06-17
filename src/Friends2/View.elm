@@ -1,6 +1,6 @@
 module Friends2.View exposing (..)
 
-import Html exposing (Attribute, Html, div, p, text)
+import Html exposing (Attribute, Html, audio, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -269,23 +269,37 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString (backgroundColor_ model))]
-        [ div
-            [ style "width" (String.fromFloat model.canvas.w++"px")
-            , style "height" (String.fromFloat model.canvas.h++"px")
-            , style "position" "absolute"
-            , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString (backgroundColor_ model))
+        (
+            [ div
+                [ style "width" (String.fromFloat model.canvas.w++"px")
+                , style "height" (String.fromFloat model.canvas.h++"px")
+                , style "position" "absolute"
+                , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
+                , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
+                , style "background-color" (colorToString (backgroundColor_ model))
+                ]
+                [ visualizeGame model alpha ]
+            , div
+                [ style "background-color" (colorToString (backgroundColor_ model))
+                , style "background-position" "center"
+                ]
+                [ visualizePrepare model
+                , ViewTest.visualizeBlock model
+                ]
+            ] ++
+            if not (List.member model.gameStatus [ Lose, AnimationPrepare, Prepare ]) then
+            [ audio
+                [ src "Friends - Bestest Detectives in the World.mp3"
+                , id "audio2"
+                , autoplay True
+                , preload "True"
+                --, loop True
+                , loop True
+                ]
+                []
             ]
-            [ visualizeGame model alpha ]
-        , div
-            [ style "background-color" (colorToString (backgroundColor_ model))
-            , style "background-position" "center"
-            ]
-            [ visualizePrepare model
-            , ViewTest.visualizeBlock model
-            ]
-        ]
+            else []
+        )
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
@@ -342,7 +356,10 @@ visualizePrepare model =
             , style "font-size" "24px"
             , style "opacity" (String.fromFloat alphaSub)
             ]
-            [ text "Press space to start" ]
+            [ text "Couple of drinks. Leisurely chats. "
+            , br [][]
+            , text "Casual flirting. "
+            ]
         , p
             [ style "position" "absolute"
             , style "top" "30%"

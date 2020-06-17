@@ -20,7 +20,7 @@ init =
                     Point
                         (canvas.w/2)
                         (paddle.pos.y - paddle.r - paddle.h - r)
-                v = Point -3.0 -3.0
+                v = Point -1.6 -1.6
                 r = 10
             in
             { active = True

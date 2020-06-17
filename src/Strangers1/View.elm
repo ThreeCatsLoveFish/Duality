@@ -1,6 +1,6 @@
 module Strangers1.View exposing (..)
 
-import Html exposing (Attribute, Html, div, p, text)
+import Html exposing (Attribute, Html, audio, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -217,23 +217,37 @@ visualize model =
         , style "left" "0"
         , style "top" "0"
         , style "background-color" (colorToString backgroundColor)]
-        [ div
-            [ style "width" (String.fromFloat model.canvas.w++"px")
-            , style "height" (String.fromFloat model.canvas.h++"px")
-            , style "position" "absolute"
-            , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString backgroundColor)
+        (
+            [ div
+                [ style "width" (String.fromFloat model.canvas.w++"px")
+                , style "height" (String.fromFloat model.canvas.h++"px")
+                , style "position" "absolute"
+                , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
+                , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
+                , style "background-color" (colorToString backgroundColor)
+                ]
+                [ visualizeGame model alpha ]
+            , div
+                [ style "background-color" (colorToString backgroundColor)
+                , style "background-position" "center"
+                ]
+                [ visualizePrepare model
+                , BasicView.visualizeBlock model
+                ]
+            ] ++
+            if not (List.member model.gameStatus [ Lose ]) then
+            [ audio
+                [ src "Strangers - "
+                , id "audio1"
+                , autoplay True
+                , preload "True"
+                --, loop True
+                , loop True
+                ]
+                []
             ]
-            [ visualizeGame model alpha ]
-        , div
-            [ style "background-color" (colorToString backgroundColor)
-            , style "background-position" "center"
-            ]
-            [ visualizePrepare model
-            , BasicView.visualizeBlock model
-            ]
-        ]
+            else []
+        )
 
 
 visualizePrepare : Model -> Html Msg
