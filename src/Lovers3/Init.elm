@@ -1,13 +1,15 @@
 module Lovers3.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (genFadeIn, genFadeInSub)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Fade exposing (genFadeIn, genFadeInSub)
 import Task
 import Tools exposing (..)
+
 import Lovers3.View
+
 
 init : ( Model, Cmd Msg )
 init =
@@ -54,9 +56,8 @@ init =
                 h = 3
                 angle = 40 * pi / 180
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
-                --center = Point pos.x (pos.y + r)
             in
-            { pos = pos -- may not be necessary
+            { pos = pos
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
             , block = dummyBlock
             , color = rgb 255 255 255
@@ -74,7 +75,6 @@ init =
                     , breath = 1
                     , offset = Point 0 -40
                     , color = rgb 66 150 240
-                    --, color = rgb 233 233 233
                     }
                 posInfo =
                     [ Point 0 -1
@@ -98,7 +98,6 @@ init =
                     , Point 2 -2
                     , Point 3 -1
                     ]
-
             in
             posInfo
                 |> List.map
@@ -132,8 +131,4 @@ init =
     ( { model | visualization = Lovers3.View.visualize model }
     , Task.perform GetViewport getViewport
     )
-
-
-
-
 

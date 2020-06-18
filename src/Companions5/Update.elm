@@ -1,13 +1,15 @@
 module Companions5.Update exposing (..)
-import CollisionPoly exposing (paddleBall)
-import Messages exposing (..)
-import Model exposing (..)
-import Tools exposing (..)
 
+import Model exposing (..)
+import Messages exposing (..)
+import Tools exposing (..)
+import CollisionPoly exposing (paddleBall)
 import CollisionBlock exposing (..)
+
 import Companions5.Collision exposing (..)
 import Companions5.State exposing (..)
 import Companions5.View exposing (..)
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -121,6 +123,7 @@ update msg model =
     in
     ( { model0 | visualization = Companions5.View.visualize model0} , Cmd.none )
 
+
 move : Float -> Model -> Model
 move elapsed model =
     let
@@ -134,6 +137,7 @@ move elapsed model =
     else
         { model | clock = elapsed_ }
 
+
 exec : Model -> Model
 exec model =
     let
@@ -146,14 +150,12 @@ exec model =
         |> moveBall
         |> basic_hit
         |> movePaddle dir
-        --|> paddleOutwardFix -- Badass
-        --|> paddleCheckIndex 1
-        --|> paddleCheckIndex 2
         |> paddleBall
         |> wallCheck
         |> winJudge
 
-moveBall : Model -> Model -- Done
+
+moveBall : Model -> Model
 moveBall model =
     let
         done ball =
@@ -169,7 +171,8 @@ moveBall model =
     in
     { model | ball = List.map done model.ball }
 
-movePaddle : Op -> Model -> Model -- Done
+
+movePaddle : Op -> Model -> Model
 movePaddle op model =
     let
         ball = getBall model.ball 1
@@ -178,7 +181,6 @@ movePaddle op model =
         distance : Point -> Point -> Float
         distance p1 p2 =
             sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
-        --norm = distance (Point 0 0)
         vNorm =  -- the speed of paddle
             case (ball.r + paddle1.r - 1) < distance ball.pos paddle1.pos
             ||   (ball.r + paddle2.r - 1) < distance ball.pos paddle2.pos
@@ -228,5 +230,4 @@ winJudge model =
                         False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
-
 

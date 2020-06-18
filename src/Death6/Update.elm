@@ -1,10 +1,11 @@
 module Death6.Update exposing (..)
+
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
-
 import CollisionBlock exposing (..)
 import CollisionPoly exposing (..)
+
 import Death6.State exposing (..)
 import Death6.View exposing (..)
 
@@ -126,6 +127,7 @@ update msg model =
     in
     ( { model0 | visualization = Death6.View.visualize model0} , Cmd.none )
 
+
 move : Float -> Model -> Model
 move elapsed model =
     let
@@ -139,6 +141,7 @@ move elapsed model =
     else
         { model | clock = elapsed_ }
 
+
 exec : Model -> Model
 exec model =
     let
@@ -151,12 +154,12 @@ exec model =
         |> movePaddle dir
         |> moveBall
         |> basic_hit
-        --|> paddleCheck
         |> paddleBall
         |> wallCheck
         |> winJudge
 
-moveBall : Model -> Model -- Done
+
+moveBall : Model -> Model
 moveBall model =
     let
         done ball =
@@ -172,7 +175,8 @@ moveBall model =
     in
     { model | ball = List.map done model.ball }
 
-movePaddle : Op -> Model -> Model -- Done
+
+movePaddle : Op -> Model -> Model
 movePaddle op model =
     let
         done paddle =
@@ -223,5 +227,4 @@ winJudge model =
                             model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
-
 

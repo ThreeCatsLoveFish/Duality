@@ -1,7 +1,10 @@
 module End7.Update exposing (..)
+
 import Messages exposing (..)
 import Model exposing (..)
+
 import End7.View exposing (..)
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -60,13 +63,14 @@ stateIterate model =
                     (getFunc stat.function) model_ stat.t
                 newModel =
                     List.foldl (\x y -> (setModel x y)) { model | state = newState } newState
-
             in
             newModel
+
 
 getEndState : Model -> Model
 getEndState model =
     model
+
 
 loopState : State -> Float -> State
 loopState state t =

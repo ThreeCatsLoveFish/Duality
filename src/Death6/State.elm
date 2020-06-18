@@ -1,7 +1,9 @@
 module Death6.State exposing (..)
-import Fade exposing (genFadeOut)
+
 import Model exposing (..)
 import Messages exposing (..)
+
+import Fade exposing (genFadeOut)
 
 
 stateIterate : Model -> Model
@@ -20,7 +22,6 @@ stateIterate model =
                 AnimationPass ->
                     { model
                     | gameStatus = End
-                    --, gameLevel = End7
                     }
                 AnimationEnd ->
                     { model
@@ -43,17 +44,21 @@ stateIterate model =
             in
             newModel
 
+
 getPrepareState : Model -> Model
 getPrepareState model =
     getEndState model
+
 
 getGameState : Model -> Model
 getGameState model =
     { model | state = [] }
 
+
 getPassState : Model -> Model
 getPassState model =
     getEndState model
+
 
 getEndState : Model -> Model
 getEndState model =
@@ -66,6 +71,7 @@ getEndState model =
             }
     in
     { model | state = [s] }
+
 
 loopState : State -> Float -> State
 loopState state t =

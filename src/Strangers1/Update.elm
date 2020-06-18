@@ -1,4 +1,5 @@
 module Strangers1.Update exposing (..)
+
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
@@ -7,6 +8,7 @@ import CollisionBlock exposing (..)
 import CollisionPoly exposing (..)
 import Strangers1.State exposing (..)
 import Strangers1.View exposing (..)
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -120,6 +122,7 @@ update msg model =
     in
     ( { model0 | visualization = Strangers1.View.visualize model0} , Cmd.none )
 
+
 move : Float -> Model -> Model
 move elapsed model =
     let
@@ -133,6 +136,7 @@ move elapsed model =
     else
         { model | clock = elapsed_ }
 
+
 exec : Model -> Model
 exec model =
     let
@@ -145,12 +149,12 @@ exec model =
         |> movePaddle dir
         |> moveBall
         |> basic_hit
-        --|> paddleCheck
         |> paddleBall
         |> wallCheck
         |> winJudge
 
-moveBall : Model -> Model -- Done
+
+moveBall : Model -> Model
 moveBall model =
     let
         done ball =
@@ -166,7 +170,8 @@ moveBall model =
     in
     { model | ball = List.map done model.ball }
 
-movePaddle : Op -> Model -> Model -- Done
+
+movePaddle : Op -> Model -> Model
 movePaddle op model =
     let
         done paddle =
@@ -210,7 +215,6 @@ winJudge model =
             sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 7 * ball.r
         win =
             case closeEnough of
-            --case closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->
                     Pass
                 False ->
@@ -219,6 +223,4 @@ winJudge model =
                         False -> model.gameStatus
     in
     { model | gameStatus = win, bricks = brick_all }
-
-
 

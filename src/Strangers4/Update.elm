@@ -1,4 +1,5 @@
 module Strangers4.Update exposing (..)
+
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
@@ -7,6 +8,7 @@ import CollisionPoly exposing (wallCheck)
 import Strangers4.State exposing (..)
 import Strangers4.View exposing (..)
 import Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -152,7 +154,6 @@ moveBall flow model =
     let
         static_old_ = List.map (\a -> { dummyBall | pos = a.pos, r = 2, color = rgb 255 200 200 }) model.ball
         static_old = griddle model.clock flow (getBall model.ball 1) static_old_
-        --static_old = List.map (\a -> { a | v = dummyPoint, color = rgb 255 255 255 }) model.ball
         done: Maybe Ball -> Ball
         done ball_maybe =
             let
@@ -166,12 +167,12 @@ moveBall flow model =
     in
     { model | ball = [done (List.head model.ball)] ++ static_old }
 
+
 griddle : Float -> Float -> Ball -> List Ball -> List Ball
 griddle clock flow cur ball =
     let
         cutting = round (max (120 - flow) 60)
         grid = [ 3, 7, 8 ,10, 11 ]
-        --top = round (max (250 - flow) 100)
         top = round ( max 100 (225 - 1.2 * 1.1 ^ ( 15 + clock ) ) )
 
         len = List.length ball
@@ -196,7 +197,8 @@ griddle clock flow cur ball =
     ball_
         |> List.take top
 
-movePaddle : Op -> Model -> Model -- Done
+
+movePaddle : Op -> Model -> Model
 movePaddle op model =
     let
         done paddle =

@@ -5,15 +5,16 @@ import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
 
-import Bezier exposing (bezierColor)
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
+import Bezier exposing (bezierColor)
 import BasicView as ViewTest
 
 
 backgroundColor : Color
 backgroundColor = rgb 242 176 173
+
 
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
@@ -27,83 +28,35 @@ backgroundColor_ model=
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
 
+
 visualizeBall1 : Ball -> Svg.Svg Msg
 visualizeBall1 ball =
     Svg.g []
-        [ --Svg.defs
-        --    []
-        --    [ Svg.filter [id "Gaussian_Blur"]
-        --        [ Svg.feGaussianBlur
-        --            [ SA.in_ "SourceGraphic"
-        --            , SA.stdDeviation "4"
-        --            ]
-        --            []
-        --        ]
-        --    , Svg.filter [id "Gaussian_Blur_in"]
-        --        [ Svg.feGaussianBlur
-        --            [ SA.in_ "SourceGraphic"
-        --            , SA.stdDeviation "3"
-        --            ]
-        --            []
-        --        ]
-        --    ]
+        [
           Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color )
-            --, SA.filter "url(#Gaussian_Blur)"
-            --, SA.opacity "0.5"
             ]
             []
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat ball.pos.x)
-        --    , SA.cy (String.fromFloat ball.pos.y)
-        --    , SA.r (String.fromFloat ball.r)
-        --    , SA.fill (colorToString ball.color)
-        --    , SA.filter "url(#Gaussian_Blur_in)"
-        --    ]
-        --    []
         ]
+
 
 visualizeBall2 : Ball -> Svg.Svg Msg
 visualizeBall2 ball =
     Svg.g []
-        [ --Svg.defs
-        --    []
-        --    [ Svg.filter [id "Gaussian_Blur"]
-        --        [ Svg.feGaussianBlur
-        --            [ SA.in_ "SourceGraphic"
-        --            , SA.stdDeviation "4"
-        --            ]
-        --            []
-        --        ]
-        --    , Svg.filter [id "Gaussian_Blur_in"]
-        --        [ Svg.feGaussianBlur
-        --            [ SA.in_ "SourceGraphic"
-        --            , SA.stdDeviation "3"
-        --            ]
-        --            []
-        --        ]
-        --    ]
+        [
           Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color)
-            --, SA.filter "url(#Gaussian_Blur)"
             , SA.opacity "0.85"
             ]
             []
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat ball.pos.x)
-        --    , SA.cy (String.fromFloat ball.pos.y)
-        --    , SA.r (String.fromFloat ball.r)
-        --    , SA.fill (colorToString ball.color)
-        --    , SA.filter "url(#Gaussian_Blur_in)"
-        --    ]
-        --    []
         ]
+
 
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
@@ -131,13 +84,6 @@ visualizePaddle paddle =
             , SA.mask "url(#mask_)"
             ]
             []
-        --, Svg.polygon
-        --    [
-        --      --SA.points (polyToString paddle.collision)
-        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-        --    , SA.fill (colorToString backgroundColor)
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -148,6 +94,7 @@ visualizePaddle paddle =
             ]
             []
         ]
+
 
 visualizeBrick : Brick -> Svg.Svg Msg
 visualizeBrick brick=
@@ -166,6 +113,7 @@ visualizeBrick brick=
         ]
         []
 
+
 changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
@@ -173,6 +121,7 @@ changeBrickColor brick =
             brick.color
         _ ->
             backgroundColor
+
 
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
@@ -295,13 +244,13 @@ visualize model =
                 --, src "Friends - Between a Squirrel and a Tree.mp3"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []
             ]
             else []
         )
+
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =

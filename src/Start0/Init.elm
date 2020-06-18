@@ -9,6 +9,7 @@ import Start0.View
 import Task
 import Tools exposing (dummyModel)
 
+
 init : ( Model, Cmd Msg )
 init =
     let
@@ -41,13 +42,8 @@ init =
             , activeInput = True
             , animateState = AniIn
             }
-
     in
     ( { model | visualization = Start0.View.visualize model }
     , Task.perform GetViewport getViewport
     )
-
-
-
-
 

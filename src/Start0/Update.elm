@@ -1,8 +1,10 @@
 module Start0.Update exposing (..)
+
 import Messages exposing (..)
 import Model exposing (..)
 import Tools exposing (..)
 import Start0.View exposing (..)
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -49,10 +51,12 @@ update msg model =
     in
     ( { model0 | visualization = Start0.View.visualize model0} , Cmd.none )
 
+
 exec : Model -> Model
 exec model =
     model
         |> winJudge
+
 
 move : Float -> Model -> Model
 move elapsed model =
@@ -66,6 +70,7 @@ move elapsed model =
 
     else
         { model | clock = elapsed_ }
+
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -86,6 +91,7 @@ stateIterate model =
             in
             newModel
 
+
 winJudge : Model -> Model
 winJudge model =
     if ((getState model.state "fadeInAndOut").t > 2) then
@@ -93,9 +99,11 @@ winJudge model =
     else
         model
 
+
 getEndState : Model -> Model
 getEndState model =
     model
+
 
 loopState : State -> Float -> State
 loopState state t =

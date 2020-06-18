@@ -1,20 +1,20 @@
 module Death6.View exposing (..)
 
-import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, audio, div, i, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
---import Markdown
 
 import Model exposing (..)
 import Messages exposing (..)
+import Bezier exposing (bezierColor)
 import Tools exposing (..)
 import BasicView as ViewTest
 
 
 backgroundColor : Color
 backgroundColor = rgb 72 65 60
+
 
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
@@ -26,7 +26,8 @@ backgroundColor_ model=
                 getState model.state "fadeIn"
         color = bezierColor (rgb 138 182 165) backgroundColor state.t
     in
-    if model.gameStatus==AnimationPrepare then color else backgroundColor
+    if model.gameStatus == AnimationPrepare then color else backgroundColor
+
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -48,21 +49,11 @@ visualizeBall ball =
                     []
                 ]
             ]
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat ball.pos.x)
-        --    , SA.cy (String.fromFloat ball.pos.y)
-        --    , SA.r (String.fromFloat (ball.r * 2.5))
-        --    , SA.fill (colorToString (rgb 200 200 200))
-        --    , SA.filter "url(#Gaussian_Blur)"
-        --    , SA.opacity "0.5"
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color)
-            --, SA.filter "url(#Gaussian_Blur_in)"
             ]
             []
         ]
@@ -93,13 +84,6 @@ visualizePaddle paddle =
             , SA.mask "url(#mask_)"
             ]
             []
-        --, Svg.polygon
-        --    [
-        --      --SA.points (polyToString paddle.collision)
-        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-        --    , SA.fill (colorToString backgroundColor)
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -110,6 +94,7 @@ visualizePaddle paddle =
             ]
             []
         ]
+
 
 visualizeBrick : Brick -> Svg.Svg Msg
 visualizeBrick brick=
@@ -129,14 +114,15 @@ visualizeBrick brick=
         ]
         []
 
+
 changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
         Hit 0 ->
-            --rgb 150 0 13
             rgb 110 106 100
         _ ->
             rgb 150 150 150
+
 
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
@@ -180,6 +166,7 @@ visualizeCanvas model =
             []
         ]
 
+
 visualizeCanvasDone : Model -> String -> Html Msg
 visualizeCanvasDone model opacity =
     div
@@ -198,6 +185,7 @@ visualizeCanvasDone model opacity =
                 ]
                 [visualizeCanvas model]
             ]
+
 
 visualizeGame : Model -> String -> Html Msg
 visualizeGame model opacity =
@@ -282,13 +270,13 @@ visualize model =
                 , src "Death - November.mp3"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []
             ]
             else []
         )
+
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
@@ -337,21 +325,10 @@ visualizePrepare model =
         , style "font-size" "48px"
         , style "color" "#FFFFFF"
         , style "opacity" (String.fromFloat alpha)
-        --, style "line-height" "500px"
-        --, style "opacity" (String.fromFloat (getState model.state "fadeInAndOut").value)
-        --, style "display"
-        --    (if model.gameStatus == Prepare then
-        --        "block"
-        --     else
-        --        "none"
-        --    )
         ]
         [ div
             [
               style "text-align" "center"
-            --, style "display" "table-cell"
-            --, style "vertical" "bottom"
-            --, style "horizontal" "center"
             ]
             [ p
                 [ style "position" "absolute"
@@ -452,7 +429,6 @@ visualizeEpitaph model =
             displaying
         , style "color" "#FFFFFF"
         , style "letter-spacing" "9px"
-        --, style "line-height" "1.5px"
         ]
         [ p
             [ style "position" "absolute"
@@ -509,18 +485,4 @@ visualizeEpitaph model =
             ]
             [ text "love you so." ]
         ]
-        --[ Markdown.toHtml [] """
---Nay,
---
---if you read this line,
---
---remember not
---
---The hand that writ;
---
---for I
---
---
---               love you so.
---"""
---        ]
+

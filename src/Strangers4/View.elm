@@ -1,20 +1,22 @@
 module Strangers4.View exposing (..)
 
-import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, audio, br, div, i, p, text)
 import Html.Attributes exposing (..)
-import Strangers4.State exposing (endColor0)
 import Svg
 import Svg.Attributes as SA
 
 import Model exposing (..)
 import Messages exposing (..)
+import Bezier exposing (bezierColor)
 import Tools exposing (..)
 import BasicView
+
+import Strangers4.State exposing (endColor0)
 
 
 backgroundColor : Color
 backgroundColor = rgb 177 177 177
+
 
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
@@ -27,6 +29,7 @@ backgroundColor_ model=
         color = bezierColor (rgb 198 185 169) backgroundColor state.t
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
+
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -66,41 +69,20 @@ visualizeBall ball =
             ]
             []
         ]
+
+
 visualizeStaticBall : Ball -> Svg.Svg Msg
 visualizeStaticBall ball =
     Svg.g []
         [ Svg.defs
             []
             [
-              --Svg.filter [id "Gaussian_Blur_in"]
-              --  [ Svg.feGaussianBlur
-              --      [ SA.in_ "SourceGraphic"
-              --      , SA.stdDeviation "3"
-              --      ]
-              --      []
-              --  ]
-            --, Svg.filter [id "Gaussian_Blur"]
-            --    [ Svg.feGaussianBlur
-            --    [ SA.in_ "SourceGraphic"
-            --    , SA.stdDeviation "4"
-            --    ]
-            --    []
             ]
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat ball.pos.x)
-        --    , SA.cy (String.fromFloat ball.pos.y)
-        --    , SA.r (String.fromFloat (ball.r * 2.5))
-        --    , SA.fill (colorToString (rgb 200 200 200))
-        --    , SA.filter "url(#Gaussian_Blur)"
-        --    , SA.opacity "0.5"
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color)
-            --, SA.filter "url(#Gaussian_Blur_in)"
             ]
             []
         ]
@@ -204,6 +186,8 @@ visualizeGame model opacity =
                 ]
                 elements
             ]
+
+
 visualize : Model -> Html Msg
 visualize model =
     let
@@ -258,13 +242,13 @@ visualize model =
                 , id "audio4"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop False
                 ]
                 []
             ]
             else []
         )
+
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
