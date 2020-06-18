@@ -35,7 +35,6 @@ visualizeBlock model =
         , style "left" "0"
         , style "top" "0"
         , style "font-family" "High Tower Text, sans-serif"
-        --, style "line-height" "500px"
         , style "opacity" alpha
         , style "display"
             (   if List.member model.gameStatus [ Paused, Lose ] then
