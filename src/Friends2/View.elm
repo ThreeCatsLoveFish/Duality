@@ -290,8 +290,7 @@ visualize model =
             if not (List.member model.gameStatus [ Lose, AnimationPrepare, Prepare ]) then
             [ audio
                 [ id "audio2"
-                --, src "Friends - Take Me Anywhere.mp3"
-                , src "Friends - Paper Airplane.mp3"
+                , src "Friends - Take Me Anywhere.mp3"
                 --, src "Friends - Bestest Detectives in the World.mp3"
                 --, src "Friends - Between a Squirrel and a Tree.mp3"
                 , autoplay True

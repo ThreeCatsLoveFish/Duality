@@ -1,6 +1,6 @@
 module Strangers1.View exposing (..)
 
-import Html exposing (Attribute, Html, audio, div, p, text)
+import Html exposing (Attribute, Html, audio, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -235,10 +235,10 @@ visualize model =
                 , BasicView.visualizeBlock model
                 ]
             ] ++
-            if not (List.member model.gameStatus [ Lose ]) then
+            if not (List.member model.gameStatus [ Lose, AnimationPrepare ]) then
             [ audio
-                [ src "Strangers - "
-                , id "audio1"
+                [ id "audio1"
+                , src "Strangers - Paper Airplane.mp3"
                 , autoplay True
                 , preload "True"
                 --, loop True
@@ -306,7 +306,10 @@ visualizePrepare model =
             , style "font-size" "24px"
             , style "opacity" (String.fromFloat alphaSub)
             ]
-            [ text "Press space to start" ]
+            [ text "It was a night when they were returning from work, "
+            , br [][]
+            , text "yet ended up in a bar. "
+            ]
         , p
             [ style "position" "absolute"
             , style "top" "30%"

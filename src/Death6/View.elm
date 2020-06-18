@@ -5,7 +5,7 @@ import Html exposing (Attribute, Html, audio, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
-import Markdown
+--import Markdown
 
 import Model exposing (..)
 import Messages exposing (..)
@@ -278,8 +278,8 @@ visualize model =
             ] ++
             if not (List.member model.gameStatus [ Lose ]) then
             [ audio
-                [ src "Death - November.mp3"
-                , id "audio6"
+                [ id "audio6"
+                , src "Death - November.mp3"
                 , autoplay True
                 , preload "True"
                 --, loop True
