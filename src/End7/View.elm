@@ -3,6 +3,7 @@ module End7.View exposing (..)
 import Html exposing (Attribute, Html, audio, div, img, p, text)
 import Html.Attributes exposing (..)
 
+import Markdown
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
@@ -51,7 +52,7 @@ visualize model =
                 , height len
                 , style "position" "fixed"
                 , style "left" (String.fromFloat ((w - len * r) / 2) ++ "px")
-                , style "top" (String.fromFloat (tMapTop t 53)  ++ "%")
+                , style "top" (String.fromFloat (tMapTop t 84)  ++ "%")
                 --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , alt "Network Failure"
                 ]
@@ -93,7 +94,7 @@ visualize model =
 tMapTop : Float -> Float -> Float
 tMapTop t posAdjust =
     let
-        per = 120
+        per = 150
     in
     (0.4 - t) * 2 * per + posAdjust
 
@@ -154,4 +155,56 @@ subtitle model =
         , p [] [text "Sun Zhimin"]
         , p [] [text "Zhou Yuchen"]
         ]
+    , p
+        [ style "width" "100%"
+        , style "Height" "40%"
+        , style "position" "fixed"
+        , style "left" "0"
+        , style "top" (String.fromFloat (tMapTop t 50)  ++ "%")
+        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+        , style "text-align" "center"
+        , style "font-size" "36px"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "color" "#FFFFFF"
+        ]
+        [ text "Music" ]
+    , div
+        [ style "width" "100%"
+        , style "Height" "40%"
+        , style "position" "fixed"
+        , style "left" "0"
+        , style "top" (String.fromFloat (tMapTop t 62)  ++ "%")
+        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+        , style "text-align" "center"
+        , style "font-size" "28px"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "color" "#FFFFFF"
+        ]
+        [ Markdown.toHtml
+            [ style "line-height" "15px"
+            , style "font-size" "28px"
+            , style "align" "center"
+            --, style
+            , style "width" "20%"
+            , style "left" "40%"
+            ] """
+    For River              Kan R. Gao
+    Paper Airplane         Kan R. Gao
+    Take Me Anywhere       Kan R. Gao
+    Bata-B                 Kan R. Gao
+    Blower’s Daughter     Damien Rice
+    Having Lived           Kan R. Gao
+    November       Endless Melancholy
+    Too Bad So Sad         Kan R. Gao
+    """
+        ] -- Todo: fix this
+        --[ Markdown.toHtml [] "For River              Kan R. Gao"
+        --, Markdown.toHtml [] "Paper Airplane         Kan R. Gao"
+        --, Markdown.toHtml [] "Take Me Anywhere       Kan R. Gao"
+        --, Markdown.toHtml [] "Bata-B                 Kan R. Gao"
+        --, Markdown.toHtml [] "Blower’s Daughter     Damien Rice"
+        --, Markdown.toHtml [] "Having Lived           Kan R. Gao"
+        --, Markdown.toHtml [] "November       Endless Melancholy"
+        --, Markdown.toHtml [] "Too Bad So Sad         Kan R. Gao"
+        --]
     ]
