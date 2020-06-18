@@ -1,6 +1,6 @@
 module Start0.View exposing (..)
 
-import Html exposing (Attribute, Html, button, div, img, p, text)
+import Html exposing (Attribute, Html, audio, button, div, img, p, text)
 import Html.Attributes exposing (..)
 
 import Html.Events exposing (onClick)
@@ -34,20 +34,35 @@ visualize model =
         , style "top" "0"
         , style "background-color" (colorToString backgroundColor)
         ]
-        [ img [ src "icon.png"
-              , width len
-              , height len
-              , style "position" "relative"
-              , style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
-              , style "left" (String.fromFloat ((w - len * r) / 2 ) ++ "px")
-              , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
-              , alt "Network Failure"
-              ]
-              []
-        , if List.member model.gameStatus [ Paused, AnimationPreparePost ]
-            then visualizeHelp model
-            else visualizeMenu model
-        ]
+        (
+            [ img
+                [ src "icon.png"
+                , width len
+                , height len
+                , style "position" "relative"
+                , style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+                , style "left" (String.fromFloat ((w - len * r) / 2 ) ++ "px")
+                , style "opacity" (String.fromFloat (genFadeInAndOut (getState model.state "fadeInAndOut").t))
+                , alt "Network Failure"
+                ]
+                []
+            , if List.member model.gameStatus [ Paused, AnimationPreparePost ]
+                then visualizeHelp model
+                else visualizeMenu model
+            ] ++
+            if not (List.member model.gameStatus [ Lose ]) then
+            [ audio
+                [ id "audio0"
+                , src "Start - For River - Piano (Johnny's Version).mp3"
+                , autoplay True
+                , preload "True"
+                --, loop True
+                , loop True
+                ]
+                []
+            ]
+            else []
+        )
 
 
 genFadeInAndOut : Float -> Float
