@@ -1,5 +1,7 @@
 module Bezier exposing (..)
+
 import Model exposing (..)
+
 
 -- Functions realized by using Bézier curve
 

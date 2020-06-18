@@ -2,22 +2,6 @@ module CollisionPoly exposing (..)
 import Tools exposing (..)
 import Model exposing (..)
 
-{--
--- Check if is in block
-blockPoint : Block -> Point -> Bool
-blockPoint block point =
-    let
-        lt = block.lt
-        rb = block.rb
-    in
-    point.x >= lt.x && point.x <= rb.x && point.y >= rb.y && point.y <= lt.y
-
-
-blockCheck : Block -> Poly -> Bool
-blockCheck block coll =
-    List.foldl (\p hit -> (blockPoint block p) || hit) False coll
---}
-
 
 type Hit
     = Danger ( List ( Point, Point ) )
@@ -108,112 +92,6 @@ hitCheck ball brick =
         False -> Danger final
 
 
-{--
-collisionCheck : Model -> Model
-collisionCheck model =
-    let
-        check_hit =
-            model.bricks
-            |> List.map
-            ( \a ->
-                case a.hitTime of
-                    Hit 0 ->
-                        hitCheck (getBall model.ball 1).collision a.collision
-                    _ ->
-                        Safe
-            )
-
-        hit_turn_lines : Hit -> Maybe (List (Point, Point))
-        hit_turn_lines hit =
-            case hit of
-                Danger list -> Just list
-                Safe -> Nothing
-
-        total_hit =
-            List.filterMap hit_turn_lines check_hit
-            |> List.concat
-
-        total_lines =
-            total_hit
-            |> List.map (\(a, b) -> { x = b.x - a.x, y = b.y - a.y })
-            |> List.foldl (\a -> \b -> { x = a.x + b.x, y = a.y + b.y } ) { x = 0, y = 0 }
-
-        symmetric : Point -> Point -> Point
-        symmetric xy mn =
-            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
-            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
-            }
-
-        ball = getBall model.ball 1
-        ball2 = getBall model.ball 2
-
-    in
-    case List.isEmpty total_hit of
-        True -> model
-        False -> {
-            model
-            | ball = [{ ball | v = symmetric ball.v total_lines }, ball2]
-            , bricks =
-                model.bricks
-                |> List.map
-                    ( \a ->
-                        case total_hit
-                            |> List.any
-                            (\(x, y) ->
-                                (List.member x a.collision) &&
-                                (List.member y a.collision) )
-                        of
-                            True ->
-                                { a | hitTime = Hit 1 }
-                            False ->
-                                a
-                    )
-            }
---}
-
-{--
-paddleCheck : Model -> Model
-paddleCheck model =
-    let
-        check_hit =
-            [ hitCheck (getBall model.ball 1).collision (getPaddle model.paddle 1).collision ]
-
-        hit_turn_lines : Hit -> Maybe (List (Point, Point))
-        hit_turn_lines hit =
-            case hit of
-                Danger list -> Just list
-                Safe -> Nothing
-
-        total_hit =
-            List.filterMap hit_turn_lines check_hit
-            |> List.concat
-
-        total_lines =
-            total_hit
-            |> List.map (\(a, b) -> { x = b.x - a.x, y = b.y - a.y })
-            |> List.foldl (\a -> \b -> { x = a.x + b.x, y = a.y + b.y } ) { x = 0, y = 0 }
-
-        symmetric : Point -> Point -> Point
-        symmetric xy mn =
-            let
-                lineH = 2
-            in
-            if xy.y < -lineH then xy
-            else
-            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
-            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
-            }
-
-        ball = getBall model.ball 1
-        ball2 = getBall model.ball 2
-
-    in
-    case List.isEmpty total_hit of
-            True -> model
-            False ->
-                { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
---}
-
 -- Check if is hit - in a style of ball
 ballCheck : Paddle -> Ball -> Ball
 ballCheck paddle ball =
@@ -241,40 +119,6 @@ ballCheck paddle ball =
     in
     { ball | v = dir_, pos = pos_ }
 
-{--
-ballCheck paddle ball =
-    let
-        vector : Point -> Point -> Point
-        vector a b =
-            { x = b.x - a.x, y = b.y - a.y }
-
-        distance : Float
-        distance =
-            sqrt( (ball.pos.x - paddle.pos.x)^2 + (ball.pos.y - paddle.pos.y)^2 )
-
-        axis : Point
-        axis =
-            vector ball.pos paddle.pos
-
-        symmetric : Point -> Point -> Point
-        symmetric xy mn =
-            let
-                lineH = 2
-            in
-            if xy.y < -lineH then xy
-            else
-            { x = (2*mn.x*mn.y*xy.y + xy.x*(mn.x*mn.x - mn.y*mn.y)) / (mn.x*mn.x + mn.y*mn.y)
-            , y = (2*mn.x*mn.y*xy.x + xy.y*(mn.y*mn.y - mn.x*mn.x)) / (mn.x*mn.x + mn.y*mn.y)
-            }
-
-        new_dir = symmetric ball.v axis
-    in
-    case distance < ball.r + paddle.r of
-        True ->
-            { ball | v = new_dir }
-        False ->
-            ball
---}
 
 paddleBall : Model -> Model
 paddleBall model =
@@ -297,7 +141,7 @@ wallCheck model =
                 False -> identity
         vcBall =
             case ( pos.y <= 10 && v.y < 0)
-                || (pos.y >= (model.canvas.h - 10) && v.y > 0 && model.god == True)  -- Todo: God mode √
+                || (pos.y >= (model.canvas.h - 10) && v.y > 0 && model.god == True)
                 of
                 True -> (\b -> { b | v = Point v.x -v.y })
                 False -> identity

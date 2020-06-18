@@ -206,7 +206,7 @@ visualizeHelp model =
             , style "font-size" "24px"
             , style "color" "#FFFFFF"
             , align "center"
-            ] -- TODO: Text of document
+            ]
             [ Markdown.toHtml [] """
 [←] [→] for game-control.
 
