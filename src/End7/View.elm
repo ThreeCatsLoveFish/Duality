@@ -52,7 +52,7 @@ visualize model =
                 , height len
                 , style "position" "fixed"
                 , style "left" (String.fromFloat ((w - len * r) / 2) ++ "px")
-                , style "top" (String.fromFloat (tMapTop t 120)  ++ "%")
+                , style "top" (String.fromFloat (tMapTop t 160)  ++ "%")
                 --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , alt "Network Failure"
                 ]
@@ -77,10 +77,9 @@ visualize model =
                     [text "Press Space to restart."]
                 ]
             ] ++
-            if not (List.member model.gameStatus [ Lose ]) then
             [ audio
                 [ src "End - The Blowers Daughter (Instrumental).mp3"
-                , id "audio6"
+                , id "audio7"
                 , autoplay True
                 , preload "True"
                 --, loop True
@@ -88,15 +87,14 @@ visualize model =
                 ]
                 []
             ]
-            else []
         )
 
 tMapTop : Float -> Float -> Float
 tMapTop t posAdjust =
     let
-        per = 150
+        per = 170
     in
-    (0.4 - t) * 2 * per + posAdjust
+    (0.32 - t) * 2 * per + posAdjust
 
 tMapFade : Float -> Float
 tMapFade t =
@@ -119,7 +117,7 @@ subtitle model =
         , style "top" (String.fromFloat (tMapTop t 0)  ++ "%")
         --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
-        , style "font-size" "64px"
+        , style "font-size" "72px"
         , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
         ]
@@ -136,16 +134,16 @@ subtitle model =
         , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
         ]
-        [ text "Staff - Alphabetically" ]
+        [ text (String.toUpper "Staff") ]
     , div
         [ style "width" "100%"
         , style "Height" "40%"
         , style "position" "fixed"
         , style "left" "0"
-        , style "top" (String.fromFloat (tMapTop t 32)  ++ "%")
+        , style "top" (String.fromFloat (tMapTop t 30)  ++ "%")
         --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
-        , style "line-height" "6px" -- todo: change
+        , style "line-height" "6px"
         , style "font-size" "28px"
         , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
@@ -167,10 +165,10 @@ subtitle model =
         , style "font-family" "High Tower Text, sans-serif"
         , style "color" "#FFFFFF"
         ]
-        [ text "Music" ]
+        [ text "MUSIC" ]
         , div
         [ style "font-family" "High Tower Text, sans-serif"
-        , style "line-height" "6px" -- todo: change
+        , style "line-height" "6px"
         , style "font-size" "24px"
         , style "color" "#FFFFFF"
         ]
@@ -312,4 +310,66 @@ subtitle model =
         --, Markdown.toHtml [] "November       Endless Melancholy"
         --, Markdown.toHtml [] "Too Bad So Sad         Kan R. Gao"
         --]
+
+    , p
+        [ style "width" "100%"
+        , style "Height" "40%"
+        , style "position" "fixed"
+        , style "left" "0"
+        , style "top" (String.fromFloat (tMapTop t 98)  ++ "%")
+        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+        , style "text-align" "center"
+        , style "font-size" "36px"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "color" "#FFFFFF"
+        ]
+        [ text "FONT" ]
+    , div
+        [ style "width" "100%"
+        , style "Height" "40%"
+        , style "position" "fixed"
+        , style "left" "0"
+        , style "top" (String.fromFloat (tMapTop t 110)  ++ "%")
+        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+        , style "text-align" "center"
+        , style "line-height" "6px"
+        , style "font-size" "28px"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "color" "#FFFFFF"
+        ]
+        [ p [] [text "High Tower Text"]
+        , p [] [text "Copperplate Gothic Light"]
+        ]
+    , p
+        [ style "width" "100%"
+        , style "Height" "40%"
+        , style "position" "fixed"
+        , style "left" "0"
+        , style "top" (String.fromFloat (tMapTop t 124)  ++ "%")
+        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+        , style "text-align" "center"
+        , style "font-size" "36px"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "color" "#FFFFFF"
+        ]
+        [ text "Special Thanks for" ]
+    , div
+        [ style "width" "100%"
+        , style "Height" "40%"
+        , style "position" "fixed"
+        , style "left" "0"
+        , style "top" (String.fromFloat (tMapTop t 136)  ++ "%")
+        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
+        , style "text-align" "center"
+        , style "line-height" "6px"
+        , style "font-size" "28px"
+        , style "font-family" "High Tower Text, sans-serif"
+        , style "color" "#FFFFFF"
+        ]
+        [ p [] [text "William Shakespeare"]
+        , p [] [text "Edgar Allan Poe"]
+        , p [] [text "Manuel Charlem"]
+        , p [] [text "Michele M. Campbell"]
+        , p [] [text "Pan Yu"]
+        ]
     ]

@@ -118,7 +118,8 @@ visualizeMenu model =
             , style "text-align" "center"
             , style "font-size" "24px"
             , style "border" "1px solid #000000"
-            , style "color" "#b7e5d9"
+            , style "color" "#ffffff"
+            --, style "color" "#b7e5d9"
             , style "background" (colorToString backgroundColor)
             , style "font-family" "High Tower Text, sans-serif"
             , onClick (ShowStatus Paused)
@@ -150,15 +151,16 @@ visualizeMenu model =
             , style "position" "absolute"
             --, style "position" "relative"
             , style "outline" "none"
-            , style "top" "30%"
+            , style "top" "32%"
             , style "left" "40%"
             , style "align" "center"
             , style "width" "20%"
             , style "text-align" "center"
-            , style "font-size" "48px"
+            , style "font-size" "72px"
             , style "background" (colorToString backgroundColor)
             , style "border" "1px solid #000000"
-            , style "color" "#b7e5d9"
+            , style "color" "#ffffff"
+            --, style "color" "#b7e5d9"
             , onClick (ChooseLevel Strangers1)
             , style "font-family" "High Tower Text, sans-serif"
             ]
