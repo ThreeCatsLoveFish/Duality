@@ -1,7 +1,7 @@
 module Death6.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, audio, br, div, p, text)
+import Html exposing (Attribute, Html, audio, div, i, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -362,9 +362,35 @@ visualizePrepare model =
                 , style "opacity" (String.fromFloat alphaSub)
                 , style "line-height" "40px"
                 ]
-                [ text "Let all bell toll! "
-                , br [][]
-                , text "Let no bell toll."
+                [ p
+                    [ style "position" "relative"
+                    , style "left" "43%"
+                    , style "width" "40%"
+                    , style "text-align" "left"
+                    ]
+                    [ text "Let all bells toll!"
+                    ]
+                , p
+                    [ style "position" "relative"
+                    , style "top" "-20px"
+                    , style "left" "43%"
+                    , style "width" "40%"
+                    , style "text-align" "left"
+                    , style "color" "#C00000"
+                    ]
+                    [ text "Let"
+                    , i [] [ text " no" ]
+                    , text " bell toll."
+                    ]
+                , p
+                    [ style "font-size" "16px"
+                    , style "position" "relative"
+                    , style "top" "-35px"
+                    , style "left" "32%"
+                    , style "width" "40%"
+                    , style "font-family" "High Tower Text, sans-serif"
+                    ]
+                    [ text "              - Edgar Allan Poe " ]
                 ]
             , p
                 [ style "position" "absolute"
