@@ -53,6 +53,8 @@ keyDown keycode =
             KeyDown Key_Right
         32 ->
             KeyDown Space
+        68 ->
+            KeyDown Key_D -- debug, force skip to next level
         71 ->
             KeyDown Key_G -- god
         82 ->

@@ -37,6 +37,7 @@ type KeyType
     | Key_Right
     | Key_R
     | Key_S
+    | Key_D
     | Key_G
 
 type Msg
