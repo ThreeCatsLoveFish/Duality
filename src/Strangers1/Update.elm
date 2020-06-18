@@ -209,7 +209,8 @@ winJudge model =
         closeEnough =
             sqrt ((ball.pos.x - ball2.pos.x)^2 + (ball.pos.y - ball2.pos.y)^2) < 7 * ball.r
         win =
-            case closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
+            case closeEnough of
+            --case closeEnough || ( brick_all |> List.filter (\b -> b.hitTime /= NoMore) |> List.isEmpty ) of
                 True ->
                     Pass
                 False ->
