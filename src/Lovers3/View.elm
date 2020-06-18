@@ -320,7 +320,7 @@ visualizePrepare model =
             , style "font-size" "24px"
             , style "opacity" (String.fromFloat alphaSub)
             ]
-            [ text "Deeply united, they got closer. The boundary became vague.", br [] [] , text "They were tangled.  " ]
+            [ text "Deeply united, they got closer. The boundary grew vaguer.", br [] [] , text "They were tangled.  " ]
         , p
             [ style "position" "absolute"
             , style "top" "30%"
