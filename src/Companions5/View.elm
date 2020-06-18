@@ -325,7 +325,9 @@ visualizePrepare model =
             , br [][]
             , text "- Together."
             , br [][]
-            , i [ style "color" "#ECE29F" ] [ text "You'll never know how much I want to be with you. "]
+            , i [ style "color" "#9fece0" ] [ text "You'll never know how much I want to be with you. "]
+            , br [][]
+            , i [ style "color" "#ECE29F" ] [ text "And how much I did in order to. "]
             ]
         , p
             [ style "position" "absolute"

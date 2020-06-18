@@ -92,18 +92,9 @@ visualizeMenu model =
                 "none"
             )
         ]
-        [ p
-            [ style "position" "absolute"
-            , style "top" "55%"
-            , style "width" "100%"
-            , style "text-align" "center"
-            , style "font-size" "24px"
-            , style "color" "#FFFFFF"
-            , align "center"
-            ]
-            [ text "Menu" ]
-        , button
-            [ style "position" "absolute"
+        [ button
+            [ id "help"
+            , style "position" "absolute"
             , style "outline" "none"
             , style "left" "48.2%"
             , style "top" "75%"
@@ -118,6 +109,16 @@ visualizeMenu model =
             [ text "Help" ]
         , p
             [ style "position" "absolute"
+            , style "top" "55%"
+            , style "width" "100%"
+            , style "text-align" "center"
+            , style "font-size" "24px"
+            , style "color" "#FFFFFF"
+            , align "center"
+            ]
+            [ text "Menu" ]
+        , p
+            [ style "position" "absolute"
             , style "top" "90%"
             , style "width" "100%"
             , style "text-align" "center"
@@ -127,7 +128,8 @@ visualizeMenu model =
             ]
             [ text "Cattubene" ]
         , button
-            [ style "position" "absolute"
+            [ id "Duality"
+            , style "position" "absolute"
             , style "left" "45.6%"
             , style "outline" "none"
             , style "top" "30%"
