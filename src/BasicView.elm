@@ -8,7 +8,6 @@ import Html.Attributes exposing (..)
 import Messages exposing (..)
 
 
-
 visualizeBlock : Model -> Html Msg
 visualizeBlock model =
     let
@@ -105,7 +104,6 @@ visualizeMenu model =
     in
     div
         [ style "text-align" "center"
-        --, style "background" (colorToString back_color)
         , style "height" "100%"
         , style "width" "100%"
         , style "position" "absolute"
@@ -125,7 +123,7 @@ visualizeMenu model =
                 , onClick (ChooseLevel Start0)
                 , style "opacity" (hiding (level < 0))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 0)
+                , disabled (level == 0)
                 ]
                 [ text "Start" ]
             , button
@@ -134,7 +132,7 @@ visualizeMenu model =
                 , onClick (ChooseLevel Strangers1)
                 , style "opacity" (hiding (level < 1))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 1)
+                , disabled (level == 1)
                 ]
                 [ text "Strangers" ]
             , button
@@ -143,7 +141,7 @@ visualizeMenu model =
                 , onClick (ChooseLevel Friends2)
                 , style "opacity" (hiding (level < 2))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 2)
+                , disabled (level == 2)
                 ]
                 [ text "Friends" ]
             , button
@@ -152,7 +150,7 @@ visualizeMenu model =
                 , onClick (ChooseLevel Lovers3)
                 , style "opacity" (hiding (level < 3))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 3)
+                , disabled (level == 3)
                 ]
                 [ text "Lovers" ]
             , button
@@ -161,7 +159,7 @@ visualizeMenu model =
                 , onClick (ChooseLevel Strangers4)
                 , style "opacity" (hiding (level < 4))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 4)
+                , disabled (level == 4)
                 ]
                 [ text "Strangers II" ]
             , button
@@ -170,7 +168,7 @@ visualizeMenu model =
                 , onClick (ChooseLevel Companions5)
                 , style "opacity" (hiding (level < 5))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 5)
+                , disabled (level == 5)
                 ]
                 [ text "Companions" ]
             , button
@@ -179,18 +177,9 @@ visualizeMenu model =
                 , onClick (ChooseLevel Death6)
                 , style "opacity" (hiding (level < 6))
                 , style "font-family" "High Tower Text, sans-serif"
-                --, disabled (level < 6)
+                , disabled (level == 6)
                 ]
                 [ text "Death" ]
-            --, button
-            --    [ style "top" "65%"
-            --    , style "left" "60%"
-            --    , style "color" (colorToString button_color)
-            --    , style "font-size" "28px"
-            --    , onClick End7
-            --    , disabled (level < 6)
-            --    ]
-            --    [ text "Ending" ]
             , button
                 [ style "font-size" "28px"
                 , onClick (ChooseLevel nextLevel)
@@ -199,14 +188,6 @@ visualizeMenu model =
                 , disabled False
                 ]
                 [ text "Skip" ]
-            --, p
-            --    [ style "position" "absolute"
-            --    , style "top" "25%"
-            --    , style "width" "100%"
-            --    , style "text-align" "center"
-            --    , style "font-size" "48px"
-            --    ]
-            --    [ text "Duality" ]
             ]
         ]
 
