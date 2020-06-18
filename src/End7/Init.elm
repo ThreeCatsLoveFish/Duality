@@ -1,13 +1,14 @@
 module End7.Init exposing (..)
 
-
 import Browser.Dom exposing (getViewport)
 
 import Model exposing (..)
 import Messages exposing (..)
-import End7.View
 import Task
 import Tools exposing (dummyModel, dummyStateManagement)
+
+import End7.View
+
 
 init : ( Model, Cmd Msg )
 init =
@@ -27,6 +28,7 @@ init =
               , loop = False
               }
             ]
+
         model =
             { dummyModel
             | gameLevel = End7

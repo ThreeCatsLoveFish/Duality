@@ -1,13 +1,15 @@
 module Death6.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (genFadeIn, genFadeInSub)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Fade exposing (genFadeIn, genFadeInSub)
 import Task
 import Tools exposing (..)
+
 import Death6.View
+
 
 init : ( Model, Cmd Msg )
 init =
@@ -54,9 +56,8 @@ init =
                 h = 3
                 angle = 40 * pi / 180
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
-                --center = Point pos.x (pos.y + r)
             in
-            { pos = pos -- may not be necessary
+            { pos = pos
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
             , block = dummyBlock
             , color = rgb 255 255 255
@@ -97,12 +98,11 @@ init =
                         (Hit 0)
                         (rgb 0 0 0)
                     )
+
         model =
             { dummyModel
             | gameLevel = Death6
             , gameStatus = AnimationPrepare
-            --, gameStatus = Paused -- for brick test
-            --, gameStatus = Pass -- for AnimationEnd test
             , ball = [ball]
             , paddle = [paddle]
             , bricks = bricks
@@ -117,8 +117,4 @@ init =
     ( { model | visualization = Death6.View.visualize model }
     , Task.perform GetViewport getViewport
     )
-
-
-
-
 

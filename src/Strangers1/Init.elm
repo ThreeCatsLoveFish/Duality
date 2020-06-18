@@ -2,13 +2,13 @@ module Strangers1.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
 import Fade exposing (genFadeIn, genFadeInSub)
---import Strangers1.State exposing (fadeIn)
 
 import Model exposing (..)
 import Messages exposing (..)
 import Task
 import Tools exposing (..)
 import Strangers1.View
+
 
 init : ( Model, Cmd Msg )
 init =
@@ -74,7 +74,7 @@ init =
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
             in
             { dummyPaddle
-            | pos = pos -- may not be necessary
+            | pos = pos
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
             , block = dummyBlock
             , color = rgb 255 255 255
@@ -113,8 +113,4 @@ init =
     ( { model | visualization = Strangers1.View.visualize model }
     , Task.perform GetViewport getViewport
     )
-
-
-
-
 

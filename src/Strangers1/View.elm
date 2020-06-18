@@ -14,6 +14,7 @@ import BasicView
 backgroundColor : Color
 backgroundColor = rgb 0 0 0
 
+
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
     Svg.g []
@@ -53,6 +54,7 @@ visualizeBall ball =
             []
         ]
 
+
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
     let
@@ -79,13 +81,6 @@ visualizePaddle paddle =
             , SA.mask "url(#mask_)"
             ]
             []
-        --, Svg.polygon
-        --    [
-        --      --SA.points (polyToString paddle.collision)
-        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-        --    , SA.fill (colorToString backgroundColor)
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -96,6 +91,7 @@ visualizePaddle paddle =
             ]
             []
         ]
+
 
 visualizeBrick : Brick -> Svg.Svg Msg
 visualizeBrick brick=
@@ -114,6 +110,7 @@ visualizeBrick brick=
         ]
         []
 
+
 changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
@@ -121,6 +118,7 @@ changeBrickColor brick =
             brick.color
         _ ->
             backgroundColor
+
 
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
@@ -241,7 +239,6 @@ visualize model =
                 , src "Strangers - Paper Airplane.mp3"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []
@@ -286,7 +283,6 @@ visualizePrepare model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        --, style "font-family" "Helvetica, Arial, sans-serif" -- Courier New --
         , style "font-family" "High Tower Text, sans-serif"
         , style "font-size" "48px"
         , style "color" "#FFFFFF"

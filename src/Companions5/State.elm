@@ -1,8 +1,10 @@
 module Companions5.State exposing (..)
-import Fade exposing (fadeOut)
+
 import Model exposing (..)
 import Messages exposing (..)
+import Fade exposing (fadeOut)
 import Tools exposing (dummyState)
+
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -41,12 +43,15 @@ stateIterate model =
             in
             newModel
 
+
 getPrepareState : Model -> Model
 getPrepareState model = getEndState model
+
 
 getGameState : Model -> Model
 getGameState model =
     { model | state = [dummyState] }
+
 
 getEndState : Model -> Model
 getEndState model =
@@ -59,6 +64,7 @@ getEndState model =
             }
     in
     { model | state = [s] }
+
 
 loopState : State -> Float -> State
 loopState state t =

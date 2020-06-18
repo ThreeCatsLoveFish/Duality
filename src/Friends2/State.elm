@@ -1,12 +1,16 @@
 module Friends2.State exposing (..)
+
+import Model exposing (..)
+import Messages exposing (..)
+
 import Bezier exposing (..)
 import Fade exposing (fadeOut)
 import Tools exposing (getBall, getState)
-import Model exposing (..)
-import Messages exposing (..)
+
 import Friends2.Find exposing (..)
 
-genBezierBall2 : Point -> Point -> Point -> Point -> (Model -> Float -> Model)
+
+genBezierBall2 : Point -> Point -> Point -> Point -> ( Model -> Float -> Model )
 genBezierBall2 p1 p2 p3 p4 =
     let
         bezier = bezierPos p1 p2 p3 p4
@@ -21,7 +25,8 @@ genBezierBall2 p1 p2 p3 p4 =
     in
     bezierBall2
 
-genBezierPoints : Point -> Point -> Float -> Float -> (Model -> Float -> Model)
+
+genBezierPoints : Point -> Point -> Float -> Float -> ( Model -> Float -> Model )
 genBezierPoints p1 p4 degree ratio =
     let
         theta = degree * pi / 180
@@ -39,6 +44,7 @@ genBezierPoints p1 p4 degree ratio =
         p3 = Point (ori.x + rot.x) (ori.y + rot.y)
     in
     genBezierBall2 p1 p2 p3 p4
+
 
 moveBall2 : Model -> Model
 moveBall2 model =
@@ -101,6 +107,7 @@ moveBall2 model =
                 model
             else
                 { model | state = [stateKToK] }
+
 ---
 
 stateIterate : Model -> Model
@@ -140,15 +147,16 @@ stateIterate model =
             in
             newModel
 
+
 getPrepareState : Model -> Model
 getPrepareState model = getEndState model
+
 
 getGameState : Model -> Model
 getGameState model =
     let
         s =
             let
-                --(pos, index) = find model.bricks 1
                 index = 27
                 pos = (getBrick model.bricks index).pos
                 p1 = {x=pos.x, y=pos.y}
@@ -177,6 +185,7 @@ getEndState model =
             }
     in
     { model | state = [s1] }
+
 
 loopState : State -> Float -> State
 loopState state t =

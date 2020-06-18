@@ -1,6 +1,7 @@
 module Companions5.Collision exposing (..)
-import Tools exposing (..)
+
 import Model exposing (..)
+import Tools exposing (..)
 
 
 type Hit

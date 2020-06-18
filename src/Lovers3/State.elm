@@ -1,8 +1,9 @@
 module Lovers3.State exposing (..)
-import Bezier exposing (bezierPos)
-import Fade exposing (genFadeOut)
+
 import Model exposing (..)
 import Messages exposing (..)
+import Bezier exposing (bezierPos)
+import Fade exposing (genFadeOut)
 import Tools exposing (divState, getBall)
 
 
@@ -22,10 +23,7 @@ genBezierBrick bricks__ =
                                 vMax = 12
                                 frac = 1 - sp/vMax
                             in
-                            --if t__ < frac then
                                 t__ / frac
-                            --else
-                            --    1
                     in
                     timeMap t_ s__.value
 
@@ -53,14 +51,6 @@ genBezierBrick bricks__ =
 
                 bricks_m = model.bricks
                 bricks_ =
-                    --bricks__
-                    --    |> List.map (\b ->
-                    --            { b
-                    --            | pos = (pos2curve b.pos) t
-                    --            , block = Block ((pos2curve b.block.lt) t) ((pos2curve b.block.rb) t)
-                    --            , collision = List.map (\p -> (pos2curve p) t) b.collision
-                    --            }
-                    --        )
                     bricks__
                         |> List.map (\b ->
                                 let
@@ -80,9 +70,11 @@ genBezierBrick bricks__ =
     in
     bezierBrick
 
+
 getSpeed : Point -> Float
 getSpeed v =
     (v.x^2+v.y^2) |> sqrt
+
 
 vecAway : Point -> Point -> Float -> Point
 vecAway target origin distance =
@@ -92,12 +84,14 @@ vecAway target origin distance =
     in
     Point x y
 
+
 convertSpeed : Point -> Float -> Point
 convertSpeed v speed =
     let
         vN = getSpeed v
     in
     Point (v.x/vN*speed) (v.y/vN*speed)
+
 
 posDiff : Point -> Point -> Point -> Point
 posDiff ori new cur =
@@ -107,6 +101,7 @@ posDiff ori new cur =
     in
     Point x y
 
+
 speedMap : Int -> Float
 speedMap brickN =
     let
@@ -115,6 +110,7 @@ speedMap brickN =
         dv = 0.4
     in
     vInit + (toFloat (brickInit - brickN)) * dv
+
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -153,6 +149,7 @@ stateIterate model =
             in
             newModel
 
+
 getPrepareState : Model -> Model
 getPrepareState model =
     let
@@ -164,6 +161,7 @@ getPrepareState model =
             }
     in
     { model | state = [s] }
+
 
 getGameState : Model -> Model
 getGameState model =
@@ -177,6 +175,7 @@ getGameState model =
     in
     { model | state = [s] }
 
+
 getEndState : Model -> Model
 getEndState model =
     let
@@ -188,6 +187,7 @@ getEndState model =
             }
     in
     { model | state = [s] }
+
 
 loopState : State -> Float -> State
 loopState state t =

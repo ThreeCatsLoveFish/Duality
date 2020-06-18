@@ -10,6 +10,7 @@ import Tools exposing (..)
 import Friends2.View
 import Friends2.Find exposing (getBrick)
 
+
 init : ( Model, Cmd Msg )
 init =
     let
@@ -70,7 +71,7 @@ init =
                 angle = 40 * pi / 180
                 pos = Point (canvas.w/2) (canvas.h + r * cos angle - 5 - r)
             in
-            { pos = pos -- may not be necessary
+            { pos = pos
             , collision = getPaddleColl pos r h angle 16 -- for hitCheck
             , block = dummyBlock
             , color = rgb 255 255 255
@@ -111,8 +112,4 @@ init =
     ( { model | visualization = Friends2.View.visualize model }
     , Task.perform GetViewport getViewport
     )
-
-
-
-
 

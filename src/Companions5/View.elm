@@ -1,6 +1,5 @@
 module Companions5.View exposing (..)
 
-import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, audio, br, div, i, p, text)
 import Html.Attributes exposing (..)
 import Svg
@@ -8,12 +7,14 @@ import Svg.Attributes as SA
 
 import Model exposing (..)
 import Messages exposing (..)
+import Bezier exposing (bezierColor)
 import Tools exposing (..)
 import BasicView as ViewTest
 
 
 backgroundColor : Color
 backgroundColor = rgb 138 182 165
+
 
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
@@ -26,6 +27,7 @@ backgroundColor_ model=
         color = bezierColor (rgb 177 177 177) backgroundColor state.t
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
+
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -47,49 +49,23 @@ visualizeBall ball =
                     []
                 ]
             ]
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat ball.pos.x)
-        --    , SA.cy (String.fromFloat ball.pos.y)
-        --    , SA.r (String.fromFloat (ball.r * 2.5))
-        --    , SA.fill (colorToString (rgb 200 200 200))
-        --    , SA.filter "url(#Gaussian_Blur)"
-        --    , SA.opacity "0.5"
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color)
-            --, SA.filter "url(#Gaussian_Blur_in)"
             ]
             []
         ]
 
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
-    --let
-        --w = 2 * (paddle.r + paddle.h + 1)
-        --h = 2 * paddle.r * (cos paddle.angle)
-        --pos_ = { x= paddle.pos.x, y= paddle.pos.y- h }
-    --in
     Svg.g []
-         --[ Svg.defs
-        --    []
-        --    [ Svg.mask [id "mask_"]
-        --        [ Svg.polygon
-        --            [ SA.points (polyToString (posToPoly w h pos_))
-        --            , SA.fill (colorToString paddle.color)
-        --            ]
-        --            []
-        --        ]
-        --    ]
         [ Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
             , SA.r (String.fromFloat (paddle.r + paddle.h))
             , SA.fill (colorToString paddle.color)
-            --, SA.mask "url(#mask_)"
             ]
             []
         , Svg.circle
@@ -102,6 +78,7 @@ visualizePaddle paddle =
             ]
             []
         ]
+
 
 visualizeBrick : Brick -> Svg.Svg Msg
 visualizeBrick brick=
@@ -120,6 +97,7 @@ visualizeBrick brick=
         ]
         []
 
+
 changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
@@ -128,19 +106,10 @@ changeBrickColor brick =
         _ ->
             backgroundColor
 
+
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
     let
-        --(w,h)=model.size
-        --r =
-        --    if w / h > model.canvas.w / model.canvas.h then
-        --        Basics.min 1 (h / model.canvas.h)
-        --    else
-        --        Basics.min 1 (w / model.canvas.w)
-        --lt = Point ((w - model.canvas.w * r) / 2) 0
-        --lb = Point ((w - model.canvas.w * r) / 2) model.canvas.h
-        --rb = Point ((w - model.canvas.w * (r - 2)) / 2) model.canvas.h
-        --rt = Point ((w - model.canvas.w * (r - 2)) / 2) 0
         lt = Point 0 0
         lb = Point 0 model.canvas.h
         rb = Point model.canvas.w model.canvas.h
@@ -201,6 +170,8 @@ visualizeGame model opacity =
                 ]
                 elements
             ]
+
+
 visualize : Model -> Html Msg
 visualize model =
     let
@@ -257,13 +228,13 @@ visualize model =
                 , id "audio5"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []
             ]
             else []
         )
+
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =

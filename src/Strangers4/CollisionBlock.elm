@@ -1,6 +1,7 @@
 module Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
+
+import Model exposing (..)
 import Tools exposing (getBall)
-import Model exposing (Ball, Block, Brick, HitTime(..), Model, Paddle, StateFunc(..))
 import CollisionBlock exposing (Hit(..), block_black_box_hit, xyToCorner)
 
 import Strangers4.State exposing (..)

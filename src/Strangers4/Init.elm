@@ -1,9 +1,10 @@
 module Strangers4.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (genFadeIn, genFadeInSub)
+
 import Model exposing (..)
 import Messages exposing (..)
+import Fade exposing (genFadeIn, genFadeInSub)
 import Task
 import Tools exposing (..)
 
@@ -62,6 +63,7 @@ init =
               , loop = False
               }
             ]
+
         bricks : List Brick
         bricks =
             let
@@ -98,6 +100,7 @@ init =
                         (Hit 0)
                         hi.color
                     )
+
         model =
             { dummyModel
             | gameLevel = Strangers4

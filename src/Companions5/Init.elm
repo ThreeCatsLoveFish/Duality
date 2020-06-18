@@ -1,13 +1,15 @@
 module Companions5.Init exposing (..)
 
 import Browser.Dom exposing (getViewport)
-import Fade exposing (genFadeIn, genFadeInSub)
 
 import Model exposing (..)
 import Messages exposing (..)
+import Fade exposing (genFadeIn, genFadeInSub)
 import Task
 import Tools exposing (..)
+
 import Companions5.View
+
 
 init : ( Model, Cmd Msg )
 init =
@@ -94,7 +96,9 @@ init =
                 |> List.map reflect
             , color = rgb 250 200 50
             }
+
         bricksize = {w=39, h=39}
+
         bricks : List Brick
         bricks =
             let
@@ -134,6 +138,7 @@ init =
                     List.map (\pos -> Brick pos (pos2coll pos info.brick) (pos2block pos info.brick) (Hit 0) info.color) posBricks
             in
             newBricks_ brickInfo
+
         model =
             { dummyModel
             | gameLevel = Companions5
@@ -152,8 +157,4 @@ init =
     ( { model | visualization = Companions5.View.visualize model }
     , Task.perform GetViewport getViewport
     )
-
-
-
-
 

@@ -1,6 +1,5 @@
 module Lovers3.View exposing (..)
 
-import Bezier exposing (bezierColor)
 import Html exposing (Attribute, Html, audio, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
@@ -8,12 +7,14 @@ import Svg.Attributes as SA
 
 import Model exposing (..)
 import Messages exposing (..)
+import Bezier exposing (bezierColor)
 import Tools exposing (..)
 import BasicView as ViewTest
 
 
 backgroundColor : Color
 backgroundColor = rgb 198 185 169
+
 
 backgroundColor_ : Model -> Color
 backgroundColor_ model=
@@ -26,6 +27,7 @@ backgroundColor_ model=
         color = bezierColor (rgb 242 176 173) backgroundColor state.t
     in
     if model.gameStatus==AnimationPrepare then color else backgroundColor
+
 
 visualizeBall : Ball -> Svg.Svg Msg
 visualizeBall ball =
@@ -47,24 +49,15 @@ visualizeBall ball =
                     []
                 ]
             ]
-        --, Svg.circle
-        --    [ SA.cx (String.fromFloat ball.pos.x)
-        --    , SA.cy (String.fromFloat ball.pos.y)
-        --    , SA.r (String.fromFloat (ball.r * 2.5))
-        --    , SA.fill (colorToString (rgb 200 200 200))
-        --    , SA.filter "url(#Gaussian_Blur)"
-        --    , SA.opacity "0.5"
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat ball.pos.x)
             , SA.cy (String.fromFloat ball.pos.y)
             , SA.r (String.fromFloat ball.r)
             , SA.fill (colorToString ball.color)
-            --, SA.filter "url(#Gaussian_Blur_in)"
             ]
             []
         ]
+
 
 visualizePaddle : Paddle -> Html Msg
 visualizePaddle paddle =
@@ -92,13 +85,6 @@ visualizePaddle paddle =
             , SA.mask "url(#mask_)"
             ]
             []
-        --, Svg.polygon
-        --    [
-        --      --SA.points (polyToString paddle.collision)
-        --      SA.points (polyToString (posToPoly (2 * (paddle.r + paddle.h + 1)) (2 * paddle.r * (cos paddle.angle)) paddle.pos))
-        --    , SA.fill (colorToString backgroundColor)
-        --    ]
-        --    []
         , Svg.circle
             [ SA.cx (String.fromFloat paddle.pos.x)
             , SA.cy (String.fromFloat paddle.pos.y)
@@ -109,6 +95,7 @@ visualizePaddle paddle =
             ]
             []
         ]
+
 
 visualizeBrick : Brick -> Svg.Svg Msg
 visualizeBrick brick=
@@ -127,6 +114,7 @@ visualizeBrick brick=
         ]
         []
 
+
 changeBrickColor : Brick -> Color
 changeBrickColor brick =
     case brick.hitTime of
@@ -134,6 +122,7 @@ changeBrickColor brick =
             rgb 121 26 26
         _ ->
             rgb 140 120 100
+
 
 visualizeCanvas : Model -> Svg.Svg Msg
 visualizeCanvas model =
@@ -257,7 +246,6 @@ visualize model =
                 --, src "Lovers - Poison, Crime, Punishment.mp3"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []

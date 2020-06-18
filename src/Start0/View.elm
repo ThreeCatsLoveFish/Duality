@@ -9,6 +9,7 @@ import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
 
+
 backgroundColor : Color
 backgroundColor = rgb 0 0 0
 
@@ -56,7 +57,6 @@ visualize model =
                 , src "Start - For River - Piano (Johnny's Version).mp3"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []
@@ -125,16 +125,6 @@ visualizeMenu model =
             , onClick (ShowStatus Paused)
             ]
             [ text "Help" ]
-        --, p
-        --    [ style "position" "absolute"
-        --    , style "top" "55%"
-        --    , style "width" "100%"
-        --    , style "text-align" "center"
-        --    , style "font-size" "24px"
-        --    , style "color" "#FFFFFF"
-        --    , align "center"
-        --    ]
-        --    [ text "Menu" ]
         , p
             [ style "position" "absolute"
             , style "top" "90%"
@@ -149,7 +139,6 @@ visualizeMenu model =
         , button
             [ id "Duality"
             , style "position" "absolute"
-            --, style "position" "relative"
             , style "outline" "none"
             , style "top" "32%"
             , style "left" "40%"
@@ -227,17 +216,4 @@ visualizeHelp model =
             , align "center"
             ]
             [ text "Cattubene" ]
-        --, button
-        --    [ style "position" "absolute"
-        --    , style "left" "45.6%"
-        --    , style "outline" "none"
-        --    , style "top" "30%"
-        --    , style "text-align" "center"
-        --    , style "font-size" "48px"
-        --    , style "background" (colorToString backgroundColor)
-        --    , style "border" "1px solid #000000"
-        --    , style "color" "#b7e5d9"
-        --    , style "font-family" "High Tower Text, sans-serif"
-        --    ]
-        --    [ text "Duality" ]
         ]

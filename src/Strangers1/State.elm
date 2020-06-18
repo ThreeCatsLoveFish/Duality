@@ -1,4 +1,5 @@
 module Strangers1.State exposing (..)
+
 import Bezier exposing (bezierPos, bezierColor)
 import Fade exposing (fadeOut, genFadeOut)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
@@ -38,6 +39,7 @@ genChangeBallColor model t=
     in
     {model | ball = newball, state = state}
 
+
 genChangeBallSize : Model -> Float -> Model
 genChangeBallSize model t=
     let
@@ -55,6 +57,7 @@ genChangeBallSize model t=
                  _ -> model.state
     in
     {model | ball = newball, state = state}
+
 
 stateIterate : Model -> Model
 stateIterate model =
@@ -97,6 +100,7 @@ stateIterate model =
             in
             newModel
 
+
 bezierBall : Model -> State -> Model
 bezierBall model state =
     let
@@ -105,6 +109,7 @@ bezierBall model state =
             (getfunc state.function model state.t).ball
     in
     { model | ball = newBalls }
+
 
 getPrepareState : Model -> Model
 getPrepareState model =
@@ -117,6 +122,7 @@ getPrepareState model =
             }
     in
     { model | state = [s3] }
+
 
 getGameState : Model -> Model
 getGameState model =
@@ -160,6 +166,7 @@ getEndState model =
             }
     in
     { model | state = [s1,s2,s3] }
+
 
 loopState : State -> Float -> State
 loopState state t =

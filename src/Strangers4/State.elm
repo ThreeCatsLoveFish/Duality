@@ -1,8 +1,9 @@
 module Strangers4.State exposing (..)
+
+import Model exposing (Brick, Color, HitTime(..), Model, Point, State, StateFunc(..), rgb)
+import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Bezier exposing (bezierColor)
 import Fade exposing (fadeOut)
-import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
-import Model exposing (Brick, Color, HitTime(..), Model, Point, State, StateFunc(..), rgb)
 import Tools exposing (dummyState)
 
 
@@ -12,6 +13,7 @@ endColor1 = rgb 15 112 140
 endColor2 = rgb 37 136 164
 endColor3 = rgb 115 169 184
 endColor4 = rgb 158 189 200
+
 
 genBezierColor : Model -> Float -> Model
 genBezierColor =
@@ -87,8 +89,10 @@ stateIterate model =
             in
             newModel
 
+
 getPrepareState : Model -> Model
 getPrepareState model = getEndState model
+
 
 getGameState : Model -> Model
 getGameState model =
@@ -109,6 +113,7 @@ getEndState model =
             }
     in
     { model | state = [s1] }
+
 
 loopState : State -> Float -> State
 loopState state t =
