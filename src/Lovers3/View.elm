@@ -1,7 +1,7 @@
 module Lovers3.View exposing (..)
 
 import Bezier exposing (bezierColor)
-import Html exposing (Attribute, Html, br, div, p, text)
+import Html exposing (Attribute, Html, audio, br, div, p, text)
 import Html.Attributes exposing (..)
 import Svg
 import Svg.Attributes as SA
@@ -229,24 +229,41 @@ visualize model =
         , style "position" "absolute"
         , style "left" "0"
         , style "top" "0"
-        , style "background-color" (colorToString (backgroundColor_ model))]
-        [ div
-            [ style "width" (String.fromFloat model.canvas.w++"px")
-            , style "height" (String.fromFloat model.canvas.h++"px")
-            , style "position" "absolute"
-            , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
-            , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
-            , style "background-color" (colorToString (backgroundColor_ model))
-            ]
-            [ visualizeGame model alpha ]
-        , div
-            [ style "background-color" (colorToString (backgroundColor_ model))
-            , style "background-position" "center"
-            ]
-            [ visualizePrepare model
-            , ViewTest.visualizeBlock model
-            ]
+        , style "background-color" (colorToString (backgroundColor_ model))
         ]
+        (
+            [ div
+                [ style "width" (String.fromFloat model.canvas.w++"px")
+                , style "height" (String.fromFloat model.canvas.h++"px")
+                , style "position" "absolute"
+                , style "left" (String.fromFloat((w - model.canvas.w * r) / 2) ++ "px")
+                , style "top" (String.fromFloat((h - model.canvas.h * r) / 2) ++ "px")
+                , style "background-color" (colorToString (backgroundColor_ model))
+                ]
+                [ visualizeGame model alpha ]
+            , div
+                [ style "background-color" (colorToString (backgroundColor_ model))
+                , style "background-position" "center"
+                ]
+                [ visualizePrepare model
+                , ViewTest.visualizeBlock model
+                ]
+            ] ++
+            if not (List.member model.gameStatus [ AnimationPrepare, Prepare, AnimationPreparePost, Lose ]) then
+            [ audio
+                [ id "audio3"
+                , src "Lovers - Beta-B.mp3"
+                --, src "Lovers - Uncharted Realms.mp3"
+                --, src "Lovers - Poison, Crime, Punishment.mp3"
+                , autoplay True
+                , preload "True"
+                --, loop True
+                , loop True
+                ]
+                []
+            ]
+            else []
+        )
 
 visualizePrepare : Model -> Html Msg
 visualizePrepare model =
