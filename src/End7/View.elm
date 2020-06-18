@@ -8,17 +8,10 @@ import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
 
+
 backgroundColor : Color
 backgroundColor = rgb 0 0 0
 
---pixelWidth : Float
---pixelWidth =
---    834
---
---pixelHeight : Float
---pixelHeight =
---    834
----
 
 visualize : Model -> Html Msg
 visualize model =
@@ -53,7 +46,6 @@ visualize model =
                 , style "position" "fixed"
                 , style "left" (String.fromFloat ((w - len * r) / 2) ++ "px")
                 , style "top" (String.fromFloat (tMapTop t 160)  ++ "%")
-                --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , alt "Network Failure"
                 ]
                 []
@@ -63,7 +55,6 @@ visualize model =
                 , style "position" "fixed"
                 , style "left" "0"
                 , style "top" "35%"
-                --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , style "text-align" "center"
                 , style "font-size" "36px"
                 , style "font-family" "High Tower Text, sans-serif"
@@ -82,7 +73,6 @@ visualize model =
                 , id "audio7"
                 , autoplay True
                 , preload "True"
-                --, loop True
                 , loop True
                 ]
                 []
@@ -101,7 +91,6 @@ tMapFade t =
     if t < 0 then 0
     else if t < 0.1 then t / 0.1
     else if t < 0.2 then 1
-    --else if t < 0.4 then (0.3 - t) / 0.1
     else 1
 
 subtitle : Model -> List (Html Msg)
@@ -115,7 +104,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 0)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "72px"
         , style "font-family" "High Tower Text, sans-serif"
@@ -128,7 +116,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 20)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "36px"
         , style "font-family" "High Tower Text, sans-serif"
@@ -141,7 +128,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 30)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "line-height" "6px"
         , style "font-size" "28px"
@@ -159,7 +145,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 50)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "36px"
         , style "font-family" "High Tower Text, sans-serif"
@@ -301,23 +286,12 @@ subtitle model =
             ]
             [text "Kan R. Gao"]
         ]
-        --[ Markdown.toHtml [] "For River              Kan R. Gao"
-        --, Markdown.toHtml [] "Paper Airplane         Kan R. Gao"
-        --, Markdown.toHtml [] "Take Me Anywhere       Kan R. Gao"
-        --, Markdown.toHtml [] "Bata-B                 Kan R. Gao"
-        --, Markdown.toHtml [] "Blower’s Daughter     Damien Rice"
-        --, Markdown.toHtml [] "Having Lived           Kan R. Gao"
-        --, Markdown.toHtml [] "November       Endless Melancholy"
-        --, Markdown.toHtml [] "Too Bad So Sad         Kan R. Gao"
-        --]
-
     , p
         [ style "width" "100%"
         , style "Height" "40%"
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 98)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "36px"
         , style "font-family" "High Tower Text, sans-serif"
@@ -330,7 +304,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 110)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "line-height" "6px"
         , style "font-size" "28px"
@@ -346,7 +319,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 124)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "font-size" "36px"
         , style "font-family" "High Tower Text, sans-serif"
@@ -359,7 +331,6 @@ subtitle model =
         , style "position" "fixed"
         , style "left" "0"
         , style "top" (String.fromFloat (tMapTop t 136)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
         , style "text-align" "center"
         , style "line-height" "6px"
         , style "font-size" "28px"

@@ -119,7 +119,6 @@ visualizeMenu model =
             , style "font-size" "24px"
             , style "border" "1px solid #000000"
             , style "color" "#ffffff"
-            --, style "color" "#b7e5d9"
             , style "background" (colorToString backgroundColor)
             , style "font-family" "High Tower Text, sans-serif"
             , onClick (ShowStatus Paused)
@@ -149,7 +148,6 @@ visualizeMenu model =
             , style "background" (colorToString backgroundColor)
             , style "border" "1px solid #000000"
             , style "color" "#ffffff"
-            --, style "color" "#b7e5d9"
             , onClick (ChooseLevel Strangers1)
             , style "font-family" "High Tower Text, sans-serif"
             ]
