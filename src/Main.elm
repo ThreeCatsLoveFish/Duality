@@ -116,7 +116,7 @@ update msg model =
                 , Cmd.none
                 )
             else if List.member model.gameStatus
-                [ AnimationPrepare, Prepare, AnimationPreparePost ]
+                [ AnimationPrepare, Prepare, AnimationPreparePost, End ]
                 then
                 ( model
                 , Cmd.none
