@@ -154,7 +154,16 @@ stateIterate model =
             newModel
 
 getPrepareState : Model -> Model
-getPrepareState model = getEndState model
+getPrepareState model =
+    let
+        s = { name = "fadeOut"
+            , value = 1
+            , t = 0
+            , function = Func (genFadeOut 0 1 0.01)
+            , loop = False
+            }
+    in
+    { model | state = [s] }
 
 getGameState : Model -> Model
 getGameState model =
