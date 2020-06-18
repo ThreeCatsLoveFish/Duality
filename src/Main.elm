@@ -110,9 +110,15 @@ update msg model =
         KeyDown Key_S ->
             if List.member model.gameLevel [ Start0, End7 ] then ( model, Cmd.none )
             else if List.member model.gameStatus
-                [ AnimationPrepare, Prepare, AnimationPreparePost, AnimationPass, Pass, Lose, AnimationEnd ]
+                [ AnimationPass, Pass, Lose, AnimationEnd ]
                 then
                 ( model |> nextLevel
+                , Cmd.none
+                )
+            else if List.member model.gameStatus
+                [ AnimationPrepare, Prepare, AnimationPreparePost ]
+                then
+                ( model
                 , Cmd.none
                 )
             else
