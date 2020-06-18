@@ -4,6 +4,7 @@ import Html exposing (Attribute, Html, button, div, img, p, text)
 import Html.Attributes exposing (..)
 
 import Html.Events exposing (onClick)
+import Markdown
 import Model exposing (..)
 import Messages exposing (..)
 import Tools exposing (..)
@@ -96,8 +97,9 @@ visualizeMenu model =
             [ id "help"
             , style "position" "absolute"
             , style "outline" "none"
-            , style "left" "48.2%"
-            , style "top" "75%"
+            , style "left" "47%"
+            , style "width" "6%"
+            , style "top" "70%"
             , style "text-align" "center"
             , style "font-size" "24px"
             , style "border" "1px solid #000000"
@@ -107,32 +109,36 @@ visualizeMenu model =
             , onClick (ShowStatus Paused)
             ]
             [ text "Help" ]
-        , p
-            [ style "position" "absolute"
-            , style "top" "55%"
-            , style "width" "100%"
-            , style "text-align" "center"
-            , style "font-size" "24px"
-            , style "color" "#FFFFFF"
-            , align "center"
-            ]
-            [ text "Menu" ]
+        --, p
+        --    [ style "position" "absolute"
+        --    , style "top" "55%"
+        --    , style "width" "100%"
+        --    , style "text-align" "center"
+        --    , style "font-size" "24px"
+        --    , style "color" "#FFFFFF"
+        --    , align "center"
+        --    ]
+        --    [ text "Menu" ]
         , p
             [ style "position" "absolute"
             , style "top" "90%"
             , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "18px"
+            , style "font-family" "High Tower Text, sans-serif"
             , style "color" "#b7e5d9"
             , align "center"
             ]
-            [ text "Cattubene" ]
+            [ text "Powered by Cattubene" ]
         , button
             [ id "Duality"
             , style "position" "absolute"
-            , style "left" "45.6%"
+            --, style "position" "relative"
             , style "outline" "none"
             , style "top" "30%"
+            , style "left" "40%"
+            , style "align" "center"
+            , style "width" "20%"
             , style "text-align" "center"
             , style "font-size" "48px"
             , style "background" (colorToString backgroundColor)
@@ -177,14 +183,23 @@ visualizeHelp model =
         ]
         [ p
             [ style "position" "absolute"
-            , style "top" "55%"
+            , style "top" "30%"
             , style "width" "100%"
             , style "text-align" "center"
             , style "font-size" "24px"
             , style "color" "#FFFFFF"
             , align "center"
             ] -- TODO: Text of document
-            [ text "Menu" ]
+            [ Markdown.toHtml [] """
+[←] [→] for game-control.
+
+[ Space ] for next page.
+
+[ R ] estart a level or simply [ S ] kip it.
+
+[ G ] od awaits if you just want to relax.
+"""
+            ]
         , p
             [ style "position" "absolute"
             , style "top" "90%"
@@ -195,17 +210,17 @@ visualizeHelp model =
             , align "center"
             ]
             [ text "Cattubene" ]
-        , button
-            [ style "position" "absolute"
-            , style "left" "45.6%"
-            , style "outline" "none"
-            , style "top" "30%"
-            , style "text-align" "center"
-            , style "font-size" "48px"
-            , style "background" (colorToString backgroundColor)
-            , style "border" "1px solid #000000"
-            , style "color" "#b7e5d9"
-            , style "font-family" "High Tower Text, sans-serif"
-            ]
-            [ text "Duality" ]
+        --, button
+        --    [ style "position" "absolute"
+        --    , style "left" "45.6%"
+        --    , style "outline" "none"
+        --    , style "top" "30%"
+        --    , style "text-align" "center"
+        --    , style "font-size" "48px"
+        --    , style "background" (colorToString backgroundColor)
+        --    , style "border" "1px solid #000000"
+        --    , style "color" "#b7e5d9"
+        --    , style "font-family" "High Tower Text, sans-serif"
+        --    ]
+        --    [ text "Duality" ]
         ]
