@@ -3,7 +3,7 @@ module Strangers4.State exposing (..)
 import Model exposing (Brick, Color, HitTime(..), Model, Point, State, StateFunc(..), rgb)
 import Messages exposing (GameLevel(..), GameStatus(..), Op(..))
 import Bezier exposing (bezierColor)
-import Fade exposing (fadeOut)
+import Fade exposing (genFadeOut)
 import Tools exposing (dummyState)
 
 
@@ -91,7 +91,16 @@ stateIterate model =
 
 
 getPrepareState : Model -> Model
-getPrepareState model = getEndState model
+getPrepareState model =
+    let
+        s1 = { name = "fadeOut"
+            , value = 1
+            , t = 0
+            , function = Func (genFadeOut 0 1 -0.001)
+            , loop = False
+            }
+    in
+    { model | state = [s1] }
 
 
 getGameState : Model -> Model
@@ -108,7 +117,7 @@ getEndState model =
         s1 = { name = "fadeOut"
             , value = 1
             , t = 0
-            , function = Func (fadeOut)
+            , function = Func (genFadeOut 0 1 -0.001)
             , loop = False
             }
     in
