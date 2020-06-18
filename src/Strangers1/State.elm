@@ -112,7 +112,7 @@ getPrepareState model =
         s3 = { name = "fadeOut"
             , value = 1
             , t = 0
-            , function = Func (genFadeOut 0 0.4 0.01)
+            , function = Func (genFadeOut 0 0.4 -0.001)
             , loop = False
             }
     in
