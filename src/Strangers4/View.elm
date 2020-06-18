@@ -272,7 +272,7 @@ visualizePrepare model =
         alpha =
             case model.gameStatus of
                 AnimationPrepare ->
-                    if (getState model.state "fadeIn").t == 0 then
+                    if List.isEmpty (List.filter (\s -> s.name == "fadeIn") model.state) then
                         1
                     else
                         (getState model.state "fadeIn").value
