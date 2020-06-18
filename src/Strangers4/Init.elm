@@ -58,7 +58,7 @@ init =
             , { name = "fadeInSub"
               , value = 0
               , t = 0
-              , function = Func (genFadeInSub 0.5 0.5 0)
+              , function = Func (genFadeInSub 0.5 0.5 -0.003)
               , loop = False
               }
             ]
