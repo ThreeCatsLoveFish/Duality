@@ -52,7 +52,7 @@ visualize model =
                 , height len
                 , style "position" "fixed"
                 , style "left" (String.fromFloat ((w - len * r) / 2) ++ "px")
-                , style "top" (String.fromFloat (tMapTop t 84)  ++ "%")
+                , style "top" (String.fromFloat (tMapTop t 120)  ++ "%")
                 --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
                 , alt "Network Failure"
                 ]
@@ -79,7 +79,7 @@ visualize model =
             ] ++
             if not (List.member model.gameStatus [ Lose ]) then
             [ audio
-                [ src "Death - November.mp3"
+                [ src "End - The Blowers Daughter (Instrumental).mp3"
                 , id "audio6"
                 , autoplay True
                 , preload "True"
@@ -168,36 +168,141 @@ subtitle model =
         , style "color" "#FFFFFF"
         ]
         [ text "Music" ]
-    , div
-        [ style "width" "100%"
-        , style "Height" "40%"
-        , style "position" "fixed"
-        , style "left" "0"
-        , style "top" (String.fromFloat (tMapTop t 62)  ++ "%")
-        --, style "top" (String.fromFloat ((h - len * r) / 2) ++ "px")
-        , style "text-align" "center"
-        , style "font-size" "28px"
-        , style "font-family" "High Tower Text, sans-serif"
+        , div
+        [ style "font-family" "High Tower Text, sans-serif"
+        , style "line-height" "6px" -- todo: change
+        , style "font-size" "24px"
         , style "color" "#FFFFFF"
         ]
-        [ Markdown.toHtml
-            [ style "line-height" "15px"
-            , style "font-size" "28px"
-            , style "align" "center"
-            --, style
+        [ p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 62)  ++ "%")
+            , style "left" "35%"
             , style "width" "20%"
-            , style "left" "40%"
-            ] """
-    For River              Kan R. Gao
-    Paper Airplane         Kan R. Gao
-    Take Me Anywhere       Kan R. Gao
-    Bata-B                 Kan R. Gao
-    Blower’s Daughter     Damien Rice
-    Having Lived           Kan R. Gao
-    November       Endless Melancholy
-    Too Bad So Sad         Kan R. Gao
-    """
-        ] -- Todo: fix this
+            ]
+            [text "For River"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 62)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Kan R. Gao"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 66)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "Paper Airplane"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 66)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Kan R. Gao"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 70)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "Take Me Anywhere"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 70)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Kan R. Gao"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 74)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "Bata-B"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 74)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Kan R. Gao"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 78)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "Blower’s Daughter"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 78)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Damien Rice"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 82)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "Having Lived"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 82)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Kan R. Gao"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 86)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "November"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 86)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Endless Melancholy"]
+        , p
+            [ style "text-align" "left"
+            , style "position" "fixed"
+            , style "top" (String.fromFloat (tMapTop t 90)  ++ "%")
+            , style "left" "35%"
+            , style "width" "20%"
+            ]
+            [text "Too Bad So Sad"]
+        , p
+            [ style "text-align" "right"
+            , style "top" (String.fromFloat (tMapTop t 90)  ++ "%")
+            , style "position" "fixed"
+            , style "right" "35%"
+            , style "width" "20%"
+            ]
+            [text "Kan R. Gao"]
+        ]
         --[ Markdown.toHtml [] "For River              Kan R. Gao"
         --, Markdown.toHtml [] "Paper Airplane         Kan R. Gao"
         --, Markdown.toHtml [] "Take Me Anywhere       Kan R. Gao"
