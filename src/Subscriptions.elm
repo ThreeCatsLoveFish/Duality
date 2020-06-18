@@ -1,19 +1,19 @@
 module Subscriptions exposing (..)
 
-import Model exposing (..)
-import Messages exposing (..)
-
 import Browser.Events exposing (onAnimationFrameDelta, onKeyDown, onKeyUp, onResize)
 import Json.Decode as Decode
 import Html.Events exposing (keyCode)
+
+import Model exposing (..)
+import Messages exposing (..)
+
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ case model.gameStatus of
             Running _ ->
                 onAnimationFrameDelta Tick
-            --Prepare -> -- see if needs
-            --    onAnimationFrameDelta Tick
             ChangeLevel ->
                 onAnimationFrameDelta Tick
             AnimationPrepare ->
@@ -35,8 +35,8 @@ subscriptions model =
 
 
 keyUp : Int -> Msg
-keyUp keycode =
-    case keycode of
+keyUp key_code =
+    case key_code of
         37 ->
             KeyUp Key_Left
         39 ->
@@ -44,9 +44,10 @@ keyUp keycode =
         _ ->
             NoOp
 
+
 keyDown : Int -> Msg
-keyDown keycode =
-    case keycode of
+keyDown key_code =
+    case key_code of
         37 ->
             KeyDown Key_Left
         39 ->
@@ -54,7 +55,7 @@ keyDown keycode =
         32 ->
             KeyDown Space
         68 ->
-            KeyDown Key_D -- debug, force skip to next level
+            KeyDown Key_D -- debug
         71 ->
             KeyDown Key_G -- god
         82 ->

@@ -1,4 +1,5 @@
 module Model exposing (..)
+
 import Messages exposing (..)
 import Html exposing (Html)
 
@@ -7,29 +8,13 @@ type alias Point =
     , y : Float
     }
 
-type alias Poly = List Point
+type alias Poly =
+    List Point
 
 type alias Block =
     { lt : Point -- left top
     , rb : Point -- right bottom
     }
-
-type Color
-    = Color { red : Int, green : Int, blue : Int }
-
-rgb : Int -> Int -> Int -> Color
-rgb red green blue =
-    Color { red = red, green = green, blue = blue }
-
-colorToString : Color -> String
-colorToString (Color { red, green, blue }) =
-    "rgb("
-        ++ String.fromInt red
-        ++ ","
-        ++ String.fromInt green
-        ++ ","
-        ++ String.fromInt blue
-        ++ ")"
 
 pointToString : Point -> String
 pointToString point =
@@ -48,32 +33,50 @@ posToPoly w h center =
     ]
 
 ---
+
+type Color = Color { red : Int, green : Int, blue : Int }
+
+rgb : Int -> Int -> Int -> Color
+rgb red green blue =
+    Color { red = red, green = green, blue = blue }
+
+colorToString : Color -> String
+colorToString (Color { red, green, blue }) =
+    "rgb("
+        ++ String.fromInt red
+        ++ ","
+        ++ String.fromInt green
+        ++ ","
+        ++ String.fromInt blue
+        ++ ")"
+
+---
+
 type alias Ball =
     { active : Bool
-    , pos : Point
-    , v : Point -- Could be a function related to time?
-    , r : Float
-    , collision : Poly -- save for future change
+    , pos : Point       -- position of center
+    , v : Point         -- direction
+    , r : Float         -- radius
+    , collision : Poly  -- for hitCheck
     , color : Color
     }
 
 type alias Paddle =
-    { pos : Point -- may not be necessary
-    , collision : Poly -- for hitCheck
+    { pos : Point       -- position of center
+    , collision : Poly  -- for hitCheck
     , block : Block
     , color : Color
-    , r : Float
-    , h : Float -- thickness
-    , angle : Float -- half paddle's angle
+    , r : Float         -- radius
+    , h : Float         -- thickness
+    , angle : Float     -- half paddle's angle
     }
 
 type alias Brick =
-    { pos: Point -- may not be necessary
-    , collision: Poly -- for hitCheck
+    { pos: Point        -- position of center
+    , collision: Poly   -- for hitCheck
     , block : Block
-    , hitTime: HitTime
+    , hitTime: HitTime  -- hit times
     , color : Color
-    --, visual: Visual -- can get by collision
     }
 
 type HitTime
@@ -90,7 +93,7 @@ type alias State =
     , loop : Bool
     }
 
-type StateFunc = Func (Model->Float->Model)
+type StateFunc = Func ( Model -> Float -> Model )
 
 ---
 
@@ -112,8 +115,8 @@ type alias Model =
 
     , state : List State
 
-    , canvas : {w:Float,h:Float}
-    , size : (Float,Float)
+    , canvas : { w : Float, h : Float }
+    , size : ( Float, Float )
     , clock : Float
     , activeInput : Bool -- deprecated
     , animateState : AniState -- deprecated

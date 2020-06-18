@@ -111,7 +111,7 @@ speedMap : Int -> Float
 speedMap brickN =
     let
         vInit = 4
-        brickInit = 20 -- Todo: sync with brick number in init
+        brickInit = 20
         dv = 0.4
     in
     vInit + (toFloat (brickInit - brickN)) * dv

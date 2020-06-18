@@ -14,29 +14,36 @@ distance : Point -> Point -> Float
 distance p1 p2 =
     sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
 
+
 norm : Point -> Float
 norm = distance (Point 0 0)
+
 
 -- vector from a to b
 vector : Point -> Point -> Point
 vector a b =
     { x = b.x - a.x, y = b.y - a.y }
 
+
 combine : Point -> Point -> Point
 combine a b =
     { x = b.x + a.x, y = b.y + a.y }
+
 
 dot : Point -> Point -> Float
 dot v1 v2 =
     v1.x * v2.x + v1.y * v2.y
 
+
 scale : Float -> Point -> Point
 scale t v =
     Point (t*v.x) (t*v.y)
 
+
 normalize : Point -> Point
 normalize p =
     scale (1 / (norm p)) p
+
 
 dummyBlock : Block
 dummyBlock =
@@ -117,17 +124,7 @@ getPaddleColl pos r h angle precision =
                 (pos_.y - surfaceR * cos (rulerAngle * t))
     in
     List.map toPoints points
-    --let
-    --    unitAngle = 2*(angle+0.2)/(toFloat precision - 1)
-    --    points = List.range 0 (precision - 1) |> List.map (\x -> toFloat x)
-    --    initAngle = (pi/2) - angle
-    --    surfaceR = r + h + 4
-    --    toPoints t =
-    --        Point
-    --            (pos.x + surfaceR * cos (unitAngle * t + initAngle))
-    --            (pos.y - surfaceR * sin (unitAngle * t + initAngle))
-    --in
-    --List.reverse <| List.map toPoints points
+
 
 dummyState : State
 dummyState = { name = "dummy"
@@ -164,6 +161,7 @@ divState states name =
     in
     ( state, lst )
 
+
 dummyStateManagement : String -> Float -> (Model -> Float -> Model)
 dummyStateManagement name end =
     let
@@ -179,9 +177,11 @@ dummyStateManagement name end =
     in
     dummy_
 
+
 dummyBrick : Brick
 dummyBrick =
     Brick dummyPoint dummyPoly dummyBlock NoMore dummyColor
+
 
 -- Brick part
 
@@ -212,11 +212,8 @@ newBricks info =
             -- get y by proportion
         posBricks =
             List.concatMap (\x -> List.map (Point x) posBrickY) posBrickX -- get pos
-        --newBrick pos =
-        --    Brick pos (pos2coll pos) (pos2block pos) (Hit 0)
     in
     List.map (\pos -> Brick pos (pos2coll pos info.brick) (pos2block pos info.brick) (Hit 0) info.color) posBricks
-    -- get bricks
 
 
 pos2coll pos object =
@@ -242,6 +239,7 @@ pos2block pos object =
     in
     Block (Point (x - w) (y - h)) (Point (x + w) (y + h))
 
+
 pos2blockL pos object =
     let
         w = object.w /2 + 3.51
@@ -260,6 +258,7 @@ dummyModel =
         {w=0,h=0} (0, 0) 0 True AniStop
         False 0
         (div [] [])
+
 
 nextLevel model =
     let

@@ -3,6 +3,7 @@ module Fade exposing (..)
 import Model exposing (..)
 import Tools exposing (divState)
 
+
 genFadeIn : Float -> Float -> Float -> (Model -> Float -> Model)
 genFadeIn break interval speedAdjust =
     let
@@ -24,6 +25,8 @@ genFadeIn break interval speedAdjust =
             { model | state = state }
     in
     fadeIn_
+
+
 genFadeInSub : Float -> Float -> Float -> (Model -> Float -> Model)
 genFadeInSub break interval speedAdjust =
     let
@@ -46,6 +49,7 @@ genFadeInSub break interval speedAdjust =
     in
     fadeIn_
 
+
 fadeInAndOut : Model -> Float -> Model
 fadeInAndOut model t =
     let
@@ -63,6 +67,7 @@ fadeInAndOut model t =
                 _ -> state_
     in
     { model | state = state }
+
 
 -- break: before fade;
 -- interval: time to fade;
@@ -89,6 +94,7 @@ genFadeOut break interval speedAdjust =
             { model | state = state }
     in
     fadeOut_
+
 
 fadeOut : Model -> Float -> Model
 fadeOut model t =

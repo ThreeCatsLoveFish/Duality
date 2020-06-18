@@ -7,6 +7,7 @@ type Hit
     = Danger ( List ( Point, Point ) )
     | Safe
 
+
 -- Check if is hit
 hitCheck : Poly -> Poly -> Hit
 hitCheck ball brick =
@@ -135,61 +136,10 @@ paddleCheckIndex index model =
             False ->
                 { model | ball = [{ ball | v = symmetric ball.v total_lines }, ball2] }
 
-{--
--- If we can't fix the problem, fix the guy instead.
--- This is a bad-ass vigilante.
-paddleOutwardFix : Model -> Model
-paddleOutwardFix model =
-    let
-        distance : Point -> Point -> Float
-        distance p1 p2 =
-            sqrt ((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
-        norm = distance (Point 0 0)
-
-        paddleBallFix : Paddle -> Ball -> Ball
-        paddleBallFix paddle ball =
-            let
-                enough = (ball.r + paddle.r - 10)
-                outward = enough < distance paddle.pos ball.pos
-                outDir = Point (ball.pos.x - paddle.pos.x) (ball.pos.y - paddle.pos.y)
-                out =
-                    Point
-                    (paddle.pos.x + outDir.x / (norm outDir) * (enough+1))
-                    (paddle.pos.y + outDir.y / (norm outDir) * (enough+1))
-            in
-            case outward of
-                True -> ball
-                False -> { ball | pos = out }
-
-        newBalls =
-            model.ball
-                |> List.map (\b -> paddleBallFix (getPaddle model.paddle 1) b)
-                |> List.map (\b -> paddleBallFix (getPaddle model.paddle 2) b)
-    in
-    { model | ball = newBalls }
---}
 
 wallCheck : Model -> Model
 wallCheck model =
     let
-        {-
-        old = model.ball
-        hWall = model.horizontalWall
-        vWall = model.verticalWall
-        change ball_ ori =
-            case ori of
-                Vertical -> { ball_ | v = Point ball_.pos.x -ball_.pos.y}
-                Horizontal -> { ball_ | v = Point -ball_.pos.x ball_.pos.y}
-                _ -> ball_
-        detect ball_ block ori =
-            case blockCheck block ball_.collision of
-                True -> change ball_ ori
-                False -> ball_
-        newH = List.foldl (\block b -> detect b block Horizontal) old hWa
-ll
-        newV = List.foldl (\block b -> detect b block Vertical) newH vWall
-        ball = newV
-        -}
         old = (getBall model.ball 1)
         v = old.v
         pos = old.pos
@@ -204,8 +154,8 @@ ll
                 paddle2 = getPaddle model.paddle 2
             in
             case
-                ( pos.y <= 0 && v.y < 0 && model.god == True) -- Todo: √
-                || ( pos.y >= (model.canvas.h - 10) && v.y > 0 && model.god == True)  -- Todo: √
+                ( pos.y <= 0 && v.y < 0 && model.god == True)
+                || ( pos.y >= (model.canvas.h - 10) && v.y > 0 && model.god == True)
                 || ( (ball.r + paddle1.r - 1) > distance ball.pos paddle1.pos && v.y > 0)
                 || ( (ball.r + paddle2.r - 1) > distance ball.pos paddle2.pos && v.y < 0)
                 of
@@ -213,5 +163,4 @@ ll
                 False -> identity
     in
     { model | ball = [old |> hcBall |> vcBall, getBall model.ball 2] }
-
 
