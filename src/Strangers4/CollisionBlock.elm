@@ -2,9 +2,24 @@ module Strangers4.CollisionBlock exposing (block_hit, paddle_hit)
 
 import Model exposing (..)
 import Tools exposing (getBall)
-import CollisionBlock exposing (Hit(..), block_black_box_hit, xyToCorner)
+import CollisionBlock exposing (Hit(..), block_black_box_hit)
 
 import Strangers4.State exposing (..)
+
+
+-- Stranger 4 Feature! -> To break a broken heart
+xyToCorner : Hit -> Hit -> Hit
+xyToCorner hit_x hit_y =
+    case (hit_x, hit_y) of
+        (Corner, _) -> Corner
+        (_, Corner) -> Corner
+        (X, Y) -> Corner
+        (Y, X) -> Corner
+        (X, Safe) -> X
+        (Safe, X) -> X
+        (Y, Safe) -> Y
+        (Safe, Y) -> Y
+        _ -> Safe
 
 
 -- Direction

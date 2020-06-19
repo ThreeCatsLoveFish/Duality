@@ -15649,6 +15649,69 @@ var $author$project$Strangers4$State$getPrepareState = function (model) {
 				[s1])
 		});
 };
+var $author$project$Strangers4$CollisionBlock$xyToCorner = F2(
+	function (hit_x, hit_y) {
+		var _v0 = _Utils_Tuple2(hit_x, hit_y);
+		_v0$1:
+		while (true) {
+			_v0$8:
+			while (true) {
+				switch (_v0.a.$) {
+					case 'Corner':
+						var _v1 = _v0.a;
+						return $author$project$CollisionBlock$Corner;
+					case 'X':
+						switch (_v0.b.$) {
+							case 'Corner':
+								break _v0$1;
+							case 'Y':
+								var _v3 = _v0.a;
+								var _v4 = _v0.b;
+								return $author$project$CollisionBlock$Corner;
+							case 'Safe':
+								var _v7 = _v0.a;
+								var _v8 = _v0.b;
+								return $author$project$CollisionBlock$X;
+							default:
+								break _v0$8;
+						}
+					case 'Y':
+						switch (_v0.b.$) {
+							case 'Corner':
+								break _v0$1;
+							case 'X':
+								var _v5 = _v0.a;
+								var _v6 = _v0.b;
+								return $author$project$CollisionBlock$Corner;
+							case 'Safe':
+								var _v11 = _v0.a;
+								var _v12 = _v0.b;
+								return $author$project$CollisionBlock$Y;
+							default:
+								break _v0$8;
+						}
+					default:
+						switch (_v0.b.$) {
+							case 'Corner':
+								break _v0$1;
+							case 'X':
+								var _v9 = _v0.a;
+								var _v10 = _v0.b;
+								return $author$project$CollisionBlock$X;
+							case 'Y':
+								var _v13 = _v0.a;
+								var _v14 = _v0.b;
+								return $author$project$CollisionBlock$Y;
+							default:
+								break _v0$8;
+						}
+				}
+			}
+			return $author$project$CollisionBlock$Safe;
+		}
+		var _v2 = _v0.b;
+		return $author$project$CollisionBlock$Corner;
+	});
 var $author$project$Strangers4$CollisionBlock$ball_direction = F2(
 	function (ball, box) {
 		var init = $author$project$CollisionBlock$Safe;
@@ -15665,7 +15728,7 @@ var $author$project$Strangers4$CollisionBlock$ball_direction = F2(
 							var _v2 = head.hitTime;
 							if (_v2.$ === 'Hit') {
 								return A2(
-									$author$project$CollisionBlock$xyToCorner,
+									$author$project$Strangers4$CollisionBlock$xyToCorner,
 									status,
 									A2(
 										hit,
@@ -15687,7 +15750,7 @@ var $author$project$Strangers4$CollisionBlock$ball_direction = F2(
 							var _v4 = head.hitTime;
 							if (_v4.$ === 'Hit') {
 								return A2(
-									$author$project$CollisionBlock$xyToCorner,
+									$author$project$Strangers4$CollisionBlock$xyToCorner,
 									status,
 									A2(
 										hit,
@@ -16154,7 +16217,7 @@ var $author$project$Strangers4$CollisionBlock$ball_direction_paddle = F2(
 					if (tmp.$ === 'Just') {
 						var head = tmp.a;
 						return A2(
-							$author$project$CollisionBlock$xyToCorner,
+							$author$project$Strangers4$CollisionBlock$xyToCorner,
 							status,
 							A2(
 								hit,
@@ -16167,7 +16230,7 @@ var $author$project$Strangers4$CollisionBlock$ball_direction_paddle = F2(
 					if (tmp.$ === 'Just') {
 						var head = tmp.a;
 						return A2(
-							$author$project$CollisionBlock$xyToCorner,
+							$author$project$Strangers4$CollisionBlock$xyToCorner,
 							status,
 							A2(
 								hit,
