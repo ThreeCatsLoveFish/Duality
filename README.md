@@ -53,8 +53,7 @@ Duality
 ## Usage
 1. User should press **SPACE** to *start or pause* the game.
 1. User should press **S** to *skip* the level, **R** to *restart* the level.
-1. User should press **G** for god mode. All levels rebound, and the fourth level will automatically catch the ball
-    for the game experience.
+1. User should press **G** for god mode. All levels rebound, and the fourth level will automatically catch the ball for the game experience.
 1. Press the **Left** or **Right** direction button to move the board.
 1. Enjoy it!
 
@@ -121,7 +120,28 @@ We mainly designed two basic maps, Linear and Bezier. We use the type `State` de
 
 `gameStatus` and `visualization` are fields in `Model`. They are updated in every Tick, and `visualization` will be shown. `gameStatus`, on the other side, takes the place of `Msg` to control the whole `update` function. `Msg` is only used when being called by certain `gameStatus`. In this way, the Model is the boss, not some random user input. Don't worry about frequent submission. It's minimized.
 
+#### separated `init, update & view`
+
+Every level has their own system, which is team-work friendly. Important arguments are passed by `reInit` in `Main.elm`, for united game experience.
+
 ### How we did this - Work divided
 
+One guy: Game Model and Game idea design, building up the structure as well as many detailed levels. This is the control flow guy.
 
+One guy: With all the difficult collision at hand, this guy checks the collision and make sure all the hits are good, also making many detailed levels. Meet the collision guy.
 
+Yet another guy: Visualization of the game, subtle and delicate color design, and fade animations; also many detailed levels. Come and see our visual guy...or lady.
+
+Still another guy: Hardworking and learning fast, he's the one you must get to if you need a hand for any miscellaneous work. Check out the debug guy.
+
+Everyone is contributing a lot, both to the project as their part and to every level in detail, this is an ideal teamwork pattern. Really. Personally I just like this team. A lot.
+
+### Reflection
+
+#### What, if?
+
+This is about if expressions. We'll see if it can be updated in time.
+
+#### Type System in Elm
+
+Similarly, we'll see.
