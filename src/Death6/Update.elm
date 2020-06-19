@@ -181,7 +181,7 @@ movePaddle op model =
     let
         done paddle =
             let
-                vNorm = 6 -- the speed of paddle
+                vNorm = 3 -- the speed of paddle
                 v = case op of
                     Left ->
                         case pos.x > 18 of
