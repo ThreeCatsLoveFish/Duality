@@ -6703,27 +6703,6 @@ var $author$project$Companions5$View$backgroundColor_ = function (model) {
 };
 var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
 var $author$project$BasicView$visualizeMenu = function (model) {
-	var nextLevel = function () {
-		var _v1 = model.gameLevel;
-		switch (_v1.$) {
-			case 'Start0':
-				return $author$project$Messages$Strangers1;
-			case 'Strangers1':
-				return $author$project$Messages$Friends2;
-			case 'Friends2':
-				return $author$project$Messages$Lovers3;
-			case 'Lovers3':
-				return $author$project$Messages$Strangers4;
-			case 'Strangers4':
-				return $author$project$Messages$Companions5;
-			case 'Companions5':
-				return $author$project$Messages$Death6;
-			case 'Death6':
-				return $author$project$Messages$End7;
-			default:
-				return $author$project$Messages$Start0;
-		}
-	}();
 	var level = function () {
 		var _v0 = model.gameLevel;
 		switch (_v0.$) {
@@ -6912,7 +6891,7 @@ var $author$project$BasicView$visualizeMenu = function (model) {
 							[
 								A2($elm$html$Html$Attributes$style, 'font-size', '28px'),
 								$elm$html$Html$Events$onClick(
-								$author$project$Messages$ChooseLevel(nextLevel)),
+								$author$project$Messages$KeyDown($author$project$Messages$Key_S)),
 								A2(
 								$elm$html$Html$Attributes$style,
 								'opacity',
@@ -11343,7 +11322,7 @@ var $author$project$Strangers1$Init$init = function () {
 			});
 	}();
 	var ball = function () {
-		var v = A2($author$project$Model$Point, 0.2, -4.0);
+		var v = A2($author$project$Model$Point, 0.2, -3.0);
 		var r = 10;
 		var pos = A2($author$project$Model$Point, canvas.w / 2, ((paddle.pos.y - paddle.r) - paddle.h) - r);
 		return _Utils_update(
@@ -12136,60 +12115,60 @@ var $author$project$CollisionBlock$xyToCorner = F2(
 		var _v0 = _Utils_Tuple2(hit_x, hit_y);
 		_v0$1:
 		while (true) {
-			_v0$8:
+			_v0$4:
 			while (true) {
-				switch (_v0.a.$) {
-					case 'Corner':
-						var _v1 = _v0.a;
-						return $author$project$CollisionBlock$Corner;
-					case 'X':
-						switch (_v0.b.$) {
-							case 'Corner':
-								break _v0$1;
-							case 'Y':
-								var _v3 = _v0.a;
-								var _v4 = _v0.b;
-								return $author$project$CollisionBlock$Corner;
-							case 'Safe':
-								var _v7 = _v0.a;
-								var _v8 = _v0.b;
-								return $author$project$CollisionBlock$X;
-							default:
-								break _v0$8;
-						}
-					case 'Y':
-						switch (_v0.b.$) {
-							case 'Corner':
-								break _v0$1;
-							case 'X':
-								var _v5 = _v0.a;
-								var _v6 = _v0.b;
-								return $author$project$CollisionBlock$Corner;
-							case 'Safe':
-								var _v11 = _v0.a;
-								var _v12 = _v0.b;
-								return $author$project$CollisionBlock$Y;
-							default:
-								break _v0$8;
-						}
-					default:
-						switch (_v0.b.$) {
-							case 'Corner':
-								break _v0$1;
-							case 'X':
-								var _v9 = _v0.a;
-								var _v10 = _v0.b;
-								return $author$project$CollisionBlock$X;
-							case 'Y':
-								var _v13 = _v0.a;
-								var _v14 = _v0.b;
-								return $author$project$CollisionBlock$Y;
-							default:
-								break _v0$8;
-						}
+				_v0$6:
+				while (true) {
+					switch (_v0.a.$) {
+						case 'Corner':
+							var _v1 = _v0.a;
+							return $author$project$CollisionBlock$Corner;
+						case 'X':
+							switch (_v0.b.$) {
+								case 'Corner':
+									break _v0$1;
+								case 'X':
+									break _v0$4;
+								case 'Y':
+									var _v3 = _v0.a;
+									var _v4 = _v0.b;
+									return $author$project$CollisionBlock$Corner;
+								default:
+									break _v0$4;
+							}
+						case 'Y':
+							switch (_v0.b.$) {
+								case 'Corner':
+									break _v0$1;
+								case 'X':
+									var _v5 = _v0.a;
+									var _v6 = _v0.b;
+									return $author$project$CollisionBlock$Corner;
+								case 'Y':
+									break _v0$6;
+								default:
+									break _v0$6;
+							}
+						default:
+							switch (_v0.b.$) {
+								case 'Corner':
+									break _v0$1;
+								case 'X':
+									var _v8 = _v0.b;
+									return $author$project$CollisionBlock$X;
+								case 'Y':
+									var _v10 = _v0.b;
+									return $author$project$CollisionBlock$Y;
+								default:
+									return $author$project$CollisionBlock$Safe;
+							}
+					}
 				}
+				var _v9 = _v0.a;
+				return $author$project$CollisionBlock$Y;
 			}
-			return $author$project$CollisionBlock$Safe;
+			var _v7 = _v0.a;
+			return $author$project$CollisionBlock$X;
 		}
 		var _v2 = _v0.b;
 		return $author$project$CollisionBlock$Corner;
@@ -13006,7 +12985,7 @@ var $author$project$Death6$Update$moveBall = function (model) {
 var $author$project$Death6$Update$movePaddle = F2(
 	function (op, model) {
 		var done = function (paddle) {
-			var vNorm = 6;
+			var vNorm = 3;
 			var pos = paddle.pos;
 			var v = function () {
 				switch (op.$) {
@@ -15640,7 +15619,8 @@ var $author$project$Strangers1$Update$update = F2(
 	});
 var $author$project$Strangers4$State$getEndState = function (model) {
 	var s1 = {
-		_function: $author$project$Model$Func($author$project$Fade$fadeOut),
+		_function: $author$project$Model$Func(
+			A3($author$project$Fade$genFadeOut, 0, 1, -0.001)),
 		loop: false,
 		name: 'fadeOut',
 		t: 0,
@@ -15654,7 +15634,20 @@ var $author$project$Strangers4$State$getEndState = function (model) {
 		});
 };
 var $author$project$Strangers4$State$getPrepareState = function (model) {
-	return $author$project$Strangers4$State$getEndState(model);
+	var s1 = {
+		_function: $author$project$Model$Func(
+			A3($author$project$Fade$genFadeOut, 0, 1, -0.001)),
+		loop: false,
+		name: 'fadeOut',
+		t: 0,
+		value: 1
+	};
+	return _Utils_update(
+		model,
+		{
+			state: _List_fromArray(
+				[s1])
+		});
 };
 var $author$project$Strangers4$CollisionBlock$ball_direction = F2(
 	function (ball, box) {

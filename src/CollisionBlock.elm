@@ -61,6 +61,7 @@ block_corner ball block =
     -- (X) close to board
     then Corner else Safe
 
+
 -- Black Box
 block_black_box_hitTime: Ball -> Block -> HitTime
 block_black_box_hitTime ball block =
@@ -73,6 +74,7 @@ block_black_box_hitTime ball block =
                 _ -> Hit 1
     in
     hit_time
+
 
 -- Black Box
 block_black_box_hit: Ball -> Block -> Hit
@@ -97,10 +99,10 @@ xyToCorner hit_x hit_y =
         (_, Corner) -> Corner
         (X, Y) -> Corner
         (Y, X) -> Corner
-        (X, Safe) -> X
-        (Safe, X) -> X
-        (Y, Safe) -> Y
-        (Safe, Y) -> Y
+        (X, _) -> X
+        (_, X) -> X
+        (Y, _) -> Y
+        (_, Y) -> Y
         _ -> Safe
 
 
