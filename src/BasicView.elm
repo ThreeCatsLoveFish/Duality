@@ -89,16 +89,6 @@ visualizeMenu model =
                 Companions5 -> 5
                 Death6 -> 6
                 _ -> 7
-        nextLevel =
-            case model.gameLevel of
-                Start0 -> Strangers1
-                Strangers1 -> Friends2
-                Friends2 -> Lovers3
-                Lovers3 -> Strangers4
-                Strangers4 -> Companions5
-                Companions5 -> Death6
-                Death6 -> End7
-                _ -> Start0
         hiding bool = if bool then "0" else "1"
     in
     div
@@ -181,7 +171,7 @@ visualizeMenu model =
                 [ text "Death" ]
             , button
                 [ style "font-size" "28px"
-                , onClick (ChooseLevel nextLevel)
+                , onClick (KeyDown Key_S)
                 , style "opacity" (hiding False)
                 , style "font-family" "High Tower Text, sans-serif"
                 , disabled False
