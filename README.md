@@ -1,16 +1,11 @@
 # Duality
 
 ## Table of Content
-- [Title](#Duality)
-- [Menu](#Table-of-Content)
-- [Description](#Description)
-- [Structure](#File-Structure)
-- [Usage](#Usage)
-- [Story](#Story)
-- [Functions](#Functions)
-- [History Versions](ChangeLog.md)
+
+[TOC]
 
 ## Description
+
 **Duality** is a modified version of *Breakout* game,
 and this project is *2020SU VG100 Project One*, made by following members:
 - Rundong Tang
@@ -99,3 +94,4 @@ In this level, there are one word behind each brick. When a brick is hit by the 
 1. In some game levels, there are 2 balls instead of just one, and the balls are given anthropomorphic meaning, where they represents the pair of lovers.
 1. The backgrounds in our game are no longer gray at all time. We give different backgrounds to different game levels to create the atmospheres which can suit the stories in different game levels.
 1. Some interesting settings are also applied in our game to better suit the plots of the story, like in one game level, the player may find that he is dealing with two balls and an extra paddle is hidden; in one game level, the game is set to be extremely hard so that the player must fail, which leads to the next plot.
+
