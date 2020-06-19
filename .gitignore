@@ -16,5 +16,5 @@ node_modules
 # Test
 tests/
 
-icon.png
-index.html
+# Idea
+.idea/
