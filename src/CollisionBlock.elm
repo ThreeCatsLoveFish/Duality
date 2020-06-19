@@ -97,10 +97,10 @@ xyToCorner hit_x hit_y =
         (_, Corner) -> Corner
         (X, Y) -> Corner
         (Y, X) -> Corner
-        (X, Safe) -> X
-        (Safe, X) -> X
-        (Y, Safe) -> Y
-        (Safe, Y) -> Y
+        (X, _) -> X
+        (_, X) -> X
+        (Y, _) -> Y
+        (_, Y) -> Y
         _ -> Safe
 
 
