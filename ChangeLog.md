@@ -43,7 +43,7 @@ type alias Block =
     }
 ```
 [^Why_Block]: The goal of Block was initially reduce calculation pressure (or it's just grammar laziness (X_X)).
-It works like: ![Block.png](doc/Block.png)
+It works like: ![Block.png](docs/Block.png)
 3 . Brick, Wall, Ball, Paddle
 ```
 type alias Brick =
