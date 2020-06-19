@@ -310,12 +310,13 @@ visualizePrepare model =
                 , br [][]
                 , text "Patience and companionship. That's all you need. "
                 ] ++
-                if model.finished >= 6 then
+                --if model.finished >= 6 then
                 [ br [][]
                 , br [][]
                 , i [ style "font-size" "18px" ] [ text "[G] od mode recommended. " ]
                 ]
-                else []
+                --else
+                --[]
             )
         , p
             [ style "position" "absolute"
