@@ -62,13 +62,13 @@ Duality
 Our story is a love story between two people, and our storyline follows the passage of time.
 Two strangers met. They got to know each other and became friends. With their relationship closer
 and closer, they finally fall in love with each other. However, something happened which made their
-relationship lost of control. Their love was destroyed, and they became strangers again. After a long time,
-the wound in their relationship was gradually healing. They started to renew their love and eventually became couples.
-In the end, they died together, which gave an end to the romantic love story.
+relationship lost of control. Their love was destroyed, and they became strangers again. After a long time,the wound in their relationship was gradually healing. They started to renew their love and eventually became couples.
+In the end, death came, which gave an end to the romantic love story.
 
 Our storyline is divided into several plots, each is shown in one game level.
 
 ### Level 1 Strangers
+
 In this level, the player can find that the background is black and there are two shiny white balls, which present two people who haven’t met each other. One ball is moving and can be controlled by the player using the paddle, and the other ball is still behind the bricks. The goal for the player is to use the paddle to help one ball bump into the other one after hitting some bricks. When the two balls meet each other, there will be a small animation and one of the balls turns yellow, while the other turns green.
 
 ### Level 2 Friends
@@ -94,4 +94,34 @@ In this level, there are one word behind each brick. When a brick is hit by the 
 1. In some game levels, there are 2 balls instead of just one, and the balls are given anthropomorphic meaning, where they represents the pair of lovers.
 1. The backgrounds in our game are no longer gray at all time. We give different backgrounds to different game levels to create the atmospheres which can suit the stories in different game levels.
 1. Some interesting settings are also applied in our game to better suit the plots of the story, like in one game level, the player may find that he is dealing with two balls and an extra paddle is hidden; in one game level, the game is set to be extremely hard so that the player must fail, which leads to the next plot.
+
+## Tech Aspect
+
+### Features, not Bugs!
+
+- Strangers - the level will pass only if the two balls meet. 
+- Lovers - the ball speeds up; if the remaining blocks are less than 5, the game will be sure to pass, since it's already "heart broken".
+- Strangers II - The paddle is flattened for a standardized game experience. If the browser performance is good enough, the music and the game will stop simultaneously. [ G ] od mod recommended.
+- Strangers II - At some point the ball **directly hit through** the block. This is a metaphor for breaking the ice, namely, a **feature**. All the other collisions are good, in all the other levels.
+- Press D will force skip level - designed for [ D ] ebug
+- The buttons on Pause menu are clickable even if the player haven't played to that level. This is because we want to let the players who figure this out on their second try and to be surprised. In fact, if you inspect our code, you'll find the signs that we've done the level check before, but removed just for fun. 
+- **All** fade animations and music-starting time on the cover of each level are deliberately designed to be that way. Don't feel shock if they aren't "standard". 
+- This is a game suitable for 15-20 mins, not just 6 mins. 
+- 43 files and a handful of music, this, is a serious plot-based game.  
+
+### How we did this - Game Model Design
+
+#### State
+
+All the fade-in-and-outs, brick-moving, and color-shifts, are done by the State mechanism. It's a List in our Model for containing animation states. Any animation can be abstracted as a function inputting a model and some $t\in[0,1]$, and then output the new model. The curve in VV285, for example, is done this way. 
+
+We mainly designed two basic maps, Linear and Bezier. We use the type `State` defined in `Model.elm` to record the `t` of any animation, `value` for some map of `t`, and `function` for the change of animation on model, i.e. the change of ball position, which is a `Func (Model -> Float -> Model)` to avoid type alias recursion (since it involves a Model within a Model).
+
+#### Static and Passive
+
+`gameStatus` and `visualization` are fields in `Model`. They are updated in every Tick, and `visualization` will be shown. `gameStatus`, on the other side, takes the place of `Msg` to control the whole `update` function. `Msg` is only used when being called by certain `gameStatus`. In this way, the Model is the boss, not some random user input. Don't worry about frequent submission. It's minimized.
+
+### How we did this - Work divided
+
+
 
