@@ -51,7 +51,8 @@ Duality
 |- ...
 ```
 
-## Usage
+## Control
+
 1. User should press **SPACE** to *start or pause* the game.
 1. User should press **S** to *skip* the level, **R** to *restart* the level.
 1. User should press **G** for god mode. All levels rebound, and the fourth level will automatically catch the ball for the game experience.
@@ -86,8 +87,8 @@ The two balls appear again. However, they are no longer balls. Instead, become p
 ### Level 6 Death
 In this level, there are one word behind each brick. When a brick is hit by the ball, the word behind it appears. The goal for the player is to hit all the bricks and finally find the whole sentence, which presents the epitaph of the two people.
 
-
 ## Features
+
 1. We have set different game levels, and each level has a unique story to tell. The stories of different levels are set to be coherent, which are the plots of a complete story.
 1. We have added some animations among the game levels to beautify our game and make our storytelling more fluent.
 1. We have added different shapes of paddles instead of just rectangles. The paddles can even be like a ball in some game levels, which can absolutely add more fun to our game.
@@ -141,9 +142,47 @@ Everyone is contributing, both to the project as their part and to every level i
 
 #### What, if?
 
-When the expression is Bool, of course it's better to use `if`, for it's the cheapest way to branch the control flow by discrete elements. Also, it's embed-friendly, i.e., it can be directly call on in a List using `( if...then...else)`, while case expressions must involve `let`.
+When the expression itself is `Bool`, of course it's better to use `if`, for it's the cheapest way to branch the control flow by discrete elements. Also, it's embed-friendly, i.e., it can be directly call on in a List using `( if...then...else)`, while case expressions must involve `let`.
 
 But you'd better use `case` if the control flow is discrete but complex. 
+
+----
+
+But these are not concise enough. There are two kinds of control flow: processing a list of data accordingly; or process by the type branches. 
+
+For data decoding and alteration, maybe we should use `List` flexibly:
+
+- If we have a `||` connected expression in `if` around the same subject, consider `List.member` or if you want more freedom, `List.any`.
+- If we have a `&&` connected expression in `if` around the same subject, consider `List.all`.
+- If we want to change the data itself, consider `List.filter` or `List.partition`. Use `++` to recreate the whole list afterwards.
+
+For type branches and lists, `case` is also useful, in some cases it's even the only way to deconstruct the data.
+
+----
+
+I used to hate `if` a lot, but it turns out to be a handful remedy in some embedded expressions. But if the `if` produces a direct `Bool`, namely:
+
+```elm
+judge x = 
+    if x > 1 then False else True
+```
+
+Why not just:
+
+```elm
+judge x = 
+    x <= 1
+```
+
+Even more concisely, simply use the expression when it is used, perhaps:
+
+```elm
+outOfCanvas =
+    points
+        |> List.filter (\p -> p.x <= 1) 
+```
+
+As you can see, when `if` meets a list, it can always find a corresponding function in `List`, which saves any endless `if` branches, and clarifies what it does.
 
 #### Type System in Elm
 
@@ -151,15 +190,46 @@ Similarly, we'll see.
 
 #### Dummy Everything
 
+When creating a type, include a form of dummy, or its equivalence.
 
+Similarly, when using type alias, especially `Record`, write a function that produces the default value of it. Any newly created object of that kind should start from altering the dummy, namely:
 
-
-
-
-
-```bash
-for ((i=0;i<$((${#a[*]}));i++))
-do
-git filter-branch --force --index-filter "git rm -rf --cached --ignore-unmatch ${a[$i]}" --prune-empty --tag-name-filter cat -- --all
-done
+```elm
+newObject = 
+    { dummyObject
+    | a = 1
+    , b = 2
+    }
 ```
+
+The design of dummy aims at two things: 
+
+1. Get an easy default value for Error handling, like `Nothing`.
+2. Change the type to meet new needs without wildly changing useable code.
+
+### Code Style
+
+This style is presented, but not posed; you can choose not to read this, and it's all fine. It's somehow even personal. Nothing formal here.
+
+1. try to use camel cases for elm - it's the style of elm that I've felt so far.
+
+2. if you have the sense that the function's growing tedious, try to split it. Use `let`. Define more smaller functions, if necessary. Many functions in `Tools.elm` are also handy, but feel free to create new ones. We can simplify this in code reviews. 
+
+3. `_` has three feelings: 
+	- "the rest", like in case expressions; 
+	- "don't care", like in function arguments
+	- "the latter", like in `let` expressions
+
+	note that "the latter" here is just for convenience, for example:
+	
+	```elm
+	update model =
+	    let
+	        model_ = changeModel model
+	        model__ = changeModelAgain model_
+	    in
+	    model__
+	```
+	
+	We don't know how many new models should we have, so use `_` postfix to say it's a new one is easy, just like $x^\prime$. Well, pipes are better in this case, but you get the point.
+
