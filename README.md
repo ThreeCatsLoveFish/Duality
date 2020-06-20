@@ -8,6 +8,7 @@
 
 **Duality** is a modified version of *Breakout* game,
 and this project is *2020SU VG100 Project One*, made by following members:
+
 - Rundong Tang
 - Yuchen Jiang
 - Yuchen Zhou
@@ -132,16 +133,33 @@ One guy: With all the difficult collision at hand, this guy checks the collision
 
 Yet another guy: Visualization of the game, subtle and delicate color design, and fade animations; also many detailed levels. Come and see our visual guy...or lady.
 
-Still another guy: Hardworking and learning fast, he's the one you must get to if you need a hand for any miscellaneous work. Check out the debug guy.
+Still another guy: Hardworking and learning elm, he's the one you can get to if you need a hand for any tedious work. Check out the tool guy.
 
-Everyone is contributing a lot, both to the project as their part and to every level in detail, this is an ideal teamwork pattern. Really. Personally I just like this team. A lot.
+Everyone is contributing, both to the project as their part and to every level in detail, this is an ideal teamwork pattern. Personally I like this pattern. 
 
-### Reflection
+### Reflections
 
 #### What, if?
 
-This is about if expressions. We'll see if it can be updated in time.
+When the expression is Bool, of course it's better to use `if`, for it's the cheapest way to branch the control flow by discrete elements. Also, it's embed-friendly, i.e., it can be directly call on in a List using `( if...then...else)`, while case expressions must involve `let`.
+
+But you'd better use `case` if the control flow is discrete but complex. 
 
 #### Type System in Elm
 
 Similarly, we'll see.
+
+#### Dummy Everything
+
+
+
+
+
+
+
+```bash
+for ((i=0;i<$((${#a[*]}));i++))
+do
+git filter-branch --force --index-filter "git rm -rf --cached --ignore-unmatch ${a[$i]}" --prune-empty --tag-name-filter cat -- --all
+done
+```
